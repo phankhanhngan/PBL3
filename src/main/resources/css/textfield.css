@@ -1,0 +1,7 @@
+.text-field,
+.password-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-radius: 6px;
+    -fx-border-color: #0000001A;
+    -fx-background-radius: 6px;
+}
