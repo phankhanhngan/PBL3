@@ -148,16 +148,16 @@
                 </JFXButton>
             </children></AnchorPane>
         <TextField layoutX="369.0" layoutY="93.0" prefHeight="26.0" prefWidth="566.0" promptText="Search" style="-fx-background-color: #FFFFFF;" />
-        <TableView layoutX="361.0" layoutY="138.0" prefHeight="525.0" prefWidth="586.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
+        <TableView fx:id="AccountTableView" layoutX="361.0" layoutY="138.0" prefHeight="525.0" prefWidth="586.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
             <columns>
-                <TableColumn prefWidth="75.0" text="Firstname" />
-                <TableColumn prefWidth="75.0" text="Lastname" />
-                <TableColumn prefWidth="75.0" text="Username" />
-                <TableColumn prefWidth="75.0" text="Password" />
-                <TableColumn prefWidth="75.0" text="Gmail" />
-                <TableColumn prefWidth="75.0" text="Phone" />
-                <TableColumn prefWidth="75.0" text="Address" />
-                <TableColumn prefWidth="60.0" text="Type" />
+                <TableColumn fx:id="Col_FName" prefWidth="75.0" text="Firstname" />
+                <TableColumn fx:id="Col_LName" prefWidth="75.0" text="Lastname" />
+                <TableColumn fx:id="Col_Username" prefWidth="75.0" text="Username" />
+                <TableColumn fx:id="Col_Password" prefWidth="75.0" text="Password" />
+                <TableColumn fx:id="Col_Gmail" prefWidth="75.0" text="Gmail" />
+                <TableColumn fx:id="Col_Phone" prefWidth="75.0" text="Phone" />
+                <TableColumn fx:id="Col_Address" prefWidth="75.0" text="Address" />
+                <TableColumn fx:id="Col_TypeOfUser" prefWidth="60.0" text="Type" />
             </columns>
         </TableView>
         <JFXButton fx:id="closeButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="886.0" onAction="#closeButtonOnAction" prefHeight="36.0" prefWidth="54.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 0 0 50 50;" text=" ">

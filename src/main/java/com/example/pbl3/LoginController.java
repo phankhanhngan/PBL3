@@ -112,7 +112,7 @@ public class LoginController {
 
     public void createForgetPasswordStage() {
         try {
-            Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("RecoverPasswordUI.fxml"));
+            Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("RecoveryPasswordUI.fxml"));
             Stage forgetpassword = new Stage();
             forgetpassword.setScene(new Scene(root));
             forgetpassword.show();
