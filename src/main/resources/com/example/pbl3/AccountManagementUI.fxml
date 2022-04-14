@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -85,11 +84,9 @@
         </AnchorPane>
         <AnchorPane layoutX="96.0" layoutY="77.0" prefHeight="500.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
             <children>
-                <TextField fx:id="firstnameTextField" layoutX="15.0" layoutY="73.0" prefHeight="34.0" prefWidth="217.0" promptText="Firstname" stylesheets="@../../../css/textfield.css" />
-                <TextField fx:id="lastnameTextField" layoutX="15.0" layoutY="121.0" prefHeight="34.0" prefWidth="217.0" promptText="Lastname" stylesheets="@../../../css/textfield.css" />
-                <TextField fx:id="usernameTextField" layoutX="15.0" layoutY="169.0" prefHeight="34.0" prefWidth="217.0" promptText="Username" stylesheets="@../../../css/textfield.css" />
-                <TextField fx:id="gmailTextField" layoutX="15.0" layoutY="217.0" prefHeight="34.0" prefWidth="217.0" promptText="Gmail" stylesheets="@../../../css/textfield.css" />
-                <PasswordField fx:id="passwordTextField" layoutX="15.0" layoutY="265.0" prefHeight="34.0" prefWidth="218.0" promptText="Password" stylesheets="@../../../css/textfield.css" />
+                <TextField fx:id="firstnameTextField" layoutX="15.0" layoutY="175.0" prefHeight="34.0" prefWidth="217.0" promptText="Firstname" stylesheets="@../../../css/textfield.css" />
+                <TextField fx:id="lastnameTextField" layoutX="15.0" layoutY="223.0" prefHeight="34.0" prefWidth="217.0" promptText="Lastname" stylesheets="@../../../css/textfield.css" />
+                <TextField fx:id="gmailTextField" layoutX="14.0" layoutY="267.0" prefHeight="34.0" prefWidth="217.0" promptText="Gmail" stylesheets="@../../../css/textfield.css" />
                 <TextField fx:id="phoneTextField" layoutX="14.0" layoutY="313.0" prefHeight="34.0" prefWidth="217.0" promptText="Phone" stylesheets="@../../../css/textfield.css" />
                 <TextField fx:id="addressTextField" layoutX="15.0" layoutY="361.0" prefHeight="34.0" prefWidth="217.0" promptText="Address" stylesheets="@../../../css/textfield.css" />
                 <Label alignment="CENTER" contentDisplay="TOP" prefHeight="50.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 32 32 0 0;" text="Account Detail" textFill="WHITE">
@@ -123,7 +120,7 @@
                     </font>
                 </JFXRadioButton>
             </children></AnchorPane>
-        <TextField fx:id="searchTextField" layoutX="369.0" layoutY="93.0" prefHeight="26.0" prefWidth="669.0" promptText="Search" style="-fx-background-color: #FFFFFF;" />
+        <TextField fx:id="searchTextField" layoutX="369.0" layoutY="93.0" onKeyPressed="#pressEnterOnAction" prefHeight="26.0" prefWidth="669.0" promptText="Search" style="-fx-background-color: #FFFFFF;" />
         <TableView fx:id="AccountTableView" layoutX="361.0" layoutY="138.0" prefHeight="576.0" prefWidth="679.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
             <columns>
                 <TableColumn fx:id="Col_FName" prefWidth="90.13330078125" text="Firstname" />

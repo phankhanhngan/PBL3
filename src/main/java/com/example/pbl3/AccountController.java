@@ -184,10 +184,6 @@ public class AccountController implements Initializable {
     @FXML
     private TextField lastnameTextField;
     @FXML
-    private TextField usernameTextField;
-    @FXML
-    private PasswordField passwordTextField;
-    @FXML
     private TextField gmailTextField;
     @FXML
     private TextField phoneTextField;
@@ -222,17 +218,20 @@ public class AccountController implements Initializable {
     @FXML
     private TableColumn<Account, Boolean> Col_TypeOfUser;
 
+    private ObservableList<Account> accountsList;
+
 
     public AccountController() {
     }
 
     public boolean isInputFieldEmpty() {
-        return this.passwordTextField.getText().trim().isEmpty() || this.firstnameTextField.getText().trim().isEmpty() || this.lastnameTextField.getText().trim().isEmpty() || this.usernameTextField.getText().trim().isEmpty() || this.gmailTextField.getText().trim().isEmpty() || this.phoneTextField.getText().trim().isEmpty() || this.addressTextField.getText().trim().isEmpty() || !this.managerRadioButton.isSelected() && !this.cashierRadioButton.isSelected();
+        return this.firstnameTextField.getText().trim().isEmpty() || this.lastnameTextField.getText().trim().isEmpty() || this.gmailTextField.getText().trim().isEmpty() || this.phoneTextField.getText().trim().isEmpty() || this.addressTextField.getText().trim().isEmpty() || !this.managerRadioButton.isSelected() && !this.cashierRadioButton.isSelected();
     }
 
     public void addOnAction(ActionEvent event) throws Exception {
         if (!this.isInputFieldEmpty()) {
             this.addAccount();
+            UpdateListAccount("");
         } else {
             Notifications.create().text("Please fill in all fields.").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
         }
@@ -244,8 +243,8 @@ public class AccountController implements Initializable {
         Connection connectDB = connection.getConnection();
         String firstname = this.firstnameTextField.getText();
         String lastname = this.lastnameTextField.getText();
-        String username = this.usernameTextField.getText();
-        String password = this.passwordTextField.getText();
+        String username = this.phoneTextField.getText();
+        String password = "123456";
         String gmail = this.gmailTextField.getText();
         String phone = this.phoneTextField.getText();
         String address = this.addressTextField.getText();
@@ -259,7 +258,7 @@ public class AccountController implements Initializable {
             statement.executeUpdate(insertToRegister);
             Notifications.create().text("You have add account successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
             resetInputField();
-            loadTable();
+            UpdateListAccount("");
         } catch (Exception var15) {
             Notifications.create().text("You have failed add account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
         }
@@ -310,7 +309,7 @@ public class AccountController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadTable();
+        UpdateListAccount("");
         AccountTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 showButtonOnAction();
@@ -318,69 +317,10 @@ public class AccountController implements Initializable {
         });
     }
 
-    public void SelectRowHandler() {
-
-    }
-    public void loadTable()
-    {
-        ObservableList<Account> list = FXCollections.observableArrayList();
-        //Connection database
-        DatabaseConnection ConnectNow = new DatabaseConnection();
-        Connection connectDB = ConnectNow.getConnection();
-        String accountQuery = "select firstname,lastname,gmail,phone_number,username,password,address,type_customer from account";
-        try {
-
-            Statement statement = connectDB.createStatement();
-            ResultSet   queryResult = statement.executeQuery(accountQuery);
-            //Moi dong database
-            while(queryResult.next())
-            {
-                String firstName = queryResult.getString("firstname"); // get gia tri column firstname trong database
-                String lastName = queryResult.getString("lastname");
-                String gmail = queryResult.getString("gmail");
-                String phone = queryResult.getString("phone_number");
-                String username = queryResult.getString("username");
-                String password = queryResult.getString("password");
-                String address = queryResult.getString("address");
-                Boolean type = queryResult.getBoolean("type_customer");
-                String typeOfUser="";
-                if(type == true)
-                {
-                    typeOfUser = "Manager";
-                }
-                else
-                {
-                    typeOfUser = "Cashier";
-                }
-                Account acc = new Account(firstName,lastName,gmail,phone,username,password,address,typeOfUser);
-                list.add(acc); // Add vao list
-                //System.out.println(acc.fName + acc.lName);
-            }
-
-            Col_FName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-            Col_LName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-            Col_Gmail.setCellValueFactory(new PropertyValueFactory<>("gmail"));
-            Col_Password.setCellValueFactory(new JFXPasswordCellValueFactory());
-            Col_Phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-            Col_Username.setCellValueFactory(new PropertyValueFactory<>("username"));
-            Col_Address.setCellValueFactory(new PropertyValueFactory<>("address"));
-            Col_TypeOfUser.setCellValueFactory(new PropertyValueFactory<>("typeOfUser"));
-            AccountTableView.setItems(list);
-
-        }
-        catch (SQLException e)
-        {
-            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, e);
-            e.printStackTrace();
-        }
-
-    }
 
     public void resetInputField() {
         firstnameTextField.setText("");
         lastnameTextField.setText("");
-        usernameTextField.setText("");
-        passwordTextField.setText("");
         gmailTextField.setText("");
         phoneTextField.setText("");
         addressTextField.setText("");
@@ -403,17 +343,11 @@ public class AccountController implements Initializable {
         }
     }
 
-    public void showInputField() {
-
-    }
 
     public void showButtonOnAction() {
         if (AccountTableView.getSelectionModel().getSelectedItem().username != "") {
-            usernameTextField.setEditable(false);
             firstnameTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().firstName);
             lastnameTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().lastName);
-            usernameTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().username);
-            passwordTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().password);
             gmailTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().gmail);
             addressTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().address);
             phoneTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().phone);
@@ -428,8 +362,9 @@ public class AccountController implements Initializable {
 
     @FXML
     private void updateButtonOnAction() {
-        if (AccountTableView.getSelectionModel().getSelectedItem().username != "") {
-            UpdateRow(firstnameTextField.getText(), lastnameTextField.getText(), usernameTextField.getText(), passwordTextField.getText(), gmailTextField.getText(), addressTextField.getText(), phoneTextField.getText(), managerRadioButton.isSelected());
+        if (AccountTableView.getSelectionModel().getSelectedItem() != null) {
+            Account account = AccountTableView.getSelectionModel().getSelectedItem();
+            UpdateRow(firstnameTextField.getText(), lastnameTextField.getText(), account.username, account.password, gmailTextField.getText(), addressTextField.getText(), phoneTextField.getText(), managerRadioButton.isSelected());
 
         } else {
             Notifications.create().text("Please select an account to update")
@@ -456,7 +391,7 @@ public class AccountController implements Initializable {
             statement.executeUpdate(updateAccount);
             Notifications.create().text("You have update account successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
             resetInputField();
-            loadTable();
+            UpdateListAccount("");
         } catch (Exception var15) {
             Notifications.create().text("You have failed update account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
         }
@@ -472,78 +407,77 @@ public class AccountController implements Initializable {
             Statement statement = connectDB.createStatement();
             statement.executeUpdate(query);
             Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-            loadTable();
+            UpdateListAccount("");
             resetInputField();
         } catch (Exception var15) {
             var15.printStackTrace();
             Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
         }
     }
-//    @FXML
-//    void pressEnterOnAction(KeyEvent event) {
-//        if(event.getCode().toString() == "ENTER")
-//        {
-//            UpdateListAccount(searchTextField.getText());
-//
-//        }
-//    }
-//    public void UpdateListAccount(String txt)
-//    {
-//        accountsList = FXCollections.observableArrayList(Search(txt)
-//                new Account("Vo","Khang","khang@gmail.com","0111111111","black","123456","15 NLB","Cashier")
-//        );
-//        firstnameColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("firstName"));
-//        lastnameColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("lastName"));
-//        usernameColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
-//        passwordColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("password"));
-//        gmailColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("gmail"));
-//        phoneColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("phone_number"));
-//        addressColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("address"));
-//        typeColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("type_admin"));
-//        table.setItems(accountsList);
-//    }
-//    public List<Account> Search(String txt)
-//    {
-//        List<Account> accounts = new ArrayList<Account>();
-//        String sql = "SELECT * FROM account WHERE lastname = " + "'" + txt + "' OR firstname LIKE '%" + txt
-//                + "%' OR username LIKE '%" + txt + "%' OR gmail LIKE '%" + txt + "%' OR phone_number LIKE '%"
-//                + txt +"%' OR address LIKE '%" + txt + "%'";
-//        DatabaseConnection connectNow = new DatabaseConnection();
-//        Connection connectDb = connectNow.getConnection();
-//
-//        try {
-//            PreparedStatement pst = connectDb.prepareStatement(sql);
-//            ResultSet rs = pst.executeQuery();
-//            while (rs.next())
-//            {
-//                String firsname = rs.getString(1);
-//                String lastname = rs.getString(2);
-//                String gmail = rs.getString(3);
-//                String phone_number = rs.getString(4);
-//                String username = rs.getString(5);
-//                String password = rs.getString(6);
-//                String address = rs.getString(7);
-//                boolean type_admin = rs.getBoolean(8);
-//                String type;
-//                if(type_admin) type = "Manager";
-//                else type = "Cashier";
-//                accounts.add(new Account(firsname,lastname,gmail,phone_number,username,password,address,type));
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        finally {
-//            try {
-//                connectDb.close();
-//            }
-//            catch (SQLException e)
-//            {
-//                e.printStackTrace();
-//            }
-//        }
-//        return accounts;
-//    }
+    @FXML
+    void pressEnterOnAction(KeyEvent event) {
+        if(event.getCode().toString() == "ENTER")
+        {
+            UpdateListAccount(searchTextField.getText());
+
+        }
+    }
+
+    public void UpdateListAccount(String txt)
+    {
+        accountsList = FXCollections.observableArrayList(Search(txt));
+        Col_FName.setCellValueFactory(new PropertyValueFactory<Account, String>("firstName"));
+        Col_LName.setCellValueFactory(new PropertyValueFactory<Account, String>("lastName"));
+        Col_Username.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
+        Col_Password.setCellValueFactory(new JFXPasswordCellValueFactory());
+        Col_Gmail.setCellValueFactory(new PropertyValueFactory<Account, String>("gmail"));
+        Col_Phone.setCellValueFactory(new PropertyValueFactory<Account, String>("phone"));
+        Col_Address.setCellValueFactory(new PropertyValueFactory<Account, String>("address"));
+        Col_TypeOfUser.setCellValueFactory(new PropertyValueFactory<>("typeOfUser"));
+        AccountTableView.setItems(accountsList);
+    }
+    public List<Account> Search(String txt)
+    {
+        List<Account> accounts = new ArrayList<Account>();
+        String sql = "SELECT * FROM account WHERE lastname = " + "'" + txt + "' OR firstname LIKE '%" + txt
+                + "%' OR username LIKE '%" + txt + "%' OR gmail LIKE '%" + txt + "%' OR phone_number LIKE '%"
+                + txt +"%' OR address LIKE '%" + txt + "%'";
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDb = connectNow.getConnection();
+
+        try {
+            PreparedStatement pst = connectDb.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next())
+            {
+                String firsname = rs.getString(1);
+                String lastname = rs.getString(2);
+                String gmail = rs.getString(3);
+                String phone = rs.getString(4);
+                String username = rs.getString(5);
+                String password = rs.getString(6);
+                String address = rs.getString(7);
+                boolean type_admin = rs.getBoolean(8);
+                String type;
+                if(type_admin) type = "Manager";
+                else type = "Cashier";
+                accounts.add(new Account(firsname,lastname,gmail,phone,username,password,address,type));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                connectDb.close();
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return accounts;
+    }
 
     @FXML
     private void resetButtonOnAction() {
