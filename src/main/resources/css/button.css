@@ -1,0 +1,28 @@
+/*add*/
+.button-type-1 {
+    -fx-background-color: #8168A3;
+    -fx-background-radius: 8;
+    -fx-text-fill: WHITE;
+}
+/*reset*/
+.button-type-2 {
+    -fx-background-color: rgba(255,255,255,0.5);
+    -fx-background-radius: 8;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 8;
+    -fx-text-fill: #a16767;
+}
+/*delete*/
+.button-type-3 {
+    -fx-background-color: rgba(169,25,25,0.6);
+    -fx-background-radius: 8;
+    -fx-text-fill: WHITE;
+}
+/*update*/
+.button-type-4 {
+    -fx-background-color: rgba(255,255,255,0.5);
+    -fx-background-radius: 8;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 8;
+    -fx-text-fill: #8168a3;
+}

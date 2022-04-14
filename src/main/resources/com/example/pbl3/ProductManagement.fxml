@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="676.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.ProductController">
+    <children>
+    <ImageView fitHeight="774.0" fitWidth="1051.0" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
+        <image>
+            <Image url="@../../../assets/Background2.png" />
+        </image>
+    </ImageView>
+    <AnchorPane layoutX="1.0" layoutY="73.0" prefHeight="635.0" prefWidth="76.0" style="-fx-background-color: rgba(255,255,255,0.6); -fx-background-radius: 0 32 32 0;">
+        <children>
+            <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutY="41.0" prefHeight="68.0" prefWidth="58.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 0 50 50 0;" text="Home" textFill="WHITE">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+                <font>
+                    <Font name="System Bold" size="15.0" />
+                </font>
+                <!--               <graphic>-->
+                <!--                  <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="40" />-->
+                <!--               </graphic>-->
+            </JFXButton>
+            <JFXButton buttonType="RAISED" contentDisplay="CENTER" layoutY="135.0" prefHeight="68.0" prefWidth="58.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 0 50 50 0;" text=" " textFill="WHITE">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+                <font>
+                    <Font name="System Bold" size="15.0" />
+                </font>
+                <!--               <graphic>-->
+                <!--                  <FontAwesomeIconView fill="WHITE" glyphName="USER" size="40" />-->
+                <!--               </graphic>-->
+            </JFXButton>
+            <JFXButton buttonType="RAISED" contentDisplay="CENTER" layoutY="229.0" prefHeight="68.0" prefWidth="62.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 0 50 50 0;" text=" " textFill="WHITE">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+                <font>
+                    <Font name="System Bold" size="15.0" />
+                </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" contentDisplay="CENTER" layoutY="324.0" prefHeight="68.0" prefWidth="62.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 0 50 50 0;" text="CUS" textFill="WHITE">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+                <font>
+                    <Font name="System Bold" size="15.0" />
+                </font>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" contentDisplay="CENTER" layoutX="-4.0" layoutY="422.0" prefHeight="68.0" prefWidth="62.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 0 50 50 0;" text=" " textFill="WHITE">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+                <font>
+                    <Font name="System Bold" size="15.0" />
+                </font>
+                <!--               <graphic>-->
+                <!--                  <FontAwesomeIconView fill="WHITE" glyphName="INFO" size="40" />-->
+                <!--               </graphic>-->
+            </JFXButton>
+            <JFXButton fx:id="signOutButton" buttonType="RAISED" contentDisplay="CENTER" layoutY="518.0" onAction="#signOutButtonOnAction" prefHeight="68.0" prefWidth="62.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 0 50 50 0;" text="OUT" textFill="WHITE">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+                <font>
+                    <Font name="System Bold" size="15.0" />
+                </font>
+            </JFXButton>
+        </children>
+    </AnchorPane>
+        <JFXButton fx:id="closeButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="988.0" layoutY="-4.0" onAction="#closeButtonOnAction" prefHeight="36.0" prefWidth="54.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 0 0 50 50;" text=" ">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <!--         <graphic>-->
+            <!--            <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" size="25.0" strokeWidth="4.0" wrappingWidth="20.799951171875023">-->
+            <!--               <font>-->
+            <!--                  <Font size="41.0" />-->
+            <!--               </font>-->
+            <!--            </FontAwesomeIconView>-->
+            <!--         </graphic>-->
+        </JFXButton>
+        <JFXButton fx:id="minimizeButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="925.0" layoutY="-4.0" onAction="#minimizeButtonOnAction" prefHeight="36.0" prefWidth="54.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 0 0 50 50;" text=" " textAlignment="CENTER">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <!--         <graphic>-->
+            <!--            <FontAwesomeIconView fill="WHITE" glyphName="WINDOW_MINIMIZE" size="20" wrappingWidth="20.0" />-->
+            <!--         </graphic>-->
+        </JFXButton>
+      <AnchorPane layoutX="117.0" layoutY="1.0" prefHeight="767.0" prefWidth="323.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <AnchorPane layoutX="15.0" layoutY="132.0" prefHeight="582.0" prefWidth="290.0" style="-fx-background-radius: 32px; -fx-background-color: rgba(192,162,232,0.3);">
+               <children>
+                  <ImageView fitHeight="296.0" fitWidth="239.0" layoutX="21.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../assets/phone_png.png" />
+                     </image>
+                  </ImageView>
+                  <TextField layoutX="116.0" layoutY="294.0" prefHeight="27.0" prefWidth="162.0" text="IPHONE 13" />
+                  <Label layoutX="62.0" layoutY="14.0" text="Product Detail" textFill="#7e3b76">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="116.0" layoutY="330.0" prefHeight="27.0" prefWidth="162.0" text="120000" />
+                  <Label layoutX="20.0" layoutY="299.0" text="Name" />
+                  <Label layoutX="21.0" layoutY="335.0" text="Purchase Price" />
+                  <TextField layoutX="116.0" layoutY="367.0" prefHeight="27.0" prefWidth="162.0" text="120000" />
+                  <Label layoutX="21.0" layoutY="372.0" text="Sale Price" />
+                  <Label layoutX="19.0" layoutY="267.0" text="Category" />
+                  <JFXComboBox focusColor="#a580b7" labelFloat="true" layoutX="116.0" layoutY="259.0" prefHeight="26.0" prefWidth="162.0" promptText="Select an option" unFocusColor="WHITE" />
+                  <Label layoutX="21.0" layoutY="406.0" text="Barcode" />
+                  <TextField layoutX="116.0" layoutY="401.0" prefHeight="27.0" prefWidth="162.0" text="9781405234788" />
+                  <JFXButton layoutX="33.0" layoutY="494.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Add" />
+                  <JFXButton layoutX="91.0" layoutY="163.0" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Select a picture">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton layoutX="33.0" layoutY="536.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Update" />
+                  <JFXButton layoutX="154.0" layoutY="494.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-2" stylesheets="@../../../css/button.css" text="Reset" />
+                  <JFXButton layoutX="154.0" layoutY="536.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-3" stylesheets="@../../../css/button.css" text="Delete" />
+                  <DatePicker layoutX="116.0" layoutY="437.0" prefHeight="18.0" prefWidth="162.0" promptText="Date" />
+                  <Label layoutX="22.0" layoutY="441.0" text="Import Date" />
+               </children>
+            </AnchorPane>
+            <TextField layoutX="26.0" layoutY="72.0" prefHeight="36.0" prefWidth="274.0" promptText="Type here to search" stylesheets="@../../../css/textfield.css" />
+            <JFXButton layoutX="221.0" layoutY="76.0" prefHeight="27.0" prefWidth="70.0" ripplerFill="#e47fa2" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Search" />
+         </children>
+      </AnchorPane>
+      <TableView layoutX="474.0" layoutY="136.0" prefHeight="582.0" prefWidth="543.0" style="-fx-background-radius: 32px;" stylesheets="@../../../css/account.css">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Category" />
+          <TableColumn prefWidth="75.0" text="Name" />
+            <TableColumn prefWidth="75.0" text="P.Price" />
+            <TableColumn prefWidth="75.0" text="S.Price" />
+            <TableColumn prefWidth="75.0" text="Barcode" />
+            <TableColumn prefWidth="75.0" text="Import Date" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="474.0" layoutY="97.0" prefHeight="27.0" prefWidth="76.0" ripplerFill="#c796d1" style="-fx-background-color: #FFFFF;" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Tên">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton layoutX="570.0" layoutY="97.0" prefHeight="27.0" prefWidth="76.0" ripplerFill="#c796d1" style="-fx-background-color: #FFFFF;" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Ngày">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton layoutX="670.0" layoutY="97.0" prefHeight="27.0" prefWidth="76.0" ripplerFill="#c796d1" style="-fx-background-color: #FFFFF;" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Giá">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+    </children>
+</AnchorPane>
