@@ -30,6 +30,8 @@ public class LoginController {
     @FXML
     private TextField usernameTextField;
 
+    OpenUI openUI = new OpenUI();
+
     public LoginController() {
     }
 
@@ -53,7 +55,7 @@ public class LoginController {
     void recoveryPasswordOnAction(ActionEvent event) {
         Stage stage = (Stage)this.recoveryPasswordHyperlink.getScene().getWindow();
         stage.close();
-        this.createForgetPasswordStage();
+        openUI.Open_UI("RecoveryPasswordUI.fxml","");
     }
 
     public void validateLogin() {
@@ -70,7 +72,7 @@ public class LoginController {
                 if (queryResult.getInt(1) == 1) {
                     Stage stage = (Stage)this.signInButton.getScene().getWindow();
                     stage.close();
-                    this.createAccountManagementStage();
+                    openUI.Open_UI("HomePageUI.fxml","");
                 } else {
                     this.loginMessageLabel.setText("Please try again");
                 }
@@ -82,44 +84,4 @@ public class LoginController {
 
     }
 
-    public void createAccountManagementStage() {
-        try {
-            Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("AccountManagementUI.fxml"));
-            Stage accountStage = new Stage();
-            accountStage.initStyle(StageStyle.UNDECORATED);
-            accountStage.setScene(new Scene(root));
-            accountStage.show();
-        } catch (Exception var3) {
-            var3.printStackTrace();
-            var3.getCause();
-        }
-
-    }
-
-    public void createHomeStage() {
-        try {
-            Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("HomePageUI.fxml"));
-            Stage homeStage = new Stage();
-            homeStage.setScene(new Scene(root));
-            homeStage.initStyle(StageStyle.UNDECORATED);
-            homeStage.show();
-        } catch (Exception var3) {
-            var3.printStackTrace();
-            var3.getCause();
-        }
-
-    }
-
-    public void createForgetPasswordStage() {
-        try {
-            Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("RecoveryPasswordUI.fxml"));
-            Stage forgetpassword = new Stage();
-            forgetpassword.setScene(new Scene(root));
-            forgetpassword.show();
-        } catch (Exception var3) {
-            var3.printStackTrace();
-            var3.getCause();
-        }
-
-    }
 }
