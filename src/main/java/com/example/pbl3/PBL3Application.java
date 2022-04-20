@@ -11,7 +11,6 @@ public class PBL3Application extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("LoginUI.fxml"));
-        stage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root, 684.0, 514.0);
         stage.setScene(scene);
         stage.setTitle("Electronic Shop");

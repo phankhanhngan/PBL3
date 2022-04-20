@@ -20,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -28,9 +29,13 @@ import org.controlsfx.control.action.Action;
 
 public class AccountController implements Initializable {
     @FXML
-    private Button addButton;
+    private AnchorPane AnchorPane;
     @FXML
-    private Button signOutButton;
+    private MenuItem product;
+    @FXML
+    private MenuItem homepage;
+    @FXML
+    private MenuItem logout;
     @FXML
     private TextField firstnameTextField;
     @FXML
@@ -46,15 +51,8 @@ public class AccountController implements Initializable {
     @FXML
     private RadioButton cashierRadioButton;
     @FXML
-    private Button closeButton;
-    @FXML
     private TextField searchTextField;
-    @FXML
-    private Button minimizeButton;
-    @FXML
-    private Button homepageButton;
-    @FXML
-    private Button productButton;
+
     @FXML
     private TableView<Account> AccountTableView;
     @FXML
@@ -120,38 +118,6 @@ public class AccountController implements Initializable {
             Notifications.create().text("You have failed add account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
         }
 
-    }
-
-    public void closeButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.closeButton.getScene().getWindow();
-        stage.close();
-    }
-
-    public void minimizeButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.minimizeButton.getScene().getWindow();
-        stage.setIconified(true);
-    }
-
-    public void tblCashierClick(MouseEvent mouseEvent) {
-    }
-
-    public void searchOnAction(ActionEvent event) {
-    }
-
-    public void cashierUpdateOnAction(ActionEvent event) {
-    }
-
-    public void cashierDeleteOnAction(ActionEvent event) {
-    }
-
-    public void setOnAction(ActionEvent event) {
-    }
-
-    @FXML
-    public void signOutButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.signOutButton.getScene().getWindow();
-        stage.close();
-        openUI.Open_UI("LoginUI.fxml","");
     }
 
     @Override
@@ -297,7 +263,7 @@ public class AccountController implements Initializable {
             ResultSet rs = pst.executeQuery();
             while (rs.next())
             {
-                String firsname = rs.getString(1);
+                String firstname = rs.getString(1);
                 String lastname = rs.getString(2);
                 String gmail = rs.getString(3);
                 String phone = rs.getString(4);
@@ -308,7 +274,7 @@ public class AccountController implements Initializable {
                 String type;
                 if(type_admin) type = "Manager";
                 else type = "Cashier";
-                accounts.add(new Account(firsname,lastname,gmail,phone,username,password,address,type));
+                accounts.add(new Account(firstname,lastname,gmail,phone,username,password,address,type));
             }
 
         } catch (SQLException e) {
@@ -331,16 +297,25 @@ public class AccountController implements Initializable {
         resetInputField();
     }
 
-    public void homepageButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.homepageButton.getScene().getWindow();
-        stage.close();
-        openUI.Open_UI("HomePageUI.fxml","");
-    }
-
-    public void productButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)productButton.getScene().getWindow();
+    @FXML
+    public void productMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ProductManagementUI.fxml","");
+    }
+
+    @FXML
+    public void logOutMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("LoginUI.fxml","");
+    }
+
+    @FXML
+    public void homePageMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("HomePageUI.fxml","");
     }
 }
 

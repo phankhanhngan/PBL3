@@ -36,6 +36,7 @@ import org.controlsfx.control.Notifications;
 import org.controlsfx.control.action.Action;
 
 public class ProductController implements Initializable {
+
     @FXML
     Button butAdd;
     @FXML
@@ -89,15 +90,11 @@ public class ProductController implements Initializable {
     @FXML
     private RadioButton spriceRadioBT;
     @FXML
-    private Button signOutButton;
+    private MenuItem logout;
     @FXML
-    private Button minimizeButton;
+    private MenuItem homepage;
     @FXML
-    private Button closeButton;
-    @FXML
-    private Button homepageButton;
-    @FXML
-    private Button accountButton;
+    private MenuItem account;
 
     OpenUI openUI = new OpenUI();
 
@@ -408,32 +405,21 @@ public class ProductController implements Initializable {
     }
 
     @FXML
-    public void signOutButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.signOutButton.getScene().getWindow();
+    public void logOutMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml","");
     }
-    @FXML
-    public void minimizeButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.minimizeButton.getScene().getWindow();
-        stage.setIconified(true);
-    }
 
-    public void closeButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.closeButton.getScene().getWindow();
+    public void accountMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
+        openUI.Open_UI("AccountManagementUI.fxml", "");
     }
 
-    public void accountButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.accountButton.getScene().getWindow();
-        stage.close();
-        openUI.Open_UI("AccountManagementUI.fxml","");
-    }
-
-    public void homepageButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.homepageButton.getScene().getWindow();
+    public void homePageMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("HomePageUI.fxml","");
     }
-
 }

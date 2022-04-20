@@ -15,7 +15,6 @@ public class OpenUI {
             Parent root = (Parent) FXMLLoader.load(this.getClass().getResource(namefile));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
         } catch (Exception var3) {
             var3.printStackTrace();

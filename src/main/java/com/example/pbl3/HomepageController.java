@@ -3,66 +3,43 @@ package com.example.pbl3;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.action.Action;
 
 public class HomepageController {
     @FXML
-    private Button closeButton;
+    private AnchorPane AnchorPane;
     @FXML
-    private Button minimizeButton;
+    private MenuItem product;
     @FXML
-    private Button signOutButton;
+    private MenuItem account;
     @FXML
-    private Button accountButton;
-    @FXML
-    private Button homepageButton;
-    @FXML
-    private Button customerButton;
-    @FXML
-    private Button productButton;
+    private MenuItem logout;
 
     OpenUI openUI = new OpenUI();
 
-    public void closeButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.closeButton.getScene().getWindow();
+
+    @FXML
+    public void productMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
+        openUI.Open_UI("ProductManagementUI.fxml", "");
     }
 
-    public void minimizeButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.minimizeButton.getScene().getWindow();
-        stage.setIconified(true);
-    }
-
-    public void signOutButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.signOutButton.getScene().getWindow();
+    @FXML
+    public void logOutMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("LoginUI.fxml","");
+        openUI.Open_UI("LoginUI.fxml", "");
     }
 
-    public void accountButtonOnAction(ActionEvent event) {
-            Stage stage = (Stage)this.accountButton.getScene().getWindow();
-            stage.close();
-            openUI.Open_UI("AccountManagementUI.fxml","");
-    }
-
-    public void homepageButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.homepageButton.getScene().getWindow();
+    @FXML
+    public void accountMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("HomePageUI.fxml","");
+        openUI.Open_UI("AccountManagementUI.fxml", "");
     }
-
-    public void productButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)productButton.getScene().getWindow();
-        stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml","");
-    }
-//    public void customerButtonOnAction(ActionEvent event) {
-//        {
-//            Stage stage = (Stage)this.customerButton.getScene().getWindow();
-//            stage.close();
-//            openUI.Open_UI("HomePageUI.fxml","");
-//        }
-//    }
 }
