@@ -37,6 +37,8 @@ public class AccountController implements Initializable {
     @FXML
     private MenuItem logout;
     @FXML
+    private MenuItem importPrd;
+    @FXML
     private TextField firstnameTextField;
     @FXML
     private TextField lastnameTextField;
@@ -316,6 +318,34 @@ public class AccountController implements Initializable {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("HomePageUI.fxml","");
+    }
+
+    @FXML
+    public void importMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("ImportUI.fxml", "");
+    }
+
+    @FXML
+    public void supplierMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("SupplierManagementUI.fxml", "");
+    }
+
+    @FXML
+    public void categoryMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("CategoryManagementUI.fxml", "");
+    }
+
+    @FXML
+    public void customerMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("CustomerUI.fxml", "");
     }
 }
 

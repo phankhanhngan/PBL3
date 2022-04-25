@@ -60,7 +60,7 @@ public class ProductController implements Initializable {
     @FXML
     TextField txtBarcode;
     @FXML
-    DatePicker txtDayPicker;
+    TextField txtQuantity;
     @FXML
     AnchorPane AnchorPane;
     @FXML
@@ -78,7 +78,8 @@ public class ProductController implements Initializable {
     @FXML
     TableColumn<Product, String> Col_Barcode;
     @FXML
-    TableColumn<Product, Date> Col_importDate;
+    private TableColumn<Product, Integer> Col_Quantity;
+
     @FXML
     private Button searchBT;
     @FXML
@@ -95,6 +96,10 @@ public class ProductController implements Initializable {
     private MenuItem homepage;
     @FXML
     private MenuItem account;
+    @FXML
+    private MenuItem importPrd;
+    private PreparedStatement quantity = null;
+    private PreparedStatement prdQuantity = null;
 
     OpenUI openUI = new OpenUI();
 
@@ -121,12 +126,14 @@ public class ProductController implements Initializable {
         try {
             String query = "select ProductImage from products where Barcode = (?)";
             this.retrive = link.prepareStatement(query, 1005, 1008);
-            String query1 = "insert into products (Barcode,ProductName,SalePrice,PurchasePrice,ProductImage,ImportDay,Category) values (?,?,?,?,?,?,?)";
+            String query1 = "insert into products (Barcode,ProductName,SalePrice,PurchasePrice,ProductImage,Category) values (?,?,?,?,?,?)";
             this.store = link.prepareStatement(query1);
-            String query2 = "update products set ProductName = ? , SalePrice = ?, PurchasePrice = ?, ImportDay = ?, Category = ?, ProductImage = ? where Barcode = ?";
+            String query2 = "update products set ProductName = ? , SalePrice = ?, PurchasePrice = ?, Category = ?, ProductImage = ? where Barcode = ?";
             this.update = link.prepareStatement(query2);
             String query3 = "DELETE FROM products WHERE Barcode  = ? ";
             this.delete = link.prepareStatement(query3);
+            String queryQuantity = "select sum(quantity) as quantity from import where product_name = ? group by product_name";
+            this.quantity = link.prepareStatement(queryQuantity);
         } catch (SQLException var7) {
             var7.printStackTrace();
         }
@@ -168,7 +175,7 @@ public class ProductController implements Initializable {
     public boolean ValidationField()
     {
         return((txtBarcode.getText().trim().isEmpty()) || (txtPurchasePrice.getText().trim().isEmpty()) || (txtSalePrice.getText().trim().isEmpty())
-                || (txtProductName.getText().trim().isEmpty()) || (txtDayPicker.getValue() == null) ||
+                || (txtProductName.getText().trim().isEmpty()) ||
                 (cbbCategory.getSelectionModel().getSelectedItem() == null) || (this.file == null));
 
     }
@@ -181,10 +188,8 @@ public class ProductController implements Initializable {
             this.txtProductName.setText(((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getProductName());
             this.txtSalePrice.setText(Float.toString(((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getSalePrice()));
             this.txtPurchasePrice.setText(Float.toString(((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getPurchasePrice()));
-            Date date = this.ProductTableView.getSelectionModel().getSelectedItem().getImportDay();
-            this.txtDayPicker.setValue(LocalDate.of(date.getYear()+1900, date.getMonth()+1, date.getDate()));
-            this.txtDayPicker.setShowWeekNumbers(true);
             this.cbbCategory.setValue(this.ProductTableView.getSelectionModel().getSelectedItem().getCategory());
+            this.txtQuantity.setText(Integer.toString(this.ProductTableView.getSelectionModel().getSelectedItem().getQuantity()));
             try {
                 this.retrive.setString(1, ((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getBarcode());
                 ResultSet result = this.retrive.executeQuery();
@@ -210,9 +215,9 @@ public class ProductController implements Initializable {
         txtPurchasePrice.setText("");
         ProductImgView.setImage(null);
         cbbCategory.getSelectionModel().clearSelection();
-        txtDayPicker.getEditor().clear();
         ProductTableView.getSelectionModel().clearSelection();
         searchTextField.setText("");
+        txtQuantity.setText("");
         butAdd.setDisable(false);
         this.file = null;
     }
@@ -220,7 +225,6 @@ public class ProductController implements Initializable {
     public void DisableEditableField()
     {
         txtProductName.setEditable(false);
-        txtDayPicker.setEditable(false);
         txtSalePrice.setEditable(false);
         txtPurchasePrice.setEditable(false);
         txtBarcode.setEditable(false);
@@ -233,7 +237,6 @@ public class ProductController implements Initializable {
     public void EnableEditableField()
     {
         txtProductName.setEditable(true);
-        txtDayPicker.setEditable(true);
         txtSalePrice.setEditable(true);
         txtPurchasePrice.setEditable(true);
         txtBarcode.setEditable(true);
@@ -252,8 +255,7 @@ public class ProductController implements Initializable {
             this.store.setFloat(4, Float.parseFloat(this.txtPurchasePrice.getText()));
             this.fileinputstream = new FileInputStream(this.file);
             this.store.setBinaryStream(5, this.fileinputstream, (int)this.file.length());
-            this.store.setDate(6, java.sql.Date.valueOf((LocalDate)this.txtDayPicker.getValue()));
-            this.store.setString(7, ((String)this.cbbCategory.getSelectionModel().getSelectedItem()).toString());
+            this.store.setString(6, ((String)this.cbbCategory.getSelectionModel().getSelectedItem()).toString());
             this.store.execute();
             Notifications.create().text("You have add product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
             Clear();
@@ -267,15 +269,38 @@ public class ProductController implements Initializable {
     }
 
     public void CompletedCombobox() {
-        this.cbbCategory.setItems(FXCollections.observableArrayList(new String[]{"Laptop", "Phone", "Computer"}));
+        loadCbbCategory();
         this.cbbprice.setItems(FXCollections.observableArrayList(new String[]{"0-10", "10-50", "50-100", "100-500","500-5000","5000 or more", "All"}));
+    }
+
+    public void loadCbbCategory() {
+        this.cbbCategory.setItems(this.getAllCategory());
+    }
+
+    private ObservableList<String> getAllCategory() {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        DatabaseConnection ConnectNow = new DatabaseConnection();
+        Connection connectDB = ConnectNow.getConnection();
+        String query = "select Category_Name from category";
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet queryResult = statement.executeQuery(query);
+            while(queryResult.next()) {
+                String Category_Name = queryResult.getString("Category_Name");
+                list.add(Category_Name);
+            }
+        } catch (SQLException var14) {
+            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, (String)null, var14);
+            var14.printStackTrace();
+        }
+        return list;
     }
 
     public void loadTable(String txt) {
         ObservableList<Product> list = FXCollections.observableArrayList();
         DatabaseConnection ConnectNow = new DatabaseConnection();
         Connection connectDB = ConnectNow.getConnection();
-        String accountQuery = "select Barcode,ProductName,SalePrice,PurchasePrice,ImportDay,Category from products" +
+        String accountQuery = "select Barcode,ProductName,SalePrice,PurchasePrice,Category from products" +
                 " where (ProductName LIKE '%" + txt + "%' OR Category = '" + txt + "') AND (" + condition + " >= " + min;
         if(max != 0)
             accountQuery += " AND " + condition + " < " + max + ")";
@@ -285,15 +310,14 @@ public class ProductController implements Initializable {
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryResult = statement.executeQuery(accountQuery);
-
             while(queryResult.next()) {
-                String Barcode = queryResult.getString("Barcode");
                 String ProductName = queryResult.getString("ProductName");
+                String Barcode = queryResult.getString("Barcode");
                 Float SalePrice = queryResult.getFloat("SalePrice");
                 Float PurchasePrice = queryResult.getFloat("PurchasePrice");
-                Date ImportDay = queryResult.getDate("ImportDay");
                 String Category = queryResult.getString("Category");
-                Product product = new Product(Barcode, ProductName, SalePrice, PurchasePrice, ImportDay, Category);
+                Integer Quantity = getQuantityByProductName(ProductName);
+                Product product = new Product(Barcode, ProductName, SalePrice, PurchasePrice, Category, Quantity);
                 list.add(product);
             }
 
@@ -301,8 +325,8 @@ public class ProductController implements Initializable {
             this.Col_Name.setCellValueFactory(new PropertyValueFactory("ProductName"));
             this.Col_SalePrice.setCellValueFactory(new PropertyValueFactory("salePrice"));
             this.Col_PurchasePrice.setCellValueFactory(new PropertyValueFactory("purchasePrice"));
-            this.Col_importDate.setCellValueFactory(new PropertyValueFactory("importDay"));
             this.Col_Category.setCellValueFactory(new PropertyValueFactory("Category"));
+            this.Col_Quantity.setCellValueFactory(new PropertyValueFactory("Quantity"));
             this.ProductTableView.setItems(list);
         } catch (SQLException var14) {
             Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, (String)null, var14);
@@ -356,7 +380,6 @@ public class ProductController implements Initializable {
             this.update.setString(1, this.txtProductName.getText());
             this.update.setFloat(2, Float.parseFloat(this.txtSalePrice.getText()));
             this.update.setFloat(3, Float.parseFloat(this.txtPurchasePrice.getText()));
-            this.update.setDate(4, java.sql.Date.valueOf((LocalDate) this.txtDayPicker.getValue()));
             this.update.setString(5, ((String)this.cbbCategory.getSelectionModel().getSelectedItem()));
             if(file != null)
             {
@@ -404,6 +427,18 @@ public class ProductController implements Initializable {
         }
     }
 
+    private int getQuantityByProductName(String product_name) throws SQLException {
+        try {
+            this.quantity.setString(1, product_name);
+            ResultSet rs = this.quantity.executeQuery();
+            if (rs.next()) return rs.getInt("quantity");
+            else return 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     @FXML
     public void logOutMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
@@ -411,15 +446,45 @@ public class ProductController implements Initializable {
         openUI.Open_UI("LoginUI.fxml","");
     }
 
+    @FXML
     public void accountMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("AccountManagementUI.fxml", "");
     }
 
+    @FXML
     public void homePageMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("HomePageUI.fxml","");
+    }
+
+    @FXML
+    public void importMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("ImportUI.fxml","");
+    }
+
+    @FXML
+    public void supplierMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("SupplierManagementUI.fxml", "");
+    }
+
+    @FXML
+    public void categoryMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("CategoryManagementUI.fxml", "");
+    }
+
+    @FXML
+    public void customerMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("CustomerUI.fxml", "");
     }
 }

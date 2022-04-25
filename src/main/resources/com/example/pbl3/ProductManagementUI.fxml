@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -39,8 +38,8 @@
                         <Label layoutX="21.0" layoutY="382.0" text="Sale Price" />
                         <Label layoutX="19.0" layoutY="277.0" text="Category" />
                         <JFXComboBox fx:id="cbbCategory" focusColor="#a580b7" labelFloat="true" layoutX="116.0" layoutY="269.0" prefHeight="26.0" prefWidth="162.0" unFocusColor="WHITE" />
-                        <Label layoutX="21.0" layoutY="416.0" text="Barcode" />
-                        <TextField fx:id="txtBarcode" layoutX="116.0" layoutY="411.0" prefHeight="27.0" prefWidth="162.0" promptText="Barcode" />
+                        <Label layoutX="21.0" layoutY="416.0" text="Serial" />
+                        <TextField fx:id="txtBarcode" layoutX="116.0" layoutY="411.0" prefHeight="27.0" prefWidth="162.0" promptText="Serial" />
                         <JFXButton fx:id="butAdd" layoutX="33.0" layoutY="494.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Add" />
                         <JFXButton fx:id="butBrowse" layoutX="91.0" layoutY="241.0" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Browse a picture">
                             <cursor>
@@ -50,8 +49,8 @@
                         <JFXButton fx:id="ButUpdate" layoutX="33.0" layoutY="536.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Update" />
                         <JFXButton fx:id="butReset" layoutX="154.0" layoutY="494.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-2" stylesheets="@../../../css/button.css" text="Reset" />
                         <JFXButton fx:id="ButDelete" layoutX="154.0" layoutY="536.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-3" stylesheets="@../../../css/button.css" text="Delete" />
-                        <DatePicker fx:id="txtDayPicker" layoutX="116.0" layoutY="447.0" prefHeight="18.0" prefWidth="162.0" promptText="Date" />
-                        <Label layoutX="22.0" layoutY="451.0" text="Import Date" />
+                  <Label layoutX="20.0" layoutY="452.0" text="Quantity" />
+                  <TextField fx:id="txtQuantity" editable="false" layoutX="116.0" layoutY="447.0" prefHeight="27.0" prefWidth="162.0" promptText="Quantity" />
                     </children>
                 </AnchorPane>
                   <Label fx:id="ProductLabel" layoutX="87.0" layoutY="80.0" text="Product Detail" textFill="#7e3b76">
@@ -63,12 +62,12 @@
         </AnchorPane>
         <TableView fx:id="ProductTableView" layoutX="392.0" layoutY="136.0" prefHeight="582.0" prefWidth="634.0" style="-fx-background-radius: 32px;" stylesheets="@../../../css/account.css">
             <columns>
-                <TableColumn fx:id="Col_Category" prefWidth="75.0" text="Category" />
-                <TableColumn fx:id="Col_Name" prefWidth="75.0" text="Name" />
-                <TableColumn fx:id="Col_PurchasePrice" prefWidth="75.0" text="P.Price" />
-                <TableColumn fx:id="Col_SalePrice" prefWidth="75.0" text="S.Price" />
-                <TableColumn fx:id="Col_Barcode" prefWidth="75.0" text="Barcode" />
-                <TableColumn fx:id="Col_importDate" prefWidth="75.0" text="Import Date" />
+                <TableColumn fx:id="Col_Category" prefWidth="108.800048828125" text="Category" />
+                <TableColumn fx:id="Col_Name" prefWidth="118.39996337890625" text="Name" />
+                <TableColumn fx:id="Col_PurchasePrice" prefWidth="100.79998779296875" text="P.Price" />
+                <TableColumn fx:id="Col_SalePrice" prefWidth="84.800048828125" text="S.Price" />
+                <TableColumn fx:id="Col_Barcode" prefWidth="128.0" text="Serial" />
+                <TableColumn fx:id="Col_Quantity" prefWidth="94.40008544921875" text="Quantity" />
             </columns>
         </TableView>
         <JFXComboBox fx:id="cbbprice" focusColor="#a580b7" labelFloat="true" layoutX="655.0" layoutY="81.0" prefHeight="26.0" prefWidth="174.0" promptText="Price" unFocusColor="WHITE" />
@@ -103,17 +102,18 @@
           <Menu mnemonicParsing="false" text="Manage">
             <items>
               <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
-                  <MenuItem mnemonicParsing="false" text="Customer" />
-                  <MenuItem mnemonicParsing="false" text="Supplier" />
+                  <MenuItem mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
+                  <MenuItem mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
+                <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
                   <MenuItem mnemonicParsing="false" text="Product" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Import">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="importPrd" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Import product" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Order">
+            <Menu mnemonicParsing="false" text="Request">
                <items>
                   <MenuItem mnemonicParsing="false" text="About" />
                </items>

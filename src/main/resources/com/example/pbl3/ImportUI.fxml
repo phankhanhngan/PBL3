@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AnchorPane" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.ImportController">
+    <children>
+      <ImageView fitHeight="651.0" fitWidth="881.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/Background2.png" />
+         </image>
+      </ImageView>
+        <MenuBar centerShape="false" prefHeight="26.0" prefWidth="882.0" style="-fx-background-color: rgba(192,162,232,0.6);">
+            <menus>
+                <Menu mnemonicParsing="false" text="Home">
+                    <items>
+                        <MenuItem fx:id="homepage" mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="Dashboard" />
+                        <MenuItem fx:id="homepage1" mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="My Account" />
+                        <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Manage">
+                    <items>
+                        <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
+                        <MenuItem mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
+                        <MenuItem mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
+                        <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
+                        <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Import">
+                    <items>
+                        <MenuItem fx:id="importPrd" mnemonicParsing="false" text="Import Product" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Order">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+      <AnchorPane layoutX="24.0" layoutY="26.0" prefHeight="619.0" prefWidth="313.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <TextField fx:id="searchtxt" layoutX="17.0" layoutY="63.0" prefHeight="26.0" prefWidth="278.0" />
+            <JFXButton fx:id="search" layoutX="244.0" layoutY="64.0" onAction="#searchOnAction" style="-fx-background-color: rgba(192,162,232,1);" text="Search">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <AnchorPane layoutX="17.0" layoutY="113.0" prefHeight="458.0" prefWidth="278.0" style="-fx-background-color: rgba(192,162,232,0.3); -fx-background-radius: 32px;">
+               <children>
+                  <JFXComboBox fx:id="prdSerialCBBox" layoutX="32.0" layoutY="122.0" prefHeight="26.0" prefWidth="214.0" promptText="Select product" />
+                  <JFXComboBox fx:id="supplierCBBox" layoutX="31.0" layoutY="175.0" prefHeight="26.0" prefWidth="214.0" promptText="Select supplier" />
+                  <TextField fx:id="quantityTxt" layoutX="31.0" layoutY="221.0" prefHeight="26.0" prefWidth="214.0" promptText="Quantity" stylesheets="@../../../css/textfield.css" />
+                  <JFXButton fx:id="submitButton" layoutX="46.0" layoutY="337.0" onAction="#submitButtonOnAction" prefHeight="26.0" prefWidth="78.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Submit">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="resetButton" layoutX="151.0" layoutY="336.0" onAction="#resetButtonOnAction" prefHeight="27.0" prefWidth="78.0" styleClass="button-type-2" stylesheets="@../../../css/button.css" text="Reset">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                    <Label fx:id="ProductLabel" layoutX="59.0" layoutY="41.0" text="Import Product" textFill="#7e3b76">
+                        <font>
+                            <Font name="System Bold" size="22.0" />
+                        </font>
+                    </Label>
+                  <JFXButton fx:id="updateButton" layoutX="46.0" layoutY="372.0" onAction="#updateButtonOnAction" prefHeight="26.0" prefWidth="78.0" styleClass="button-type-2" stylesheets="@../../../css/button.css" text="Edit">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton fx:id="deleteButton" layoutX="151.0" layoutY="372.0" onAction="#deleteButtonOnAction" prefHeight="26.0" prefWidth="78.0" styleClass="button-type-3" stylesheets="@../../../css/button.css" text="Delete">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <DatePicker fx:id="importDate" layoutX="31.0" layoutY="262.0" prefHeight="26.0" prefWidth="214.0" promptText="Import date" stylesheets="@../../../css/textfield.css" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="ImportTableView" layoutX="361.0" layoutY="88.0" prefHeight="512.0" prefWidth="489.0" stylesheets="@../../../css/account.css">
+        <columns>
+            <TableColumn fx:id="Col_importID" editable="false" prefWidth="67.20001220703125" style="-fx-alignment: CENTER;" text="Import ID" />
+          <TableColumn fx:id="Col_prdName" editable="false" prefWidth="123.99996948242188" text="Product Name" />
+          <TableColumn fx:id="Col_supplier" editable="false" minWidth="0.0" prefWidth="120.0" text="Supplier" />
+            <TableColumn fx:id="Col_quantity" editable="false" prefWidth="75.99993896484375" text="Quantity" />
+            <TableColumn fx:id="Col_importDate" editable="false" prefWidth="103.2000732421875" text="Import Date" />
+        </columns>
+      </TableView>
+    </children>
+</AnchorPane>

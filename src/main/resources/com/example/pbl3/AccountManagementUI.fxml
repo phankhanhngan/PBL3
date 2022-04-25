@@ -124,17 +124,18 @@
                 <Menu mnemonicParsing="false" text="Manage">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Account" />
-                        <MenuItem mnemonicParsing="false" text="Customer" />
-                        <MenuItem mnemonicParsing="false" text="Supplier" />
+                        <MenuItem mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
+                        <MenuItem mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
+                  <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
                         <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Import">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem fx:id="importPrd" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Import product" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Order">
+                <Menu mnemonicParsing="false" text="Request">
                     <items>
                         <MenuItem mnemonicParsing="false" text="About" />
                     </items>

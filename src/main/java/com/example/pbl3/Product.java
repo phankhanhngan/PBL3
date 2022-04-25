@@ -12,16 +12,16 @@ public class Product {
     private String ProductName;
     private float salePrice;
     private float purchasePrice;
-    private Date importDay;
     private String Category;
+    private int quantity;
 
-    public Product(String barcode, String productName, float salePrice, float purchasePrice, Date importDay, String category) {
+    public Product(String barcode, String productName, float salePrice, float purchasePrice, String category, int quantity) {
         this.Barcode = barcode;
         this.ProductName = productName;
         this.salePrice = salePrice;
         this.purchasePrice = purchasePrice;
-        this.importDay = importDay;
         this.Category = category;
+        this.quantity = quantity;
     }
 
     public String getBarcode() {
@@ -40,13 +40,11 @@ public class Product {
         return this.purchasePrice;
     }
 
-    public Date getImportDay() {
-        return this.importDay;
-    }
-
     public String getCategory() {
         return this.Category;
     }
+
+    public int getQuantity() {return this.quantity;}
 
     public void setBarcode(String barcode) {
         this.Barcode = barcode;
@@ -64,11 +62,9 @@ public class Product {
         this.purchasePrice = purchasePrice;
     }
 
-    public void setImportDay(Date importDay) {
-        this.importDay = importDay;
-    }
-
     public void setCategory(String category) {
         this.Category = category;
     }
+
+    public void setQuantity(int quant) { this.quantity = quant; }
 }

@@ -1,6 +1,7 @@
 .table-view {
     -fx-background-color:  rgba(192,162,232,0.35);
     -fx-background-radius: 32px 32px 0 0;
+    -fx-text-alignment: center;
 }
 
 .table-view .column-header-background .filler {
@@ -60,4 +61,8 @@
 .table-row-cell:selected {
     -fx-background-color: #81c483;
     -fx-background-radius: 15px;
+}
+
+.table-column {
+    -fx-alignment: CENTER;
 }
