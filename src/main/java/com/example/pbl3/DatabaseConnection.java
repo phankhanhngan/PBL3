@@ -12,13 +12,13 @@ public class DatabaseConnection {
     public Connection getConnection() {
         String databaseName = "demo_db";
         String databaseUser = "root";
-        String databasePassword = "Pknpknkn270!";
+        String databasePassword = "black14032002";
         String url = "jdbc:mysql://localhost/" + databaseName;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.databaseLink = DriverManager.getConnection(url, databaseUser, databasePassword);
-            System.out.println("connect seccessfully!");
+//            System.out.println("connect seccessfully!");
         } catch (Exception var6) {
             var6.printStackTrace();
             var6.getCause();
