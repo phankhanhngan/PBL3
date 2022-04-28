@@ -54,7 +54,8 @@ public class AccountController implements Initializable {
     private RadioButton cashierRadioButton;
     @FXML
     private TextField searchTextField;
-
+    @FXML
+    private Button addButton;
     @FXML
     private TableView<Account> AccountTableView;
     @FXML
@@ -168,7 +169,7 @@ public class AccountController implements Initializable {
             phoneTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().phone);
             managerRadioButton.setSelected(AccountTableView.getSelectionModel().getSelectedItem().typeOfUser == "Manager" ? true : false);
             cashierRadioButton.setSelected(AccountTableView.getSelectionModel().getSelectedItem().typeOfUser == "Cashier" ? true : false);
-
+            addButton.setDisable(true);
         } else {
             Notifications.create().text("Please select an account to show")
                     .title("Notification");
@@ -197,36 +198,45 @@ public class AccountController implements Initializable {
     }
 
     public void UpdateRow(String firstname, String lastname, String username, String password, String gmail, String address, String phone, boolean isManager) {
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connectDB = connection.getConnection();
-        String updateAccount = updateQuery(firstname,lastname,username,password,gmail,address,phone,isManager);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Update the account?", ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
 
-        try {
-            Statement statement = connectDB.createStatement();
-            statement.executeUpdate(updateAccount);
-            Notifications.create().text("You have update account successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-            resetInputField();
-            UpdateListAccount("");
-        } catch (Exception var15) {
-            Notifications.create().text("You have failed update account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+        if (alert.getResult() == ButtonType.YES) {
+            DatabaseConnection connection = new DatabaseConnection();
+            Connection connectDB = connection.getConnection();
+            String updateAccount = updateQuery(firstname,lastname,username,password,gmail,address,phone,isManager);
+
+            try {
+                Statement statement = connectDB.createStatement();
+                statement.executeUpdate(updateAccount);
+                Notifications.create().text("You have update account successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                resetInputField();
+                UpdateListAccount("");
+            } catch (Exception var15) {
+                Notifications.create().text("You have failed update account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            }
         }
-
     }
     @FXML
     private void deleteButtonOnAction() {
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connectDB = connection.getConnection();
-        Account selected = AccountTableView.getSelectionModel().getSelectedItem();
-        String query = "DELETE FROM account WHERE username  = '" + selected.getUsername() + "'";
-        try {
-            Statement statement = connectDB.createStatement();
-            statement.executeUpdate(query);
-            Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-            UpdateListAccount("");
-            resetInputField();
-        } catch (Exception var15) {
-            var15.printStackTrace();
-            Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete the account?", ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            DatabaseConnection connection = new DatabaseConnection();
+            Connection connectDB = connection.getConnection();
+            Account selected = AccountTableView.getSelectionModel().getSelectedItem();
+            String query = "DELETE FROM account WHERE username  = '" + selected.getUsername() + "'";
+            try {
+                Statement statement = connectDB.createStatement();
+                statement.executeUpdate(query);
+                Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                UpdateListAccount("");
+                resetInputField();
+            } catch (Exception var15) {
+                var15.printStackTrace();
+                Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            }
         }
     }
     @FXML
