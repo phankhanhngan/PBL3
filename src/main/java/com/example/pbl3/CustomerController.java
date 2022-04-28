@@ -81,15 +81,15 @@ public class CustomerController implements Initializable  {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        birthdayDatePicker.setValue(LocalDate.now());
+//        birthdayDatePicker.setValue(LocalDate.now());
         DatabaseConnection connection = new DatabaseConnection();
         Connection link = connection.getConnection();
         try {
-            String query1 = "insert into customers(firstname,lastname,gmail,phone,gender,birthday) values(?,?,?,?,?,?)";
+            String query1 = "insert into customer(firstname,lastname,gmail,phone,gender,birthday) values(?,?,?,?,?,?)";
             this.add = link.prepareStatement(query1);
-            String query2 = "update customers set firstname = ? , lastname = ?, gmail = ?, phone = ?, gender = ?, birthday = ? where ID = ?";
+            String query2 = "update customer set firstname = ? , lastname = ?, gmail = ?, phone = ?, gender = ?, birthday = ? where ID = ?";
             this.update = link.prepareStatement(query2);
-            String query3 = "DELETE FROM customers WHERE ID  = ? ";
+            String query3 = "DELETE FROM customer WHERE ID  = ? ";
             this.delete = link.prepareStatement(query3);
         } catch (SQLException var7) {
             var7.printStackTrace();
@@ -126,7 +126,7 @@ public class CustomerController implements Initializable  {
         ObservableList<Customer> list = FXCollections.observableArrayList();
         DatabaseConnection ConnectNow = new DatabaseConnection();
         Connection connectDB = ConnectNow.getConnection();
-        String sql = "SELECT * FROM customers WHERE lastname = " + "'" + txt + "' OR firstname LIKE '%" + txt
+        String sql = "SELECT * FROM customer WHERE lastname = " + "'" + txt + "' OR firstname LIKE '%" + txt
                 + "%' OR gmail LIKE '%" + txt + "%' OR phone LIKE '%" + txt +"%'";
 
         try {

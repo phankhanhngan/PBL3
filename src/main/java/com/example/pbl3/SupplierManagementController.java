@@ -46,8 +46,6 @@ public class SupplierManagementController implements Initializable {
     @FXML
     private TableColumn<Supplier, String> Col_Address;
     @FXML
-    private TextField SupIdTextField;
-    @FXML
     private TextField SupNameTextField;
     @FXML
     private TextField SupAddressTextField;
@@ -124,7 +122,6 @@ public class SupplierManagementController implements Initializable {
             var7.printStackTrace();
         }
         LabelSupplier.setText("Add Supplier");
-        SupIdTextField.setEditable(false);
         this.loadTable();
         this.resetButton.setOnAction(e->{
             this.butResetOnAction();
@@ -157,7 +154,6 @@ public class SupplierManagementController implements Initializable {
         if (((Supplier)this.SupplierTableView.getSelectionModel().getSelectedItem()).getSup_Name() != "") {
             addButton.setDisable(true);
             LabelSupplier.setText("Supplier Details");
-            this.SupIdTextField.setText(String.valueOf(((Supplier)this.SupplierTableView.getSelectionModel().getSelectedItem()).getSup_Id()));
             this.SupNameTextField.setText(((Supplier)this.SupplierTableView.getSelectionModel().getSelectedItem()).getSup_Name());
             this.SupAddressTextField.setText(((Supplier)this.SupplierTableView.getSelectionModel().getSelectedItem()).getSup_Address());
         }
@@ -167,7 +163,7 @@ public class SupplierManagementController implements Initializable {
         try {
             this.update.setString(1, this.SupNameTextField.getText());
             this.update.setString(2, this.SupAddressTextField.getText());
-            this.update.setInt(3,Integer.parseInt(this.SupIdTextField.getText()));
+            this.update.setInt(3,Integer.parseInt(String.valueOf(((Supplier)this.SupplierTableView.getSelectionModel().getSelectedItem()).getSup_Id())));
             this.update.execute();
             butResetOnAction();
             this.loadTable();
@@ -211,7 +207,6 @@ public class SupplierManagementController implements Initializable {
         //this.loadTable();
         addButton.setDisable(false);
         LabelSupplier.setText("Add Supplier");
-        SupIdTextField.setText("");
         SupNameTextField.setText("");
         SupAddressTextField.setText("");
         this.SupplierTableView.getSelectionModel().clearSelection();

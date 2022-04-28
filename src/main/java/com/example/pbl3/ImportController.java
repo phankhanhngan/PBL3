@@ -292,7 +292,7 @@ public class ImportController implements Initializable {
         ObservableList<String> list = FXCollections.observableArrayList();
         DatabaseConnection ConnectNow = new DatabaseConnection();
         Connection connectDB = ConnectNow.getConnection();
-        String query = "select ProductName from products";
+        String query = "select ProductName from product";
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryResult = statement.executeQuery(query);

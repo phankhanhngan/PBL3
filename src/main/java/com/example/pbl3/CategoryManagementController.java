@@ -40,8 +40,6 @@ public class CategoryManagementController implements Initializable {
     @FXML
     private TableColumn<Category, String> Col_Name;
     @FXML
-    private TextField CateIdTextField;
-    @FXML
     private TextField CateNameTextField;
 
     OpenUI openUI = new OpenUI();
@@ -108,7 +106,6 @@ public class CategoryManagementController implements Initializable {
             var7.printStackTrace();
         }
         LabelCategory.setText("Add Category");
-        CateIdTextField.setEditable(false);
         this.loadTable();
         this.resetButton.setOnAction(e->{
             this.butResetOnAction();
@@ -141,7 +138,6 @@ public class CategoryManagementController implements Initializable {
         if (((Category)this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Name() != "") {
             addButton.setDisable(true);
             LabelCategory.setText("Category Details");
-            this.CateIdTextField.setText(String.valueOf(((Category)this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Id()));
             this.CateNameTextField.setText(((Category)this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Name());
 
         }
@@ -150,7 +146,7 @@ public class CategoryManagementController implements Initializable {
     {
         try {
             this.update.setString(1, this.CateNameTextField.getText());
-            this.update.setInt(2,Integer.parseInt(this.CateIdTextField.getText()));
+            this.update.setInt(2,Integer.parseInt(String.valueOf(((Category)this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Id())));
             this.update.execute();
             butResetOnAction();
             this.loadTable();
@@ -193,7 +189,6 @@ public class CategoryManagementController implements Initializable {
         //this.loadTable();
         addButton.setDisable(false);
         LabelCategory.setText("Add Category");
-        CateIdTextField.setText("");
         CateNameTextField.setText("");
         this.CategoryTableView.getSelectionModel().clearSelection();
     }

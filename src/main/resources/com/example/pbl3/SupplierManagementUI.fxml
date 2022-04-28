@@ -16,9 +16,8 @@
     <children>
         <AnchorPane layoutX="26.0" layoutY="137.0" prefHeight="350.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
             <children>
-                <TextField fx:id="SupIdTextField" layoutX="15.0" layoutY="89.0" prefHeight="34.0" prefWidth="217.0" promptText="Id" stylesheets="@../../../css/textfield.css" />
-                <TextField fx:id="SupNameTextField" layoutX="15.0" layoutY="137.0" prefHeight="34.0" prefWidth="217.0" promptText="Name" stylesheets="@../../../css/textfield.css" />
-                <TextField fx:id="SupAddressTextField" layoutX="14.0" layoutY="181.0" prefHeight="34.0" prefWidth="217.0" promptText="Address" stylesheets="@../../../css/textfield.css" />
+                <TextField fx:id="SupNameTextField" layoutX="14.0" layoutY="87.0" prefHeight="34.0" prefWidth="217.0" promptText="Name" stylesheets="@../../../css/textfield.css" />
+                <TextField fx:id="SupAddressTextField" layoutX="14.0" layoutY="151.0" prefHeight="34.0" prefWidth="217.0" promptText="Address" stylesheets="@../../../css/textfield.css" />
                 <Label fx:id="LabelSupplier" alignment="CENTER" contentDisplay="TOP" prefHeight="50.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 32 32 0 0;" text="Supplier Detail" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="20.0" />

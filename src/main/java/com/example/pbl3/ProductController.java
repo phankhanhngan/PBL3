@@ -124,13 +124,13 @@ public class ProductController implements Initializable {
         DatabaseConnection connection = new DatabaseConnection();
         Connection link = connection.getConnection();
         try {
-            String query = "select ProductImage from products where Barcode = (?)";
+            String query = "select ProductImage from product where Barcode = (?)";
             this.retrive = link.prepareStatement(query, 1005, 1008);
-            String query1 = "insert into products (Barcode,ProductName,SalePrice,PurchasePrice,ProductImage,Category) values (?,?,?,?,?,?)";
+            String query1 = "insert into product (Barcode,ProductName,SalePrice,PurchasePrice,ProductImage,Category) values (?,?,?,?,?,?)";
             this.store = link.prepareStatement(query1);
-            String query2 = "update products set ProductName = ? , SalePrice = ?, PurchasePrice = ?, Category = ?, ProductImage = ? where Barcode = ?";
+            String query2 = "update product set ProductName = ? , SalePrice = ?, PurchasePrice = ?, Category = ?, ProductImage = ? where Barcode = ?";
             this.update = link.prepareStatement(query2);
-            String query3 = "DELETE FROM products WHERE Barcode  = ? ";
+            String query3 = "DELETE FROM product WHERE Barcode  = ? ";
             this.delete = link.prepareStatement(query3);
             String queryQuantity = "select sum(quantity) as quantity from import where product_name = ? group by product_name";
             this.quantity = link.prepareStatement(queryQuantity);
@@ -300,7 +300,7 @@ public class ProductController implements Initializable {
         ObservableList<Product> list = FXCollections.observableArrayList();
         DatabaseConnection ConnectNow = new DatabaseConnection();
         Connection connectDB = ConnectNow.getConnection();
-        String accountQuery = "select Barcode,ProductName,SalePrice,PurchasePrice,Category from products" +
+        String accountQuery = "select Barcode,ProductName,SalePrice,PurchasePrice,Category from product" +
                 " where (ProductName LIKE '%" + txt + "%' OR Category = '" + txt + "') AND (" + condition + " >= " + min;
         if(max != 0)
             accountQuery += " AND " + condition + " < " + max + ")";

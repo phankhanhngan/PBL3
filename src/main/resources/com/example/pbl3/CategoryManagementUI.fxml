@@ -16,8 +16,7 @@
     <children>
         <AnchorPane layoutX="26.0" layoutY="137.0" prefHeight="285.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
             <children>
-                <TextField fx:id="CateIdTextField" layoutX="15.0" layoutY="89.0" prefHeight="34.0" prefWidth="217.0" promptText="Id" stylesheets="@../../../css/textfield.css" />
-                <TextField fx:id="CateNameTextField" layoutX="15.0" layoutY="137.0" prefHeight="34.0" prefWidth="217.0" promptText="Name" stylesheets="@../../../css/textfield.css" />
+                <TextField fx:id="CateNameTextField" layoutX="14.0" layoutY="93.0" prefHeight="34.0" prefWidth="217.0" promptText="Name" stylesheets="@../../../css/textfield.css" />
                 <Label fx:id="LabelCategory" alignment="CENTER" contentDisplay="TOP" prefHeight="50.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 32 32 0 0;" text="Category Detail" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="20.0" />
