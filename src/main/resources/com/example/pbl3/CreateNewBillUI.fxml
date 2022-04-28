@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AnchorPane" prefHeight="556.0" prefWidth="873.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 2em;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.CreateNewBillController">
+    <children>
+        <TableView fx:id="DetailBillTableView" layoutX="296.0" layoutY="261.0" onKeyPressed="#deleteRow" prefHeight="226.0" prefWidth="552.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
+            <columns>
+                <TableColumn fx:id="Col_ProductSerial" prefWidth="309.5999755859375" text="Product " />
+                <TableColumn fx:id="Col_Quantity" prefWidth="242.4000244140625" text="Quantity" />
+            </columns>
+        </TableView>
+        <AnchorPane layoutX="36.0" layoutY="261.0" prefHeight="226.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
+            <children>
+            <JFXComboBox fx:id="ccbProduct" layoutX="20.0" layoutY="37.0" onAction="#addCCBQuantity" prefHeight="26.0" prefWidth="206.0" promptText="Product" style="-fx-background-radius: 0.5em; -fx-background-color: rgba(192,162,232,0.35);" />
+                <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="76.0" layoutY="150.0" onAction="#addOnAcTion" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Add" textFill="WHITE">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </JFXButton>
+            <JFXComboBox fx:id="ccbQuantity" layoutX="19.0" layoutY="93.0" prefHeight="26.0" prefWidth="206.0" promptText="Quantity" style="-fx-background-radius: 0.5em; -fx-background-color: rgba(192,162,232,0.35);" visibleRowCount="3" />
+            </children></AnchorPane>
+      <AnchorPane layoutX="296.0" layoutY="40.0" prefHeight="183.0" prefWidth="303.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
+         <children>
+            <JFXComboBox fx:id="ccbCustomer" editable="true" layoutX="21.0" layoutY="48.0" prefHeight="26.0" prefWidth="264.0" style="-fx-background-radius: 0.5em; -fx-background-color: ffffff;" visibleRowCount="3" />
+            <JFXComboBox fx:id="ccbCashier" editable="true" layoutX="21.0" layoutY="108.0" prefHeight="26.0" prefWidth="264.0" style="-fx-background-radius: 0.5em; -fx-background-color: ffffff;" visibleRowCount="3" />
+            <Label layoutX="125.0" layoutY="14.0" text="CUSTOMER">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="132.0" layoutY="83.0" text="CASHIER">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <JFXButton fx:id="createBut" buttonType="RAISED" layoutX="249.0" layoutY="511.0" onAction="#createOnAction" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Create" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="cancelBut" buttonType="RAISED" layoutX="498.0" layoutY="511.0" onAction="#cancelOnAction" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Cancel" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+
+    </children>
+</AnchorPane>
