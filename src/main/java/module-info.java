@@ -8,6 +8,9 @@ module com.example.pbl3 {
     requires org.controlsfx.controls;
     requires java.mail;
     requires jdk.compiler;
+    requires com.jfoenix;
+    requires kernel;
+    requires layout;
 
 
     opens com.example.pbl3 to javafx.fxml;

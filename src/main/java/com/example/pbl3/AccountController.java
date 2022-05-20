@@ -303,49 +303,70 @@ public class AccountController implements Initializable {
     public void productMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml","");
+        openUI.Open_UI("ProductManagementUI.fxml");
     }
 
     @FXML
     public void logOutMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("LoginUI.fxml","");
+        openUI.Open_UI("LoginUI.fxml");
     }
 
     @FXML
     public void homePageMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("HomePageUI.fxml","");
+        openUI.Open_UI("HomePageUI.fxml");
     }
 
     @FXML
     public void importMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("ImportUI.fxml", "");
+        openUI.Open_UI("ImportUI.fxml");
     }
 
     @FXML
     public void supplierMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("SupplierManagementUI.fxml", "");
+        openUI.Open_UI("SupplierManagementUI.fxml");
     }
 
     @FXML
     public void categoryMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("CategoryManagementUI.fxml", "");
+        openUI.Open_UI("CategoryManagementUI.fxml");
     }
 
     @FXML
     public void customerMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("CustomerUI.fxml", "");
+        openUI.Open_UI("CustomerUI.fxml");
+    }
+
+    @FXML
+    public void orderMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("CreateNewBillUI.fxml");
+    }
+
+    @FXML
+    void billMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("ViewBillUI.fxml");
+    }
+
+    @FXML
+    void myAccountMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("MyAccountUI.fxml");
     }
 }
 

@@ -25,17 +25,24 @@
                 <Image url="@../../../assets/Background2.png" />
             </image>
         </ImageView>
-        <AnchorPane layoutX="61.0" layoutY="93.0" prefHeight="500.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
+      <ImageView fitHeight="281.0" fitWidth="383.0" layoutX="36.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/customer.png" />
+         </image>
+      </ImageView>
+        <AnchorPane layoutX="59.0" layoutY="216.0" prefHeight="399.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
             <children>
-                <TextField fx:id="lastnameTextField" layoutX="15.0" layoutY="169.0" prefHeight="34.0" prefWidth="217.0" promptText="Lastname" stylesheets="@../../../css/textfield.css" />
-                <TextField fx:id="gmailTextField" layoutX="15.0" layoutY="215.0" prefHeight="34.0" prefWidth="217.0" promptText="Gmail" stylesheets="@../../../css/textfield.css" />
-                <TextField fx:id="phoneTextField" layoutX="15.0" layoutY="260.0" prefHeight="34.0" prefWidth="217.0" promptText="Phone" stylesheets="@../../../css/textfield.css" />
+                <TextField fx:id="firstnameTextField" layoutX="14.0" layoutY="75.0" prefHeight="34.0" prefWidth="217.0" promptText="Firstname" stylesheets="@../../../css/textfield.css" />
+                <TextField fx:id="lastnameTextField" layoutX="14.0" layoutY="120.0" prefHeight="34.0" prefWidth="217.0" promptText="Lastname" stylesheets="@../../../css/textfield.css" />
+                <TextField fx:id="gmailTextField" layoutX="14.0" layoutY="210.0" prefHeight="34.0" prefWidth="217.0" promptText="Gmail" stylesheets="@../../../css/textfield.css" />
+                <TextField fx:id="phoneTextField" layoutX="14.0" layoutY="255.0" prefHeight="34.0" prefWidth="217.0" promptText="Phone" stylesheets="@../../../css/textfield.css" />
+                <DatePicker fx:id="birthdayDatePicker" editable="false" layoutX="13.0" layoutY="300.0" prefHeight="36.0" prefWidth="218.0" promptText="Birthday" />
                 <Label alignment="CENTER" contentDisplay="TOP" prefHeight="50.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 32 32 0 0;" text="Customer Detail" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Label>
-                <JFXRadioButton fx:id="femaleRadioButton" layoutX="86.0" layoutY="398.0" text="Female" textFill="WHITE">
+                <JFXRadioButton fx:id="femaleRadioButton" layoutX="85.0" layoutY="354.0" text="Female" textFill="WHITE">
                     <selectedColor>
                         <Color red="0.7425000071525574" green="0.6299999952316284" blue="0.8999999761581421" />
                     </selectedColor>
@@ -49,7 +56,7 @@
                         <ToggleGroup fx:id="gender_type" />
                     </toggleGroup>
                 </JFXRadioButton>
-                <JFXRadioButton fx:id="otherRadioButton" layoutX="167.0" layoutY="398.0" selected="true" text="Other" textFill="WHITE" toggleGroup="$gender_type">
+                <JFXRadioButton fx:id="otherRadioButton" layoutX="166.0" layoutY="354.0" selected="true" text="Other" textFill="WHITE" toggleGroup="$gender_type">
                     <selectedColor>
                         <Color red="0.7425000071525574" green="0.6299999952316284" blue="0.8999999761581421" />
                     </selectedColor>
@@ -60,8 +67,7 @@
                         <Font size="14.0" />
                     </font>
                 </JFXRadioButton>
-                <TextField fx:id="firstnameTextField" layoutX="16.0" layoutY="124.0" prefHeight="34.0" prefWidth="217.0" promptText="Firstname" stylesheets="@../../../css/textfield.css" />
-                <JFXRadioButton fx:id="maleRadioButton" layoutX="15.0" layoutY="398.0" text="Male" textFill="WHITE" toggleGroup="$gender_type">
+                <JFXRadioButton fx:id="maleRadioButton" layoutX="14.0" layoutY="354.0" text="Male" textFill="WHITE" toggleGroup="$gender_type">
                     <selectedColor>
                         <Color red="0.7425000071525574" green="0.6299999952316284" blue="0.8999999761581421" />
                     </selectedColor>
@@ -72,31 +78,27 @@
                         <Font size="14.0" />
                     </font>
                 </JFXRadioButton>
-                <Label alignment="CENTER" layoutX="18.0" layoutY="356.0" prefHeight="30.0" prefWidth="54.0" style="-fx-background-color: #ffffff; -fx-background-radius: 0.5em;" text="Gender" textFill="#6e3e3e">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <DatePicker fx:id="birthdayDatePicker" editable="false" layoutX="14.0" layoutY="305.0" prefHeight="36.0" prefWidth="218.0" promptText="Birthday" />
+            <TextField fx:id="addressTextField" layoutX="13.0" layoutY="165.0" prefHeight="34.0" prefWidth="217.0" promptText="Address" stylesheets="@../../../css/textfield.css" />
             </children></AnchorPane>
-        <TextField fx:id="searchTextField" layoutX="369.0" layoutY="93.0" onKeyPressed="#pressEnterOnAction" prefHeight="26.0" prefWidth="669.0" promptText="Search" style="-fx-background-color: #FFFFFF;" />
-        <TableView fx:id="CustomerTableView" layoutX="361.0" layoutY="138.0" prefHeight="576.0" prefWidth="679.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
+        <TextField fx:id="searchTextField" layoutX="369.0" layoutY="93.0" onKeyPressed="#pressEnterOnAction" prefHeight="26.0" prefWidth="656.0" promptText="Search" style="-fx-background-color: #FFFFFF;" />
+        <TableView fx:id="CustomerTableView" layoutX="361.0" layoutY="138.0" prefHeight="576.0" prefWidth="668.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
             <columns>
-                <TableColumn fx:id="Col_ID" prefWidth="64.800048828125" text="ID" />
-                <TableColumn fx:id="Col_FName" prefWidth="62.4000244140625" text="Firstname" />
+                <TableColumn fx:id="Col_ID" prefWidth="44.26666259765625" text="ID" />
+                <TableColumn fx:id="Col_FName" prefWidth="84.53338623046875" text="Firstname" />
                 <TableColumn fx:id="Col_LName" prefWidth="105.60003662109375" text="Lastname" />
                 <TableColumn fx:id="Col_Gender" prefWidth="51.199951171875" text="Gender" />
-                <TableColumn fx:id="Col_Gmail" prefWidth="168.79998779296875" text="Gmail" />
-                <TableColumn fx:id="Col_Phone" prefWidth="116.79986572265625" text="Phone" />
-                <TableColumn fx:id="Col_Birthday" prefWidth="116.80023193359375" text="Birtthday" />
+            <TableColumn fx:id="Col_Address" prefWidth="93.59991455078125" text="Address" />
+                <TableColumn fx:id="Col_Gmail" prefWidth="90.9332275390625" text="Gmail" />
+                <TableColumn fx:id="Col_Phone" prefWidth="113.86663818359375" text="Phone" />
+                <TableColumn fx:id="Col_Birthday" prefWidth="82.933349609375" text="Birtthday" />
             </columns>
         </TableView>
-        <Label layoutX="369.0" layoutY="41.0" text="CUSTOMER MANAGEMENT" textFill="#892872">
+        <Label layoutX="701.0" layoutY="43.0" text="CUSTOMER MANAGEMENT" textFill="#892872">
             <font>
                 <Font name="System Bold" size="25.0" />
             </font>
         </Label>
-        <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="76.0" layoutY="618.0" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Add" textFill="WHITE">
+        <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="74.0" layoutY="639.0" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Add" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -104,7 +106,7 @@
                 <Font size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton fx:id="resetButton" buttonType="RAISED" layoutX="199.0" layoutY="617.0" prefHeight="31.0" prefWidth="93.0" ripplerFill="#e1b3b3" style="-fx-background-color: rgba(255,255,255,0.5); -fx-background-radius: 8; -fx-border-color: #FFFFFF; -fx-border-radius: 8;" text="Reset" textFill="#a16767">
+        <JFXButton fx:id="resetButton" buttonType="RAISED" layoutX="197.0" layoutY="638.0" prefHeight="31.0" prefWidth="93.0" ripplerFill="#e1b3b3" style="-fx-background-color: rgba(255,255,255,0.5); -fx-background-radius: 8; -fx-border-color: #FFFFFF; -fx-border-radius: 8;" text="Reset" textFill="#a16767">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -112,7 +114,7 @@
                 <Font size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton fx:id="deleteButton" buttonType="RAISED" layoutX="76.0" layoutY="662.0" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: rgba(169,25,25,0.6); -fx-background-radius: 8;" text="Delete" textFill="WHITE">
+        <JFXButton fx:id="deleteButton" buttonType="RAISED" layoutX="74.0" layoutY="683.0" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: rgba(169,25,25,0.6); -fx-background-radius: 8;" text="Delete" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -120,7 +122,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton fx:id="updateButton" buttonType="RAISED" layoutX="199.0" layoutY="661.0" prefHeight="31.0" prefWidth="93.0" ripplerFill="#e1b3b3" style="-fx-background-color: rgba(255,255,255,0.5); -fx-background-radius: 8; -fx-border-color: #FFFFFF; -fx-border-radius: 8;" text="Update" textFill="#8168a3">
+        <JFXButton fx:id="updateButton" buttonType="RAISED" layoutX="197.0" layoutY="682.0" prefHeight="31.0" prefWidth="93.0" ripplerFill="#e1b3b3" style="-fx-background-color: rgba(255,255,255,0.5); -fx-background-radius: 8; -fx-border-color: #FFFFFF; -fx-border-radius: 8;" text="Update" textFill="#8168a3">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -133,7 +135,7 @@
                 <Menu mnemonicParsing="false" text="Home">
                     <items>
                         <MenuItem fx:id="homepage" mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="Dashboard" />
-                        <MenuItem mnemonicParsing="false" text="My Account" />
+                        <MenuItem mnemonicParsing="false" onAction="#myAccountMenuItemOnAction" text="My Account" />
                         <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
                     </items>
                 </Menu>
@@ -142,18 +144,18 @@
                         <MenuItem mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
                         <MenuItem mnemonicParsing="false" text="Customer" />
                         <MenuItem mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
-                        <MenuItem fx:id="category" mnemonicParsing="false" text="Category" />
+                        <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
                         <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
+                  <MenuItem fx:id="product1" mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Bill" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Import">
+                <Menu mnemonicParsing="false" text="Inventory">
                     <items>
-                        <MenuItem fx:id="importPrd" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Import product" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Order">
+                        <MenuItem mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                    </items></Menu>
+                <Menu mnemonicParsing="false" text="Request">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
                     </items>
                 </Menu>
             </menus>

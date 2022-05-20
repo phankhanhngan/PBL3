@@ -24,6 +24,11 @@
                 <Image url="@../../../assets/Background2.png" />
             </image>
         </ImageView>
+      <ImageView fitHeight="186.0" fitWidth="275.0" layoutX="-16.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/account.png" />
+         </image>
+      </ImageView>
         <AnchorPane layoutX="42.0" layoutY="158.0" prefHeight="535.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
             <children>
                 <TextField fx:id="firstnameTextField" layoutX="15.0" layoutY="89.0" prefHeight="34.0" prefWidth="217.0" promptText="Firstname" stylesheets="@../../../css/textfield.css" />
@@ -117,7 +122,7 @@
                 <Menu mnemonicParsing="false" text="Home">
                     <items>
                         <MenuItem fx:id="homepage" mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="Dashboard" />
-                        <MenuItem mnemonicParsing="false" text="My Account" />
+                        <MenuItem mnemonicParsing="false" onAction="#myAccountMenuItemOnAction" text="My Account" />
                         <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
                     </items>
                 </Menu>
@@ -128,16 +133,16 @@
                         <MenuItem mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
                   <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
                         <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
+                  <MenuItem fx:id="product1" mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Bill" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Import">
-                    <items>
-                        <MenuItem fx:id="importPrd" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Import product" />
-                    </items>
-                </Menu>
+                <Menu mnemonicParsing="false" text="Inventory">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+               </items></Menu>
                 <Menu mnemonicParsing="false" text="Request">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
                     </items>
                 </Menu>
             </menus>

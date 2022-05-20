@@ -1,0 +1,20 @@
+.table-view {
+    -fx-background-color:  transparent;
+    -fx-text-alignment: center;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-column {
+    -fx-alignment: CENTER;
+}

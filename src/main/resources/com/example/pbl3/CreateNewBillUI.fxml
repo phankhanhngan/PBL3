@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AnchorPane" prefHeight="738.0" prefWidth="895.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 2em;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.CreateNewBillController">
+    <children>
+        <TableView fx:id="DetailBillTableView" layoutX="22.0" layoutY="298.0" onKeyPressed="#deleteRow" prefHeight="226.0" prefWidth="854.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
+            <columns>
+                <TableColumn fx:id="Col_STT" prefWidth="66.39999389648438" text="STT" />
+                <TableColumn fx:id="Col_Product" prefWidth="193.6000518798828" text="Product" />
+                <TableColumn fx:id="Col_Quantity" prefWidth="138.4000244140625" text="Quantity" />
+                <TableColumn fx:id="Col_UnitPrice" prefWidth="223.20001220703125" text="Unit Price" />
+                <TableColumn fx:id="Col_IntoMoney" prefWidth="229.5999755859375" text="Into Money" />
+            </columns>
+        </TableView>
+        <Label alignment="CENTER" layoutX="286.0" layoutY="72.0" prefHeight="70.0" prefWidth="322.0" text="HÓA ĐƠN BÁN HÀNG" textFill="RED">
+            <font>
+                <Font name="Maiandra GD" size="24.0" />
+            </font>
+        </Label>
+        <Line endX="828.0" endY="-40.600006103515625" layoutX="67.0" layoutY="171.0" startX="-67.00001525878906" startY="-40.600006103515625" />
+        <Label layoutX="22.0" layoutY="142.0" prefHeight="18.0" prefWidth="172.0" text="Họ tên người mua hàng :">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="22.0" layoutY="171.0" prefHeight="18.0" prefWidth="172.0" text="Tên đơn vị :">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="22.0" layoutY="202.0" prefHeight="18.0" prefWidth="172.0" text="Mã số thuế :">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="22.0" layoutY="232.0" prefHeight="18.0" prefWidth="172.0" text="Địa chỉ :">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="22.0" layoutY="261.0" prefHeight="18.0" prefWidth="172.0" text="Hình thức thanh toán :">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <JFXComboBox fx:id="cbbCustomer" editable="true" layoutX="203.0" layoutY="139.0" onAction="#setCustomer" prefHeight="26.0" prefWidth="264.0" style="-fx-background-radius: 0.5em; -fx-background-color: ffffff;" visibleRowCount="3" />
+        <Label layoutX="203.0" layoutY="171.0" prefHeight="20.0" prefWidth="43.0" text="ORIE">
+            <font>
+                <Font name="System Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="addressCustomerTextField" layoutX="203.0" layoutY="232.0" prefHeight="20.0" prefWidth="264.0" text="ORIE">
+            <font>
+                <Font name="System Italic" size="14.0" />
+            </font>
+        </Label>
+        <JFXComboBox fx:id="cbbPay" editable="true" layoutX="203.0" layoutY="258.0" prefHeight="26.0" prefWidth="264.0" style="-fx-background-radius: 0.5em; -fx-background-color: ffffff;" visibleRowCount="3" />
+        <Line endX="753.300048828125" layoutX="122.0" layoutY="556.0" startX="-100.0" />
+        <Line endX="752.5" layoutX="121.0" layoutY="591.0" startX="-100.0" />
+        <Label layoutX="275.0" layoutY="531.0" prefHeight="18.0" prefWidth="172.0" text="Total Money :">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="totalMoneyTextField" alignment="CENTER" layoutX="710.0" layoutY="531.0" prefHeight="18.0" prefWidth="172.0" text="0">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="108.0" layoutY="606.0" prefHeight="18.0" prefWidth="172.0" text="Người mua">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="616.0" layoutY="606.0" prefHeight="18.0" prefWidth="172.0" text="Người bán hàng">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label layoutX="203.0" layoutY="202.0" prefHeight="20.0" prefWidth="264.0" text="15968746">
+            <font>
+                <Font name="System Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="customerTextField" alignment="CENTER" layoutX="11.0" layoutY="666.0" prefHeight="20.0" prefWidth="264.0" text="Người mua">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="cashierTextField" alignment="CENTER" layoutX="543.0" layoutY="666.0" prefHeight="20.0" prefWidth="264.0" text="Người bán">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <JFXComboBox fx:id="cbbProduct" layoutX="62.0" layoutY="561.0" onAction="#addCBBQuantity" prefHeight="26.0" prefWidth="264.0" promptText="Product" style="-fx-background-radius: 0.5em; -fx-background-color: ffffff;" visibleRowCount="3" />
+        <JFXButton fx:id="butAdd" buttonType="RAISED" layoutX="692.0" layoutY="559.0" onAction="#addOnAcTion" prefHeight="30.0" prefWidth="117.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Add" textFill="WHITE">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font size="14.0" />
+            </font>
+        </JFXButton>
+        <Label fx:id="dateTextField" alignment="CENTER" layoutX="606.0" layoutY="22.0" prefHeight="20.0" prefWidth="264.0" text="Date">
+            <font>
+                <Font name="System Bold Italic" size="14.0" />
+            </font>
+        </Label>
+        <JFXComboBox fx:id="cbbQuantity" layoutX="338.0" layoutY="561.0" prefHeight="26.0" prefWidth="264.0" promptText="Quantity" style="-fx-background-radius: 0.5em; -fx-background-color: ffffff;" visibleRowCount="3" />
+        <JFXButton fx:id="button" buttonType="RAISED" layoutX="225.0" layoutY="693.0" onAction="#buttonOnAction" prefHeight="30.0" prefWidth="201.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Button" textFill="WHITE">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font size="14.0" />
+            </font>
+        </JFXButton>
+        <Label fx:id="customerLabel" layoutX="203.0" layoutY="139.0" prefHeight="26.0" prefWidth="358.0">
+            <font>
+                <Font name="System Italic" size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="payLabel" layoutX="201.0" layoutY="258.0" prefHeight="26.0" prefWidth="158.0">
+            <font>
+                <Font name="System Italic" size="14.0" />
+            </font>
+        </Label>
+        <JFXButton fx:id="button1" buttonType="RAISED" layoutX="442.0" layoutY="693.0" onAction="#button1OnAction" prefHeight="30.0" prefWidth="201.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Button" textFill="WHITE">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font size="14.0" />
+            </font>
+        </JFXButton>
+    </children>
+</AnchorPane>

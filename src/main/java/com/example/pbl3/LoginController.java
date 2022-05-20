@@ -37,7 +37,7 @@ public class LoginController {
 
     @FXML
     void cancelButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.cancelButton.getScene().getWindow();
+        Stage stage = (Stage) this.cancelButton.getScene().getWindow();
         stage.close();
     }
 
@@ -53,16 +53,16 @@ public class LoginController {
 
     @FXML
     void recoveryPasswordOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.recoveryPasswordHyperlink.getScene().getWindow();
+        Stage stage = (Stage) this.recoveryPasswordHyperlink.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("RecoveryPasswordUI.fxml","");
+        openUI.Open_UI("RecoveryPasswordUI.fxml");
     }
 
     public void validateLogin() {
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDb = connectNow.getConnection();
         String var10000 = this.usernameTextField.getText();
-        String verifyLogin = "SELECT count(1) FROM account WHERE username = '" + var10000 + "' AND password = '" + this.passwordField.getText() + "'";
+        String verifyLogin = "SELECT count(1),concat(firstname,' ',lastname) as nameCashier,phone_number,type_customer,username,address,gmail FROM account WHERE username = '" + var10000 + "' AND password = '" + this.passwordField.getText() + "'";
 
         try {
             Statement statement = connectDb.createStatement();
@@ -72,7 +72,14 @@ public class LoginController {
                 if (queryResult.getInt(1) == 1) {
                     Stage stage = (Stage)this.signInButton.getScene().getWindow();
                     stage.close();
-                    openUI.Open_UI("HomePageUI.fxml","");
+                    openUI.setGmail(queryResult.getString(7));
+                    openUI.setAddress(queryResult.getString(6));
+                    openUI.setUsername(queryResult.getString(5));
+                    openUI.setNameCashier(queryResult.getString(2));
+                    openUI.setPhoneCashier(queryResult.getString(3));
+                    openUI.setTypecashier(queryResult.getBoolean(4));
+//                    openUI.Open_UI("CreateNewBillUI.fxml","");
+                    openUI.Open_UI("HomePageUI.fxml");
                 } else {
                     this.loginMessageLabel.setText("Please try again");
                 }
@@ -81,7 +88,5 @@ public class LoginController {
             var7.printStackTrace();
             var7.getCause();
         }
-
     }
-
 }

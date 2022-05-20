@@ -40,8 +40,6 @@ public class CategoryManagementController implements Initializable {
     @FXML
     private TableColumn<Category, String> Col_Name;
     @FXML
-    private TextField CateIdTextField;
-    @FXML
     private TextField CateNameTextField;
 
     OpenUI openUI = new OpenUI();
@@ -53,44 +51,66 @@ public class CategoryManagementController implements Initializable {
     public void logOutMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("LoginUI.fxml","");
+        openUI.Open_UI("LoginUI.fxml");
     }
 
     public void accountMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("AccountManagementUI.fxml", "");
+        openUI.Open_UI("AccountManagementUI.fxml");
     }
 
     public void homePageMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("HomePageUI.fxml","");
+        openUI.Open_UI("HomePageUI.fxml");
     }
     public void productMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml", "");
+        openUI.Open_UI("ProductManagementUI.fxml");
     }
     public void supplierMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("SupplierManagementUI.fxml", "");
+        openUI.Open_UI("SupplierManagementUI.fxml");
     }
 
     @FXML
     public void importMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("ImportUI.fxml","");
+        openUI.Open_UI("ImportUI.fxml");
     }
 
     @FXML
     public void customerMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("CustomerUI.fxml", "");
+        openUI.Open_UI("CustomerUI.fxml");
     }
+
+    @FXML
+    public void orderMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("CreateNewBillUI.fxml");
+    }
+
+    @FXML
+    void billMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("ViewBillUI.fxml");
+    }
+
+    @FXML
+    void myAccountMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("MyAccountUI.fxml");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DatabaseConnection connection = new DatabaseConnection();
@@ -108,7 +128,6 @@ public class CategoryManagementController implements Initializable {
             var7.printStackTrace();
         }
         LabelCategory.setText("Add Category");
-        CateIdTextField.setEditable(false);
         this.loadTable();
         this.resetButton.setOnAction(e->{
             this.butResetOnAction();
@@ -141,7 +160,6 @@ public class CategoryManagementController implements Initializable {
         if (((Category)this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Name() != "") {
             addButton.setDisable(true);
             LabelCategory.setText("Category Details");
-            this.CateIdTextField.setText(String.valueOf(((Category)this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Id()));
             this.CateNameTextField.setText(((Category)this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Name());
 
         }
@@ -150,7 +168,7 @@ public class CategoryManagementController implements Initializable {
     {
         try {
             this.update.setString(1, this.CateNameTextField.getText());
-            this.update.setInt(2,Integer.parseInt(this.CateIdTextField.getText()));
+            this.update.setInt(2,CategoryTableView.getSelectionModel().getSelectedItem().getCate_Id());
             this.update.execute();
             butResetOnAction();
             this.loadTable();
@@ -193,7 +211,6 @@ public class CategoryManagementController implements Initializable {
         //this.loadTable();
         addButton.setDisable(false);
         LabelCategory.setText("Add Category");
-        CateIdTextField.setText("");
         CateNameTextField.setText("");
         this.CategoryTableView.getSelectionModel().clearSelection();
     }

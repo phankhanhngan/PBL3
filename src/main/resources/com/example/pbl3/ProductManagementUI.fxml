@@ -2,8 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -11,116 +11,97 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPane" prefHeight="676.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.ProductController">
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="727.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.ProductController">
     <children>
-        <ImageView fitHeight="774.0" fitWidth="1051.0" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
-            <image>
-                <Image url="@../../../assets/Background2.png" />
-            </image>
-        </ImageView>
-        <AnchorPane layoutX="36.0" prefHeight="767.0" prefWidth="323.0" style="-fx-background-color: #FFFFFF;">
+        <AnchorPane fx:id="AnchorPane" layoutX="1.0" layoutY="1.0" prefHeight="727.0" prefWidth="674.0">
             <children>
-                <AnchorPane layoutX="15.0" layoutY="132.0" prefHeight="582.0" prefWidth="290.0" style="-fx-background-radius: 32px; -fx-background-color: rgba(192,162,232,0.3);">
+                <AnchorPane fx:id="AnchorPaneProduct" layoutX="28.0" layoutY="179.0" prefHeight="446.0" prefWidth="634.0" style="-fx-background-radius: 32px; -fx-background-color: rgba(192,162,232,0.3);">
                     <children>
-                        <ImageView fx:id="ProductImgView" fitHeight="223.0" fitWidth="246.0" layoutX="21.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
-                        <TextField fx:id="txtProductName" layoutX="116.0" layoutY="304.0" prefHeight="27.0" prefWidth="162.0" promptText="Product Name" />
-                        <TextField fx:id="txtPurchasePrice" layoutX="116.0" layoutY="340.0" prefHeight="27.0" prefWidth="162.0" promptText="Purchase Price" />
-                        <Label layoutX="20.0" layoutY="309.0" text="Name" />
-                        <Label layoutX="21.0" layoutY="345.0" text="Purchase Price" />
-                        <TextField fx:id="txtSalePrice" layoutX="116.0" layoutY="377.0" prefHeight="27.0" prefWidth="162.0" promptText="Sale Price" />
-                        <Label layoutX="21.0" layoutY="382.0" text="Sale Price" />
-                        <Label layoutX="19.0" layoutY="277.0" text="Category" />
-                        <JFXComboBox fx:id="cbbCategory" focusColor="#a580b7" labelFloat="true" layoutX="116.0" layoutY="269.0" prefHeight="26.0" prefWidth="162.0" unFocusColor="WHITE" />
-                        <Label layoutX="21.0" layoutY="416.0" text="Serial" />
-                        <TextField fx:id="txtBarcode" layoutX="116.0" layoutY="411.0" prefHeight="27.0" prefWidth="162.0" promptText="Serial" />
-                        <JFXButton fx:id="butAdd" layoutX="33.0" layoutY="494.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Add" />
-                        <JFXButton fx:id="butBrowse" layoutX="91.0" layoutY="241.0" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Browse a picture">
+                        <ImageView fx:id="ProductImgView" fitHeight="250.0" fitWidth="298.0" layoutX="21.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+                        <TextField fx:id="txtProductName" layoutX="457.0" layoutY="120.0" prefHeight="27.0" prefWidth="162.0" promptText="Product Name" />
+                        <Label layoutX="361.0" layoutY="126.0" text="Name" />
+                        <TextField fx:id="txtSalePrice" layoutX="457.0" layoutY="169.0" prefHeight="27.0" prefWidth="162.0" promptText="Sale Price" />
+                        <Label layoutX="362.0" layoutY="169.0" text="Sale Price" />
+                        <Label layoutX="360.0" layoutY="78.0" text="Category" />
+                        <JFXComboBox fx:id="cbbCategory" focusColor="#a580b7" labelFloat="true" layoutX="457.0" layoutY="70.0" prefHeight="27.0" prefWidth="162.0" unFocusColor="WHITE" />
+                        <Label layoutX="362.0" layoutY="218.0" text="Serial" />
+                        <TextField fx:id="txtBarcode" layoutX="457.0" layoutY="218.0" prefHeight="27.0" prefWidth="162.0" promptText="Serial" />
+                        <JFXButton fx:id="butAddOK" layoutX="82.0" layoutY="381.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Ok" />
+                        <JFXButton fx:id="butBrowse" layoutX="117.0" layoutY="313.0" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Browse a picture">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </JFXButton>
-                        <JFXButton fx:id="ButUpdate" layoutX="33.0" layoutY="536.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Update" />
-                        <JFXButton fx:id="butReset" layoutX="154.0" layoutY="494.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-2" stylesheets="@../../../css/button.css" text="Reset" />
-                        <JFXButton fx:id="ButDelete" layoutX="154.0" layoutY="536.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-3" stylesheets="@../../../css/button.css" text="Delete" />
-                  <Label layoutX="20.0" layoutY="452.0" text="Quantity" />
-                  <TextField fx:id="txtQuantity" editable="false" layoutX="116.0" layoutY="447.0" prefHeight="27.0" prefWidth="162.0" promptText="Quantity" />
+                        <JFXButton fx:id="butCancle" layoutX="457.0" layoutY="381.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-3" stylesheets="@../../../css/button.css" text="Cancel" />
+                        <Label fx:id="ProductLabel" layoutX="261.0" layoutY="14.0" text="Product Detail" textFill="#7e3b76">
+                            <font>
+                                <Font name="System Bold" size="22.0" />
+                            </font>
+                        </Label>
+                        <JFXButton fx:id="butUpdateOK" layoutX="82.0" layoutY="381.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Ok" />
+                        <Label layoutX="362.0" layoutY="265.0" text="Quantity" />
+                        <TextField fx:id="txtQuantity" layoutX="457.0" layoutY="265.0" prefHeight="27.0" prefWidth="162.0" promptText="Quantity" />
+                        <JFXButton fx:id="butDetailCancle" layoutX="271.0" layoutY="381.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-3" stylesheets="@../../../css/button.css" text="Cancel" />
                     </children>
                 </AnchorPane>
-                  <Label fx:id="ProductLabel" layoutX="87.0" layoutY="80.0" text="Product Detail" textFill="#7e3b76">
-                      <font>
-                          <Font name="System Bold" size="22.0" />
-                      </font>
-                  </Label>
+                <TableView fx:id="ProductTableView" layoutX="28.0" layoutY="111.0" prefHeight="589.0" prefWidth="634.0" style="-fx-background-radius: 32px;" stylesheets="@../../../css/account.css">
+                    <columns>
+                        <TableColumn fx:id="Col_Barcode" prefWidth="131.1999568939209" text="Serial" />
+                        <TableColumn fx:id="Col_Name" prefWidth="192.800048828125" text="Name" />
+                        <TableColumn fx:id="Col_Category" prefWidth="117.5999755859375" text="Category" />
+                        <TableColumn fx:id="Col_SalePrice" prefWidth="101.60000610351562" text="S.Price" />
+                        <TableColumn fx:id="Col_Quantity" prefWidth="90.39996337890625" text="Quantity" />
+                    </columns>
+                    <contextMenu>
+                        <ContextMenu fx:id="contextMenu">
+                            <items>
+                                <MenuItem fx:id="menuDetail" mnemonicParsing="false" text="Detail" />
+                                <MenuItem fx:id="menuAdd" mnemonicParsing="false" text="Add" />
+                                <MenuItem fx:id="menuEdit" mnemonicParsing="false" text="Edit" />
+                                <MenuItem fx:id="menuDelete" mnemonicParsing="false" text="Delete" />
+                            </items>
+                        </ContextMenu>
+                    </contextMenu>
+                </TableView>
+                <JFXComboBox fx:id="cbbprice" focusColor="#a580b7" labelFloat="true" layoutX="390.0" layoutY="63.0" prefHeight="26.0" prefWidth="174.0" promptText="Price" unFocusColor="WHITE" />
+                <MenuBar centerShape="false" prefHeight="26.0" prefWidth="684.0" style="-fx-background-color: rgba(192,162,232,0.6);">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Home">
+                            <items>
+                                <MenuItem fx:id="homepage" mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="Dashboard" />
+                                <MenuItem fx:id="homepage1" mnemonicParsing="false" onAction="#myAccountMenuItemOnAction" text="My Account" />
+                                <MenuItem fx:id="logout" mnemonicParsing="false" text="Log out" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Manage">
+                            <items>
+                                <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
+                                <MenuItem mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
+                                <MenuItem mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
+                                <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
+                                <MenuItem mnemonicParsing="false" text="Product" />
+                        <MenuItem mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Bill" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Inventory">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                     </items></Menu>
+                        <Menu mnemonicParsing="false" text="Request">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+                <TextField fx:id="searchTextField" layoutX="28.0" layoutY="58.0" prefHeight="36.0" prefWidth="298.0" promptText="Type here to search" stylesheets="@../../../css/textfield.css" />
+                <JFXButton fx:id="searchBT" layoutX="584.0" layoutY="62.0" onAction="#searchOnAction" prefHeight="27.0" prefWidth="77.0" ripplerFill="#e47fa2" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Search" />
             </children>
         </AnchorPane>
-        <TableView fx:id="ProductTableView" layoutX="392.0" layoutY="136.0" prefHeight="582.0" prefWidth="634.0" style="-fx-background-radius: 32px;" stylesheets="@../../../css/account.css">
-            <columns>
-                <TableColumn fx:id="Col_Category" prefWidth="108.800048828125" text="Category" />
-                <TableColumn fx:id="Col_Name" prefWidth="118.39996337890625" text="Name" />
-                <TableColumn fx:id="Col_PurchasePrice" prefWidth="100.79998779296875" text="P.Price" />
-                <TableColumn fx:id="Col_SalePrice" prefWidth="84.800048828125" text="S.Price" />
-                <TableColumn fx:id="Col_Barcode" prefWidth="128.0" text="Serial" />
-                <TableColumn fx:id="Col_Quantity" prefWidth="94.40008544921875" text="Quantity" />
-            </columns>
-        </TableView>
-        <JFXComboBox fx:id="cbbprice" focusColor="#a580b7" labelFloat="true" layoutX="655.0" layoutY="81.0" prefHeight="26.0" prefWidth="174.0" promptText="Price" unFocusColor="WHITE" />
-        <JFXRadioButton fx:id="ppriceRadioBT" layoutX="856.0" layoutY="69.0" text="P.Price">
-            <unSelectedColor>
-                <Color red="0.49473685026168823" green="0.2730214297771454" blue="0.49473685026168823" />
-            </unSelectedColor>
-            <selectedColor>
-                <Color red="0.9560025930404663" green="0.4874074161052704" blue="0.9894737005233765" />
-            </selectedColor>
-            <toggleGroup>
-                <ToggleGroup fx:id="price_type" />
-            </toggleGroup>
-        </JFXRadioButton>
-        <JFXRadioButton fx:id="spriceRadioBT" layoutX="856.0" layoutY="103.0" text="S.Price" toggleGroup="$price_type">
-            <unSelectedColor>
-                <Color red="0.49473685026168823" green="0.2730214297771454" blue="0.49473685026168823" />
-            </unSelectedColor>
-            <selectedColor>
-                <Color red="0.9560025930404663" green="0.4874074161052704" blue="0.9894737005233765" />
-            </selectedColor>
-        </JFXRadioButton>
-      <MenuBar centerShape="false" prefHeight="18.0" prefWidth="1051.0" style="-fx-background-color: rgba(192,162,232,0.6);">
-        <menus>
-          <Menu mnemonicParsing="false" text="Home">
-               <items>
-                  <MenuItem fx:id="homepage" mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="Dashboard" />
-                  <MenuItem fx:id="homepage1" mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="My Account" />
-                  <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
-               </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Manage">
-            <items>
-              <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
-                  <MenuItem mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
-                  <MenuItem mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
-                <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
-                  <MenuItem mnemonicParsing="false" text="Product" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Import">
-            <items>
-              <MenuItem fx:id="importPrd" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Import product" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Request">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
-               </items>
-            </Menu>
-        </menus>
-      </MenuBar>
-          <TextField fx:id="searchTextField" layoutX="392.0" layoutY="76.0" prefHeight="36.0" prefWidth="246.0" promptText="Type here to search" stylesheets="@../../../css/textfield.css" />
-          <JFXButton fx:id="searchBT" layoutX="948.0" layoutY="80.0" onAction="#searchOnAction" prefHeight="27.0" prefWidth="77.0" ripplerFill="#e47fa2" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Search" />
     </children>
-</AnchorPane>
+</StackPane>

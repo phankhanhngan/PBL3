@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPane" prefHeight="676.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.HomepageController">
+<AnchorPane fx:id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.HomepageController">
     <children>
         <ImageView fitHeight="774.0" fitWidth="1051.0" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
             <image>
@@ -19,7 +24,7 @@
                 <Menu mnemonicParsing="false" text="Home">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Dashboard" />
-                        <MenuItem mnemonicParsing="false" text="My Account" />
+                        <MenuItem mnemonicParsing="false" onAction="#myAccountMenuItemOnAction" text="My Account" />
                         <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
                     </items>
                 </Menu>
@@ -28,21 +33,96 @@
                         <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
                         <MenuItem mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
                         <MenuItem fx:id="supplier" mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
-                        <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
+                  <MenuItem mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
                         <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
+                  <MenuItem fx:id="product1" mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Bill" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Import">
+                <Menu mnemonicParsing="false" text="Inventory">
                     <items>
-                        <MenuItem fx:id="importPrd" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Import product" />
-                    </items>
-                </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                    </items></Menu>
                 <Menu mnemonicParsing="false" text="Request">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
+        <ImageView fitHeight="165.0" fitWidth="1051.0" layoutY="25.0" pickOnBounds="true">
+            <image>
+                <Image url="@../../../assets/home-background.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="labelWelcome" layoutX="187.0" layoutY="114.0" style="-fx-background-color: transparent;" text="Welcome back!" textFill="#6e446b">
+            <font>
+                <Font name="Arial Bold" size="33.0" />
+            </font>
+        </Label>
+        <Label layoutX="187.0" layoutY="153.0" style="-fx-background-color: transparent;" text="Let's start by adding a new client!" textFill="#6e4c7a">
+            <font>
+                <Font name="Arial" size="22.0" />
+            </font>
+        </Label>
+        <AnchorPane layoutX="55.0" layoutY="207.0" prefHeight="106.0" prefWidth="195.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 20;">
+            <children>
+                <Label layoutX="24.0" layoutY="72.0" style="-fx-background-color: transparent;" text="Total customers" textFill="#690065cc">
+                    <font>
+                        <Font name="Arial Bold" size="19.0" />
+                    </font>
+                </Label>
+                <Label fx:id="labelTotalCus" alignment="CENTER" layoutX="38.0" layoutY="4.0" prefHeight="59.0" prefWidth="119.0" text="10" textFill="#690065cc">
+                    <font>
+                        <Font name="Arial" size="55.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+        <Label layoutX="62.0" layoutY="336.0" style="-fx-background-color: transparent;" text="Top Selling Products" textFill="#6e446b">
+            <font>
+                <Font name="Arial Bold" size="18.0" />
+            </font>
+        </Label>
+        <TableView fx:id="tableViewTopProduct" layoutX="57.0" layoutY="377.0" prefHeight="365.0" prefWidth="934.0" style="-fx-background-color: transparent;">
+            <columns>
+                <TableColumn fx:id="col_No" editable="false" prefWidth="90.13329696655273" text="No" />
+                <TableColumn fx:id="col_ProductName" prefWidth="310.6667175292969" text="Product Name" />
+                <TableColumn fx:id="col_Price" prefWidth="214.93341064453125" text="Price" />
+                <TableColumn fx:id="col_Sale" prefWidth="185.86663818359375" text="Quantity" />
+                <TableColumn fx:id="col_ProductStatus" prefWidth="130.39999999999998" text="Product Status" />
+            </columns>
+            <stylesheets>
+                <URL value="@../../../css/stylesheet.css" />
+                <URL value="@../../../css/account.css" />
+            </stylesheets>
+        </TableView>
+      <AnchorPane layoutX="414.0" layoutY="207.0" prefHeight="106.0" prefWidth="195.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 20;">
+         <children>
+            <Label layoutX="40.0" layoutY="72.0" style="-fx-background-color: transparent;" text="Total quotes" textFill="#690065cc">
+               <font>
+                  <Font name="Arial Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelTotalquotes" alignment="CENTER" layoutX="38.0" layoutY="4.0" prefHeight="59.0" prefWidth="119.0" text="10" textFill="#690065cc">
+               <font>
+                  <Font name="Arial" size="55.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="795.0" layoutY="207.0" prefHeight="106.0" prefWidth="195.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 20;">
+         <children>
+            <Label layoutX="40.0" layoutY="72.0" style="-fx-background-color: transparent;" text="Total products" textFill="#690065cc">
+               <font>
+                  <Font name="Arial Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelTotalProd" alignment="CENTER" layoutX="38.0" layoutY="4.0" prefHeight="59.0" prefWidth="119.0" text="10" textFill="#690065cc">
+               <font>
+                  <Font name="Arial" size="55.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>

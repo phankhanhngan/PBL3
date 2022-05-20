@@ -11,15 +11,13 @@ public class Product {
     private String Barcode;
     private String ProductName;
     private float salePrice;
-    private float purchasePrice;
     private String Category;
     private int quantity;
 
-    public Product(String barcode, String productName, float salePrice, float purchasePrice, String category, int quantity) {
+    public Product(String barcode, String productName, float salePrice, String category, int quantity) {
         this.Barcode = barcode;
         this.ProductName = productName;
         this.salePrice = salePrice;
-        this.purchasePrice = purchasePrice;
         this.Category = category;
         this.quantity = quantity;
     }
@@ -34,10 +32,6 @@ public class Product {
 
     public float getSalePrice() {
         return this.salePrice;
-    }
-
-    public float getPurchasePrice() {
-        return this.purchasePrice;
     }
 
     public String getCategory() {
@@ -56,10 +50,6 @@ public class Product {
 
     public void setSalePrice(float salePrice) {
         this.salePrice = salePrice;
-    }
-
-    public void setPurchasePrice(float purchasePrice) {
-        this.purchasePrice = purchasePrice;
     }
 
     public void setCategory(String category) {

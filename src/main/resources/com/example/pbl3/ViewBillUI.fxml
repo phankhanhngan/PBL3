@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AnchorPane" prefHeight="710.0" prefWidth="937.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.ViewBillController">
+    <children>
+      <ImageView fitHeight="710.0" fitWidth="990.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/Background.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="211.0" fitWidth="268.0" layoutX="693.0" layoutY="-15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/bill.png" />
+         </image>
+      </ImageView>
+        <Label alignment="CENTER" layoutX="383.0" layoutY="36.0" prefHeight="54.0" prefWidth="299.0" text="Bill management" textFill="#892872">
+            <font>
+                <Font name="System Bold" size="36.0" />
+            </font>
+        </Label>
+        <MenuBar centerShape="false" prefHeight="26.0" prefWidth="944.0" style="-fx-background-color: rgba(192,162,232,0.6);">
+            <menus>
+                <Menu mnemonicParsing="false" text="Home">
+                    <items>
+                        <MenuItem fx:id="homepage" mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="Dashboard" />
+                        <MenuItem mnemonicParsing="false" onAction="#myAccountMenuItemOnAction" text="My Account" />
+                        <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Manage">
+                    <items>
+                        <MenuItem fx:id="accountMenuItem" mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
+                        <MenuItem mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
+                        <MenuItem mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
+                        <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
+                        <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
+                        <MenuItem fx:id="billMenuItem" mnemonicParsing="false" text="Bill" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Inventory">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                    </items></Menu>
+                <Menu mnemonicParsing="false" text="Request">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <JFXButton fx:id="butCreatNewBill" buttonType="RAISED" layoutX="791.0" layoutY="657.0" onAction="#createNewBillOnAction" prefHeight="30.0" prefWidth="128.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Create New Bill" textFill="WHITE">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font size="14.0" />
+            </font>
+        </JFXButton>
+        <TableView fx:id="BillTableView" layoutX="28.0" layoutY="163.0" onKeyPressed="#deleteRow" prefHeight="476.0" prefWidth="894.0" stylesheets="@../../../css/account.css">
+            <columns>
+                <TableColumn fx:id="Col_IDBill" prefWidth="120.80001544952393" text="ID Bill" />
+                <TableColumn fx:id="Col_CustomerName" prefWidth="235.99998474121094" text="Customer name" />
+                <TableColumn fx:id="Col_Date" prefWidth="211.20001220703125" text="Date" />
+                <TableColumn fx:id="Col_CashierName" prefWidth="240.79998779296875" text="Cashier name" />
+                <TableColumn fx:id="Col_Total" prefWidth="199.199951171875" text="Total" />
+            </columns>
+        </TableView>
+        <TextField fx:id="searchTextField" layoutX="40.0" layoutY="107.0" prefHeight="30.0" prefWidth="642.0" />
+        <JFXButton fx:id="butSearch" layoutX="573.0" layoutY="108.0" onAction="#search" prefHeight="19.0" prefWidth="110.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Search" textFill="WHITE">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+            <font>
+                <Font size="14.0" />
+            </font>
+        </JFXButton>
+    </children>
+</AnchorPane>

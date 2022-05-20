@@ -10,8 +10,9 @@ public class Customer {
     private String phone;
     private String gender;
     private Date birthday;
+    private String address;
 
-    public Customer(int ID, String firstname, String lastname, String gmail, String phone, String gender, Date birthday)
+    public Customer(int ID, String firstname, String lastname, String gmail, String phone, String gender, Date birthday,String address)
     {
         this.ID = ID;
         this.firstname = firstname;
@@ -20,6 +21,7 @@ public class Customer {
         this.phone = phone;
         this.gender = gender;
         this.birthday = birthday;
+        this.address = address;
     }
 
     public int getID() {
@@ -76,5 +78,9 @@ public class Customer {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AnchorPane" prefHeight="568.0" prefWidth="435.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.MyAccountController">
+    <children>
+        <MenuBar centerShape="false" prefHeight="26.0" prefWidth="435.0" style="-fx-background-color: rgba(192,162,232,0.6);">
+            <menus>
+                <Menu mnemonicParsing="false" text="Home">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="Dashboard" />
+                        <MenuItem mnemonicParsing="false" text="My Account" />
+                        <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Manage">
+                    <items>
+                        <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
+                        <MenuItem mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
+                        <MenuItem fx:id="supplier" mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
+                        <MenuItem mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
+                        <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
+                        <MenuItem mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Bill" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Inventory">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                    </items></Menu>
+                <Menu mnemonicParsing="false" text="Request">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
+                    </items>
+                </Menu>
+            <Menu mnemonicParsing="false" text="Statistics">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#statisticMenuItemOnAction" text="View statistics" />
+               </items>
+            </Menu>
+            </menus>
+        </MenuBar>
+        <ImageView fitHeight="542.0" fitWidth="498.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../assets/Background1.png" />
+            </image>
+        </ImageView>
+        <Pane layoutY="63.0" prefHeight="86.0" prefWidth="435.0" style="-fx-background-color: rgba(192,162,232,0.3);">
+            <children>
+                <Label layoutX="16.0" layoutY="9.0" text="Hello " textFill="#660860">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label fx:id="nameLabel" layoutX="50.0" layoutY="9.0" text="Khanh Ngan" textFill="#a30d7bb8">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font></Label>
+                <Label layoutX="14.0" layoutY="26.0" prefHeight="25.0" prefWidth="258.0" text="You can see your account information and">
+                    <font>
+                        <Font name="System Italic" size="12.0" />
+                    </font>
+                </Label>
+                <Label layoutX="15.0" layoutY="43.0" prefHeight="25.0" prefWidth="258.0" text="statistics of your work here.">
+                    <font>
+                        <Font name="System Italic" size="12.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="261.0" layoutY="-24.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../assets/myaccount.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+        <TabPane layoutX="-1.0" layoutY="190.0" prefHeight="363.0" prefWidth="435.0" stylesheets="@../../../css/tabpane.css" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Information">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="338.0" prefWidth="435.0">
+                            <children>
+                                <Label layoutX="14.0" layoutY="4.0" text="Name:" />
+                                <Label layoutX="15.0" layoutY="57.0" text="Gmail:" />
+                                <Label layoutX="13.0" layoutY="104.0" text="Phone:" />
+                                <Label layoutX="15.0" layoutY="155.0" text="Username:" />
+                                <Label layoutX="18.0" layoutY="199.0" text="Address:" />
+                                <Label layoutX="17.0" layoutY="251.0" text="Type:" />
+                                <TextField fx:id="nameTxt" layoutX="14.0" layoutY="27.0" prefHeight="26.0" prefWidth="392.0" />
+                                <TextField fx:id="gmailTxt" layoutX="15.0" layoutY="76.0" prefHeight="26.0" prefWidth="392.0" />
+                                <TextField fx:id="phoneTxt" layoutX="15.0" layoutY="124.0" prefHeight="26.0" prefWidth="392.0" />
+                                <TextField fx:id="usernameTxt" layoutX="15.0" layoutY="172.0" prefHeight="26.0" prefWidth="392.0" />
+                                <TextField fx:id="addressTxt" layoutX="15.0" layoutY="219.0" prefHeight="26.0" prefWidth="392.0" />
+                                <JFXRadioButton fx:id="cashierRadioBtn" layoutX="20.0" layoutY="275.0" text="Cashier" underline="true">
+                                    <selectedColor>
+                                        <Color red="0.6631578803062439" green="0.13754385709762573" blue="0.4003508687019348" />
+                                    </selectedColor>
+                                    <unSelectedColor>
+                                        <Color red="0.6947368383407593" green="0.3164912164211273" blue="0.6569122672080994" />
+                                    </unSelectedColor>
+                                </JFXRadioButton>
+                                <JFXRadioButton fx:id="managerRadioBtn" layoutX="109.0" layoutY="275.0" text="Manager" underline="true">
+                                    <selectedColor>
+                                        <Color red="0.6631578803062439" green="0.13754385709762573" blue="0.4003508687019348" />
+                                    </selectedColor>
+                                    <unSelectedColor>
+                                        <Color red="0.6947368383407593" green="0.3164912164211273" blue="0.6569122672080994" />
+                                    </unSelectedColor>
+                                </JFXRadioButton>
+                                <Hyperlink fx:id="changePasswordHyper" layoutX="297.0" layoutY="315.0" text="Want to change password?">
+                                    <font>
+                                        <Font name="System Italic" size="10.0" />
+                                    </font>
+                                </Hyperlink>
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Your work">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="339.0" prefWidth="435.0">
+                            <children>
+                                <PieChart fx:id="piechart" layoutY="14.0" prefHeight="322.0" prefWidth="435.0" title="Total product imported/sold" />
+                            </children></AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>

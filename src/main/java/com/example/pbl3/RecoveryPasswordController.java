@@ -1,5 +1,6 @@
 package com.example.pbl3;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -8,6 +9,7 @@ import java.util.Random;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javax.mail.Authenticator;
 import javax.mail.MessagingException;
@@ -25,10 +28,13 @@ import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.lang.invoke.StringConcatFactory;
+import java.util.ResourceBundle;
 
 import static com.sun.tools.javac.jvm.ByteCodes.invokedynamic;
 
-public class RecoveryPasswordController {
+public class RecoveryPasswordController implements Initializable {
+    @FXML
+    private AnchorPane AnchorPane;
     @FXML
     private Label announceLabel;
     @FXML
@@ -41,12 +47,21 @@ public class RecoveryPasswordController {
     private TextField codeTextField;
     @FXML
     private Hyperlink backToLoginHyperLink;
+    @FXML
+    private Hyperlink backToHome;
     int value;
     String gmail;
     private Stage stage;
     private Scene scene;
     private Parent root;
 
+    private OpenUI openUI = new OpenUI();
+
+    public void backToHomeOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("MyAccountUI.fxml");
+    }
     public RecoveryPasswordController() {
     }
 
@@ -77,7 +92,6 @@ public class RecoveryPasswordController {
             var8.printStackTrace();
             var8.getCause();
         }
-
     }
 
     @FXML
@@ -153,5 +167,16 @@ public class RecoveryPasswordController {
             var4.getCause();
         }
 
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(openUI.namecashier == null) {
+            backToHome.setVisible(false);
+            backToLoginHyperLink.setVisible(true);
+        } else {
+            backToHome.setVisible(true);
+            backToLoginHyperLink.setVisible(false);
+        }
     }
 }
