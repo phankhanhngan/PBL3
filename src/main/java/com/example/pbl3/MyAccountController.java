@@ -1,5 +1,6 @@
 package com.example.pbl3;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -9,18 +10,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.Chart;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.mail.internet.PreencodedMimeBodyPart;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Properties;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MyAccountController implements Initializable {
@@ -29,22 +35,7 @@ public class MyAccountController implements Initializable {
     private AnchorPane AnchorPane;
 
     @FXML
-    private MenuItem account;
-
-    @FXML
-    private MenuItem logout;
-
-    @FXML
-    private MenuItem product;
-
-    @FXML
-    private MenuItem supplier;
-
-    @FXML
     private Label nameLabel;
-
-    @FXML
-    private PieChart piechart;
 
     @FXML
     private TextField addressTxt;
@@ -62,22 +53,31 @@ public class MyAccountController implements Initializable {
     private TextField usernameTxt;
 
     @FXML
-    private Hyperlink changePasswordHyper;
+    private JFXButton resetButton;
+
+    @FXML
+    private JFXButton sendCodeButton;
+
+    @FXML
+    private JFXButton submitButton;
+
+    @FXML
+    private TextField code;
+
+    @FXML
+    private PasswordField newPass;
+
+    @FXML
+    private PasswordField newPassConfirm;
 
     @FXML
     private TextField gmailTxt;
 
     @FXML
     private TextField nameTxt;
-
+    int value;
     private OpenUI openUI = new OpenUI();
 
-    private Integer prdSoldQuantity = 0;
-    private Integer prdImportedQuantity = 0;
-
-    private PreparedStatement stmImportPrd = null;
-    private PreparedStatement stmSoldPrd = null;
-    private static DatabaseConnection  conn = new DatabaseConnection();
 
 
     public void DisableField() {
@@ -112,42 +112,103 @@ public class MyAccountController implements Initializable {
         DisableField();
         FillInformation();
 
-        changePasswordHyper.setOnAction(e -> {
-            changePassword();
+        resetButton.setOnAction(e -> {
+            resetField();
         });
-        Connection link = conn.getConnection();
+
+        sendCodeButton.setOnAction(e -> {
+            sendCode();
+        });
+
+        submitButton.setOnAction(e -> {
+            confirm();
+        });
+    }
+
+    public void resetField() {
+        newPass.setText("");
+        newPassConfirm.setText("");
+        code.setText("");
+    }
+
+    public void sendCode() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDb = connectNow.getConnection();
+        String verifyLogin = "SELECT count(1) FROM account WHERE gmail = '" + openUI.gmail + "'";
+
         try {
-            String queryGetImportedPrd = "select sum(quantity) as quantity from detailimport inner join import " +
-                    "on import.import_id = detailimport.import_id where cashier = ? and month(date) = month(CURRENT_DATE());";
-            String queryGetSoldPrd = "select sum(Quantity) as quantity  from bill inner join detailbill " +
-                    "on bill.ID_Bill = detailbill.ID_Bill where Cashier_Phone = ?;";
-            this.stmImportPrd = link.prepareStatement(queryGetImportedPrd);
-            this.stmSoldPrd = link.prepareStatement(queryGetSoldPrd);
-            stmImportPrd.setString(1,openUI.namecashier);
-            stmSoldPrd.setString(1,openUI.phonecashier);
-            ResultSet rs = stmImportPrd.executeQuery();
-            while(rs.next()) {
-                prdImportedQuantity = rs.getInt("quantity");
+            Statement statement = connectDb.createStatement();
+            ResultSet queryResult = statement.executeQuery(verifyLogin);
+
+            while(queryResult.next()) {
+                if (queryResult.getInt(1) == 1) {
+                    this.SendMail(this.openUI.gmail);
+                    Notifications.create().text("Code sent to your gmail. Check it out!").title("Sent successful!").hideAfter(Duration.seconds(5.0D)).show();
+                    break;
+                }
             }
-            rs = null;
-            rs = stmSoldPrd.executeQuery();
-            while(rs.next()) {
-                prdSoldQuantity = rs.getInt("quantity");
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch (Exception var8) {
+            var8.printStackTrace();
+            var8.getCause();
         }
-        ObservableList<PieChart.Data> piechartData = FXCollections.observableArrayList(
-                new PieChart.Data("Sold:", prdSoldQuantity),
-                new PieChart.Data("Imported:", prdImportedQuantity));
-        piechart.setData(piechartData);
-        piechartData.forEach(data ->
-                data.nameProperty().bind(
-                        Bindings.concat(
-                                data.getName(), "\n", data.pieValueProperty(), " Products"
-                        )
-                )
-        );
+    }
+
+    public void SendMail(String to) {
+        Random generator = new Random();
+        this.value = generator.nextInt(9000) + 1000;
+        String host = "smtp.gmail.com";
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+        Session session = Session.getInstance(properties, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("vokhuong1403@gmail.com", "blackdiablo1403");
+            }
+        });
+        session.setDebug(true);
+
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("vokhuong1403@gmail.com"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject("Confirmation code");
+            message.setText(String.valueOf(this.value));
+            Transport.send(message);
+        } catch (MessagingException var7) {
+            var7.printStackTrace();
+        }
+
+    }
+
+    public void confirm() {
+        String s = String.valueOf(this.value);
+        if (this.value == Integer.parseInt(this.code.getText())) {
+            if (newPass.getText().equals(newPassConfirm.getText())) {
+                updatePassword();
+            } else {
+                Notifications.create().text("Your password doesn't match!").title("Oh snap!").hideAfter(Duration.seconds(5.0D)).show();
+            }
+        } else {
+            Notifications.create().text("Incorrect confirmation code. Check it again!").title("Oh snap!").hideAfter(Duration.seconds(5.0D)).show();
+        }
+    }
+
+    public void updatePassword() {
+        DatabaseConnection connectNow = new DatabaseConnection();
+        Connection connectDb = connectNow.getConnection();
+        String var10000 = this.newPass.getText();
+        String verifyLogin = "UPDATE account SET password = '" + var10000 + "' WHERE gmail = '" + openUI.gmail + "'";
+
+        try {
+            Statement statement = connectDb.createStatement();
+            statement.executeUpdate(verifyLogin);
+            Notifications.create().text("Your password has been changed!").title("Great!").hideAfter(Duration.seconds(5.0D)).show();
+        } catch (Exception var5) {
+            var5.printStackTrace();
+            var5.getCause();
+        }
     }
 
     @FXML
