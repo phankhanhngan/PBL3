@@ -5,10 +5,13 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -37,7 +40,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
                         <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
                         <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
-                  <MenuItem fx:id="product1" mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Bill" />
+                        <MenuItem fx:id="product1" mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Bill" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Inventory">
@@ -50,72 +53,71 @@
                         <MenuItem mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
                     </items>
                 </Menu>
-            <Menu mnemonicParsing="false" text="Statistics">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
-               </items>
-            </Menu>
+                <Menu mnemonicParsing="false" text="Statistics">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
             </menus>
         </MenuBar>
-      <AnchorPane layoutX="35.0" layoutY="143.0" prefHeight="626.0" prefWidth="611.0">
-         <children>
-            <BarChart fx:id="chart" layoutY="14.0" legendSide="TOP" prefHeight="546.0" prefWidth="598.0" style="-fx-background-radius: 26px;" title="Sales statistics">
-              <xAxis>
-                <CategoryAxis fx:id="month" side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis fx:id="Money" side="LEFT" />
-              </yAxis>
-            </BarChart>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="624.0" layoutY="46.0" prefHeight="649.0" prefWidth="417.0">
-         <children>
-            <AnchorPane layoutX="2.0" layoutY="22.0" prefHeight="611.0" prefWidth="394.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 26px;">
-               <children>
-                  <PieChart fx:id="PieChart" layoutX="16.0" layoutY="46.0" prefHeight="325.0" prefWidth="346.0" />
-                  <AnchorPane layoutX="23.0" layoutY="457.0" prefHeight="102.0" prefWidth="164.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 26px;">
-                     <children>
-                        <Label layoutX="37.0" layoutY="14.0" text="SALES" textFill="#7d10a1">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="txtSales" layoutX="40.0" layoutY="49.0" text="10000" textFill="#7d10a1">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <JFXComboBox fx:id="cbbMonth" focusColor="#31143b" layoutX="152.0" layoutY="14.0" onAction="#SelectMonthOnAction" prefHeight="26.0" prefWidth="186.0" />
-                  <Label layoutX="65.0" layoutY="14.0" prefHeight="26.0" prefWidth="65.0" text="Month" textFill="#7d10a1">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <AnchorPane layoutX="198.0" layoutY="458.0" prefHeight="102.0" prefWidth="164.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 26px;">
-                     <children>
-                        <Label layoutX="3.0" layoutY="14.0" text="Total product" textFill="#7d10a1">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="txtTotalproduct" layoutX="42.0" layoutY="49.0" text="10000" textFill="#7d10a1">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
-         </children></AnchorPane>
-      <JFXComboBox fx:id="cbbYear" focusColor="#31143b" layoutX="128.0" layoutY="92.0" onAction="#SelectYearOnAction" prefHeight="26.0" prefWidth="125.0" />
-      <Label layoutX="79.0" layoutY="91.0" prefHeight="26.0" prefWidth="65.0" text="Year" textFill="#7d10a1">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
+        <JFXComboBox focusColor="#a8408d" labelFloat="true" layoutX="814.0" layoutY="108.0" prefHeight="26.0" prefWidth="214.0" promptText="Category" unFocusColor="#996281" />
+        <TableView fx:id="tableViewTopProduct" layoutX="815.0" layoutY="191.0" prefHeight="287.0" prefWidth="223.0" stylesheets="@../../../css/tablesimple.css">
+            <columns>
+                <TableColumn fx:id="col_ProductNo" prefWidth="25.5999755859375" text="No." />
+                <TableColumn fx:id="col_ProductName" prefWidth="153.60009765625" text="NAME" />
+                <TableColumn fx:id="col_ProductQty" prefWidth="42.40001220703124" text="QTY" />
+            </columns>
+        </TableView>
+        <AnchorPane layoutX="504.0" layoutY="318.0" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 12px;">
+            <children>
+                <Label layoutX="106.0" layoutY="12.0" text="Total Orders" textFill="#a4a4a4" />
+                <ImageView fitHeight="49.0" fitWidth="52.0" layoutX="24.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../assets/statistics_supplier.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="txtOrders" layoutX="104.0" layoutY="23.0" prefHeight="49.0" prefWidth="35.0" text="0" textFill="#000000a6">
+                    <font>
+                        <Font name="System Bold" size="30.0" />
+                    </font>
+                </Label>
+            </children></AnchorPane>
+        <Label layoutX="927.0" layoutY="71.0" text="Top-selling products" textFill="#00000099" />
+        <AnchorPane layoutX="504.0" layoutY="209.0" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 12px;">
+            <children>
+                <Label layoutX="101.0" layoutY="14.0" text="Total Renevue" textFill="#a4a4a4" />
+                <ImageView fitHeight="49.0" fitWidth="52.0" layoutX="23.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../assets/statistics_product.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="txtRenevue" layoutX="100.0" layoutY="25.0" prefHeight="50.0" prefWidth="138.0" text="0" textFill="#000000a5">
+                    <font>
+                        <Font name="System Bold" size="30.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+        <Label layoutX="971.0" layoutY="479.0" text="Top sellers" textFill="#00000099" />
+        <TableView fx:id="tableViewTopSeller" layoutX="815.0" layoutY="505.0" prefHeight="235.0" prefWidth="223.0" stylesheets="@../../../css/tablesimple.css">
+            <columns>
+                <TableColumn fx:id="col_SellerNo" prefWidth="25.5999755859375" text="No." />
+                <TableColumn fx:id="col_SellerName" prefWidth="131.2000732421875" text="NAME" />
+                <TableColumn fx:id="col_SellerRevenue" prefWidth="66.39996337890625" text="REVENUE" />
+            </columns>
+        </TableView>
+        <JFXComboBox fx:id="typeCBB" layoutX="70.0" layoutY="46.0" prefHeight="26.0" prefWidth="110.0" style="-fx-background-radius: 0.5em;" visibleRowCount="3" />
+        <DatePicker fx:id="start_date" layoutX="270.0" layoutY="47.0" onAction="#startDateOnAction" />
+        <DatePicker fx:id="end_date" layoutX="526.0" layoutY="46.0" onAction="#endDateOnAction" />
+        <PieChart fx:id="PieChart" layoutX="45.0" layoutY="72.0" onMouseClicked="#loadPiechartInfo" prefHeight="380.0" prefWidth="443.0" />
+        <Label fx:id="labelInfo" layoutX="526.0" layoutY="113.0" prefHeight="38.0" prefWidth="138.0" />
+        <BarChart fx:id="barchart_Revenue" categoryGap="0.0" layoutX="20.0" layoutY="462.0" onMouseClicked="#loadBarchartInfo" prefHeight="306.0" prefWidth="771.0">
+            <xAxis>
+                <CategoryAxis side="BOTTOM" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT" />
+            </yAxis>
+        </BarChart>
     </children>
 </AnchorPane>

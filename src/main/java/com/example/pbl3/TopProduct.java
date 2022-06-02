@@ -3,16 +3,12 @@ package com.example.pbl3;
 public class TopProduct {
     private int No;
     private String ProductName;
-    private Double Price;
-    private Double Sale;
-    private String ProductStatus;
+    private int quantity;
 
-    public TopProduct(int no, String productName, Double price, Double sale, String productStatus) {
+    public TopProduct(int no, String productName, int quantity) {
         No = no;
         ProductName = productName;
-        Price = price;
-        Sale = sale;
-        ProductStatus = productStatus;
+        this.quantity = quantity;
     }
 
     public int getNo() {
@@ -23,35 +19,7 @@ public class TopProduct {
         return ProductName;
     }
 
-    public Double getPrice() {
-        return Price;
-    }
-
-    public Double getSale() {
-        return Sale;
-    }
-
-    public String getProductStatus() {
-        return ProductStatus;
-    }
-
-    public void setNo(int no) {
-        No = no;
-    }
-
-    public void setProductName(String productName) {
-        ProductName = productName;
-    }
-
-    public void setPrice(Double price) {
-        Price = price;
-    }
-
-    public void setSale(Double sale) {
-        Sale = sale;
-    }
-
-    public void setProductStatus(String productStatus) {
-        ProductStatus = productStatus;
+    public int getQuantity() {
+        return quantity;
     }
 }

@@ -321,6 +321,7 @@ public class AccountController implements Initializable {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
+        openUI = null;
     }
 
     @FXML

@@ -224,7 +224,8 @@ public class ImportController implements Initializable {
 
         showSupplierComboBoxItem();
         showItemComboboxItem();
-
+        new AutoCompleteBox(itemCBBox);
+        new AutoCompleteBox(supplierCBBox);
         supplierCBBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
@@ -234,11 +235,7 @@ public class ImportController implements Initializable {
                 }
             }
         });
-//
-//        unitPriceTxt.textProperty().addListener(
-//                (observable, oldValue, newValue) -> lbTotal.setText(calTotal(unitPriceTxt.getText(),quantityTxt.getText())));
-//       quantityTxt.textProperty().addListener(
-//                (observable, oldValue, newValue) -> lbTotal.setText(calTotal(unitPriceTxt.getText(),quantityTxt.getText())));
+
 
 
         ImportTableView.setOnMouseClicked( event -> {
@@ -310,6 +307,7 @@ public class ImportController implements Initializable {
         this.importDate.setValue(LocalDate.of(date.getYear()+1900, date.getMonth()+1, date.getDate()));
         receiptDatePrint.setText(date.toString());
         this.lbSupplier.setText(this.ImportTableView.getSelectionModel().getSelectedItem().getSupplier_name());
+        this.lbTotal.setText(String.valueOf(this.ImportTableView.getSelectionModel().getSelectedItem().getTotal()));
         try {
             this.loadDetailImport.setInt(1,ImportTableView.getSelectionModel().getSelectedItem().getImport_id());
             ResultSet rs = loadDetailImport.executeQuery();

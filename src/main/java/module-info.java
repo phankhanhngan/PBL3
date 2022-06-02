@@ -11,6 +11,8 @@ module com.example.pbl3 {
     requires com.jfoenix;
     requires kernel;
     requires layout;
+    requires AnimateFX;
+    requires java.desktop;
 
 
     opens com.example.pbl3 to javafx.fxml;

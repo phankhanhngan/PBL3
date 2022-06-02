@@ -1,6 +1,10 @@
 package com.example.pbl3;
 
+import animatefx.animation.FadeInUp;
 import com.jfoenix.controls.JFXButton;
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -8,63 +12,215 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class HomepageController implements Initializable {
+
     @FXML
     private AnchorPane AnchorPane;
+
     @FXML
-    private MenuItem product;
+    private Text TextBrand;
+
+    @FXML
+    private Text TextCorporation;
+
+    @FXML
+    private Text TextDevelopBy;
+
+    @FXML
+    private Text TextOrie;
+
     @FXML
     private MenuItem account;
+
+    @FXML
+    private MenuItem bill;
+
+    @FXML
+    private Button buttonStarted;
+
+    @FXML
+    private MenuItem category;
+
+    @FXML
+    private MenuItem customer;
+
+    @FXML
+    private MenuItem dashboard;
+
+    @FXML
+    private ImageView facebook;
+
+    @FXML
+    private ImageView google;
+
+    @FXML
+    private ImageView imageLogo;
+
+    @FXML
+    private ImageView imageMain;
+
+    @FXML
+    private Label labelWelcome;
+
+    @FXML
+    private Line line;
+
     @FXML
     private MenuItem logout;
 
     @FXML
-    private TableColumn<TopProduct, Integer> col_No;
+    private MenuItem myaccount;
 
     @FXML
-    private TableColumn<TopProduct, Double> col_Price;
+    private MenuItem order;
 
     @FXML
-    private TableColumn<TopProduct, String> col_ProductName;
+    private MenuItem product;
 
     @FXML
-    private TableColumn<TopProduct, JFXButton> col_ProductStatus;
+    private MenuItem receipt;
 
     @FXML
-    private TableColumn<TopProduct, Double> col_Sale;
+    private MenuItem supplier;
 
     @FXML
-    private Label labelWelcome;
-    @FXML
-    private Label labelTotalCus;
+    private ImageView youtube;
+    private final String FACEBOOK = "https://www.facebook.com/LaynezCode-106644811127683";
 
-    @FXML
-    private Label labelTotalProd;
+    private final String GMAIL = "https://www.google.com/";
 
-    @FXML
-    private Label labelTotalquotes;
-
-
-    @FXML
-    private TableView<TopProduct> tableViewTopProduct;
-
+    private final String YOUTUBE = "https://www.youtube.com/c/LaynezCode/";
 
     OpenUI openUI = new OpenUI();
-    Statement statement = null;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setView();
+        setURL();
+        setTransition();
+    }
+    private void setView()
+    {
+        //imageMain.setVisible(false);
+        imageLogo.setVisible(false);
+        labelWelcome.setVisible(false);
+        buttonStarted.setVisible(false);
+        TextDevelopBy.setVisible(false);
+        TextOrie.setVisible(false);
+        line.setVisible(false);
+        facebook.setVisible(false);
+        google.setVisible(false);
+        youtube.setVisible(false);
+        TextBrand.setVisible(false);
+       // TextCorporation.setVisible(false);
+    }
+    private void setTransition()
+    {
+        //transition(imageMain,0.5);
+        transition(imageLogo,1);
+        transition(labelWelcome,1.5);
+        transition(buttonStarted,3);
+        transition(TextDevelopBy,3.5);
+        transition(TextOrie,4);
+        transition(line,4.5);
+        transition(facebook,5);
+        transition(google,5.5);
+        transition(youtube,6);
+        transition(TextBrand,6.5);
+       // transition(TextCorporation,7);
+
+
+
+    }
+    private void transition(Node node, double duration) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), node);
+        scaleTransition.setFromX(1.0);
+        scaleTransition.setFromY(1.0);
+        scaleTransition.setToX(1.2);
+        scaleTransition.setToY(1.2);
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(3000), node);
+        fadeTransition.setFromValue(2);
+        fadeTransition.setToValue(0.5);
+
+        PauseTransition pauseTransition = new PauseTransition();
+        pauseTransition.setDuration(Duration.seconds(duration));
+        pauseTransition.setOnFinished(ev -> {
+            PauseTransition pauseTransition2 = new PauseTransition();
+            pauseTransition2.setDuration(Duration.seconds(0.1));
+            pauseTransition2.setOnFinished(ev2 -> {
+                node.setVisible(true);
+            });
+
+            pauseTransition2.play();
+            fadeInUp(node);
+            fadeTransition.play();
+        });
+
+        pauseTransition.play();
+
+        node.setOnMouseEntered(ev -> {
+            fadeTransition.setToValue(1);
+            fadeTransition.playFromStart();
+
+            scaleTransition.setRate(1.0);
+            scaleTransition.play();
+        });
+
+        node.setOnMouseExited(ev -> {
+            fadeTransition.setDuration(Duration.millis(100));
+            fadeTransition.setToValue(0.5);
+            fadeTransition.playFromStart();
+
+            scaleTransition.setRate(-1.0);
+            scaleTransition.play();
+        });
+    }
+    private void fadeInUp(Node node) {
+        new FadeInUp(node).play();
+    }
+    private void setURL() {
+        url(FACEBOOK, facebook);
+        url(GMAIL, google);
+        url(YOUTUBE, youtube);
+    }
+    private void url(String url, Node node) {
+        node.setOnMouseClicked(ev -> {
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.browse(new URI(url));
+            } catch (IOException | URISyntaxException ex) {
+                Logger.getLogger(HomepageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
     @FXML
     public void productMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
@@ -129,109 +285,24 @@ public class HomepageController implements Initializable {
     }
 
     @FXML
+    public void homePageMenuItemOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("HomePageUI.fxml");
+    }
+
+    @FXML
+    public void statisticMenuItemOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("StatisticsUI.fxml");
+    }
+
+    @FXML
     void myAccountMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
     }
 
-    public void setDecentralization()
-    {
-        if(openUI.typecashier == true)
-        {
-            account.setDisable(false);
-        }
-        else {
-            account.setDisable(true);
-        }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection link = connection.getConnection();
-        try
-        {
-            statement = link.createStatement();
-        }
-        catch (SQLException e)
-        {
-
-        }
-        if(openUI.typecashier == true)
-        {
-            labelWelcome.setText("Welcome back,Manager!");
-        }
-        else
-        {
-            labelWelcome.setText("Welcome back,Cashier!");
-        }
-
-        loadTable();
-        setDecentralization();
-        setTotal();
-    }
-    public void setTotal()
-    {
-        labelTotalCus.setText(DatabaseHelper.getTotalCustomer());
-        labelTotalProd.setText(DatabaseHelper.getTotalProduct());
-        labelTotalquotes.setText(DatabaseHelper.getTotalQuote());
-    }
-    public void loadTable()
-    {
-        ObservableList<TopProduct> list = FXCollections.observableArrayList();
-        try{
-            String selectQuery = "select ProductName,SalePrice,sum(detailbill.Quantity) as Sale from product inner join detailbill on product.ProductName = detailbill.Product group by ProductName order by Sale desc limit 10";
-            ResultSet rs  = statement.executeQuery(selectQuery);
-            int no =1;
-            String Status = "404";
-            while(rs.next())
-            {
-                String Name = rs.getString("ProductName");
-                Double Price = rs.getDouble("SalePrice");
-                Double Sale = rs.getDouble("Sale");
-                int quantity = DatabaseHelper.GetQuantityByProductname(Name);
-                if(quantity != 0) {
-                     Status = "In Stock";
-                }
-                else
-                {
-                    Status = "Out Of Stock";
-                }
-
-                TopProduct topProduct = new TopProduct(no,Name,Price,Sale,Status);
-                no++;
-                list.add(topProduct);
-            }
-            this.col_No.setCellValueFactory(new PropertyValueFactory("No"));
-            this.col_Price.setCellValueFactory(new PropertyValueFactory("Price"));
-            this.col_ProductName.setCellValueFactory(new PropertyValueFactory("ProductName"));
-            this.col_Sale.setCellValueFactory(new PropertyValueFactory("Sale"));
-            this.col_ProductStatus.setCellValueFactory(new JFXButtonTypeUserCellValueFactory());
-            this.tableViewTopProduct.setItems(list);
-
-        }
-        catch (SQLException e10)
-        {
-
-        }
-    }
-    private class JFXButtonTypeUserCellValueFactory implements Callback<TableColumn.CellDataFeatures<TopProduct, JFXButton>, ObservableValue<JFXButton>> {
-
-        @Override
-        public ObservableValue<JFXButton> call(TableColumn.CellDataFeatures<TopProduct, JFXButton> param) {
-            TopProduct item = param.getValue();
-
-            JFXButton button = new JFXButton();
-            button.setPrefWidth(col_ProductStatus.getWidth() / 0.5);
-            button.setText(item.getProductStatus());
-
-            if (item.getProductStatus().equals("In Stock")) {
-                button.setStyle("-fx-background-color: #69e067; -fx-background-radius: 10px");
-            } else {
-                button.setStyle("-fx-background-color: #ff3363; -fx-background-radius: 10px");
-            }
-            return new SimpleObjectProperty<>(button);
-        }
-    }
 }

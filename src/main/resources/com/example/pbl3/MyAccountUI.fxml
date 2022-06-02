@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXRadioButton?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -99,11 +100,11 @@
                                 <Label layoutX="15.0" layoutY="155.0" text="Username:" />
                                 <Label layoutX="18.0" layoutY="199.0" text="Address:" />
                                 <Label layoutX="17.0" layoutY="251.0" text="Type:" />
-                                <TextField fx:id="nameTxt" layoutX="14.0" layoutY="27.0" prefHeight="26.0" prefWidth="392.0" />
-                                <TextField fx:id="gmailTxt" layoutX="15.0" layoutY="76.0" prefHeight="26.0" prefWidth="392.0" />
-                                <TextField fx:id="phoneTxt" layoutX="15.0" layoutY="124.0" prefHeight="26.0" prefWidth="392.0" />
-                                <TextField fx:id="usernameTxt" layoutX="15.0" layoutY="172.0" prefHeight="26.0" prefWidth="392.0" />
-                                <TextField fx:id="addressTxt" layoutX="15.0" layoutY="219.0" prefHeight="26.0" prefWidth="392.0" />
+                                <TextField fx:id="nameTxt" layoutX="14.0" layoutY="27.0" prefHeight="26.0" prefWidth="392.0" stylesheets="@../../../css/textfield.css" />
+                                <TextField fx:id="gmailTxt" layoutX="15.0" layoutY="76.0" prefHeight="26.0" prefWidth="392.0" stylesheets="@../../../css/textfield.css" />
+                                <TextField fx:id="phoneTxt" layoutX="15.0" layoutY="124.0" prefHeight="26.0" prefWidth="392.0" stylesheets="@../../../css/textfield.css" />
+                                <TextField fx:id="usernameTxt" layoutX="15.0" layoutY="172.0" prefHeight="26.0" prefWidth="392.0" stylesheets="@../../../css/textfield.css" />
+                                <TextField fx:id="addressTxt" layoutX="15.0" layoutY="219.0" prefHeight="26.0" prefWidth="392.0" stylesheets="@../../../css/textfield.css" />
                                 <JFXRadioButton fx:id="cashierRadioBtn" layoutX="20.0" layoutY="275.0" text="Cashier" underline="true">
                                     <selectedColor>
                                         <Color red="0.6631578803062439" green="0.13754385709762573" blue="0.4003508687019348" />
@@ -120,22 +121,44 @@
                                         <Color red="0.6947368383407593" green="0.3164912164211273" blue="0.6569122672080994" />
                                     </unSelectedColor>
                                 </JFXRadioButton>
-                                <Hyperlink fx:id="changePasswordHyper" layoutX="297.0" layoutY="315.0" text="Want to change password?">
-                                    <font>
-                                        <Font name="System Italic" size="10.0" />
-                                    </font>
-                                </Hyperlink>
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Your work">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="339.0" prefWidth="435.0">
-                            <children>
-                                <PieChart fx:id="piechart" layoutY="14.0" prefHeight="322.0" prefWidth="435.0" title="Total product imported/sold" />
-                            </children></AnchorPane>
-                    </content>
-                </Tab>
+            <Tab text="Password">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="nameLabel1" layoutX="293.0" layoutY="21.0" text="Change password" textFill="#a30d7bb8">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <PasswordField fx:id="newPass" layoutX="35.0" layoutY="61.0" prefHeight="27.0" prefWidth="364.0" promptText="New password" stylesheets="@../../../css/textfield.css" />
+                        <PasswordField fx:id="newPassConfirm" layoutX="34.0" layoutY="105.0" prefHeight="27.0" prefWidth="366.0" promptText="Confirm new password" stylesheets="@../../../css/textfield.css" />
+                        <TextField fx:id="code" layoutX="34.0" layoutY="147.0" prefHeight="27.0" prefWidth="282.0" promptText="Code" stylesheets="@../../../css/textfield.css" />
+                        <JFXButton fx:id="sendCodeButton" layoutX="326.0" layoutY="147.0" styleClass="button-type-2" stylesheets="@../../../css/button.css" text="Send code">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></JFXButton>
+                        <JFXButton fx:id="submitButton" layoutX="96.0" layoutY="236.0" prefHeight="26.0" prefWidth="109.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Submit">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <Label layoutX="36.0" layoutY="186.0" prefHeight="26.0" prefWidth="307.0" text="Confirmation code will be sent to your gmail. Check it out!" textFill="#0000008d">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <JFXButton fx:id="resetButton" layoutX="229.0" layoutY="236.0" prefHeight="26.0" prefWidth="109.0" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Reset">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
             </tabs>
         </TabPane>
     </children>

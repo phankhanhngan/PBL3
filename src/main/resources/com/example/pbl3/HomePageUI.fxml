@@ -1,128 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.HomepageController">
+<AnchorPane fx:id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="969.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.HomepageController">
     <children>
-        <ImageView fitHeight="774.0" fitWidth="1051.0" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
+        <ImageView fitHeight="625.0" fitWidth="969.0" pickOnBounds="true">
             <image>
-                <Image url="@../../../assets/Background2.png" />
+                <Image url="@../../../assets/Background.png" />
             </image>
         </ImageView>
-        <MenuBar centerShape="false" prefHeight="18.0" prefWidth="1051.0" style="-fx-background-color: rgba(192,162,232,0.6);">
+        <ImageView fx:id="imageMain" fitHeight="573.0" fitWidth="794.0" layoutX="425.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../assets/homepage_pana.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="labelWelcome" layoutX="40.0" layoutY="45.0" prefHeight="73.0" prefWidth="354.0" style="-fx-background-color: transparent;" text="Great Marketing" textFill="#0d5557ec">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Label>
+        <Button fx:id="buttonStarted" layoutX="32.0" layoutY="227.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="144.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Get Started" textFill="#ffffffcc">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Button>
+        <Label layoutX="40.0" layoutY="150.0" text="Make your sales increase with centralized management starting from" textFill="#00000092">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Label>
+        <ImageView fx:id="imageLogo" fitHeight="62.0" fitWidth="56.0" layoutX="187.0" layoutY="297.0" opacity="0.27" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../assets/logo.png" />
+            </image>
+        </ImageView>
+        <Text fx:id="TextDevelopBy" fill="#000000cc" layoutX="31.0" layoutY="516.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Developed by: ">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Text>
+        <Text fx:id="TextBrand" fill="#000000cc" layoutX="34.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PBL3 - Dự án CNPM:">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Text>
+        <Line fx:id="line" endX="-100.00001525878906" endY="115.800048828125" layoutX="284.0" layoutY="459.0" rotate="180.0" startX="-100.0" startY="55.0" />
+        <Text fx:id="TextOrie" layoutX="29.0" layoutY="557.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O R I E">
+            <font>
+                <Font name="Bookman Old Style" size="37.0" />
+            </font>
+        </Text>
+        <ImageView fx:id="facebook" fitHeight="36.0" fitWidth="33.0" layoutX="199.0" layoutY="528.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../assets/facebook_icon.png" />
+            </image>
+        </ImageView>
+        <Text fill="#000000bb" layoutX="199.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phan Khánh Ngân">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
+        <MenuBar centerShape="false" prefHeight="26.0" prefWidth="969.0" style="-fx-background-color: rgba(192,162,232,0.6);">
             <menus>
                 <Menu mnemonicParsing="false" text="Home">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Dashboard" />
-                        <MenuItem mnemonicParsing="false" onAction="#myAccountMenuItemOnAction" text="My Account" />
+                        <MenuItem fx:id="dashboard" mnemonicParsing="false" text="Dashboard" />
+                        <MenuItem fx:id="myaccount" mnemonicParsing="false" onAction="#myAccountMenuItemOnAction" text="My Account" />
                         <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Manage">
                     <items>
                         <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
-                        <MenuItem mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
+                        <MenuItem fx:id="customer" mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
                         <MenuItem fx:id="supplier" mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
-                  <MenuItem mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
+                        <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
                         <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
-                  <MenuItem fx:id="product1" mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Bill" />
+                        <MenuItem fx:id="bill" mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Bill" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Inventory">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
-                    </items></Menu>
+                        <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                    </items>
+                </Menu>
                 <Menu mnemonicParsing="false" text="Request">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
+                        <MenuItem fx:id="order" mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
-        <ImageView fitHeight="165.0" fitWidth="1051.0" layoutY="25.0" pickOnBounds="true">
+        <ImageView fx:id="google" fitHeight="36.0" fitWidth="33.0" layoutX="249.0" layoutY="528.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../assets/home-background.png" />
+                <Image url="@../../../assets/google_icon.png" />
             </image>
         </ImageView>
-        <Label fx:id="labelWelcome" layoutX="187.0" layoutY="114.0" style="-fx-background-color: transparent;" text="Welcome back!" textFill="#6e446b">
-            <font>
-                <Font name="Arial Bold" size="33.0" />
-            </font>
-        </Label>
-        <Label layoutX="187.0" layoutY="153.0" style="-fx-background-color: transparent;" text="Let's start by adding a new client!" textFill="#6e4c7a">
-            <font>
-                <Font name="Arial" size="22.0" />
-            </font>
-        </Label>
-        <AnchorPane layoutX="55.0" layoutY="207.0" prefHeight="106.0" prefWidth="195.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 20;">
-            <children>
-                <Label layoutX="24.0" layoutY="72.0" style="-fx-background-color: transparent;" text="Total customers" textFill="#690065cc">
-                    <font>
-                        <Font name="Arial Bold" size="19.0" />
-                    </font>
-                </Label>
-                <Label fx:id="labelTotalCus" alignment="CENTER" layoutX="38.0" layoutY="4.0" prefHeight="59.0" prefWidth="119.0" text="10" textFill="#690065cc">
-                    <font>
-                        <Font name="Arial" size="55.0" />
-                    </font>
-                </Label>
-            </children>
-        </AnchorPane>
-        <Label layoutX="62.0" layoutY="336.0" style="-fx-background-color: transparent;" text="Top Selling Products" textFill="#6e446b">
-            <font>
-                <Font name="Arial Bold" size="18.0" />
-            </font>
-        </Label>
-        <TableView fx:id="tableViewTopProduct" layoutX="57.0" layoutY="377.0" prefHeight="365.0" prefWidth="934.0" style="-fx-background-color: transparent;">
-            <columns>
-                <TableColumn fx:id="col_No" editable="false" prefWidth="90.13329696655273" text="No" />
-                <TableColumn fx:id="col_ProductName" prefWidth="310.6667175292969" text="Product Name" />
-                <TableColumn fx:id="col_Price" prefWidth="214.93341064453125" text="Price" />
-                <TableColumn fx:id="col_Sale" prefWidth="185.86663818359375" text="Quantity" />
-                <TableColumn fx:id="col_ProductStatus" prefWidth="130.39999999999998" text="Product Status" />
-            </columns>
-            <stylesheets>
-                <URL value="@../../../css/stylesheet.css" />
-                <URL value="@../../../css/account.css" />
-            </stylesheets>
-        </TableView>
-      <AnchorPane layoutX="414.0" layoutY="207.0" prefHeight="106.0" prefWidth="195.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 20;">
-         <children>
-            <Label layoutX="40.0" layoutY="72.0" style="-fx-background-color: transparent;" text="Total quotes" textFill="#690065cc">
-               <font>
-                  <Font name="Arial Bold" size="19.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelTotalquotes" alignment="CENTER" layoutX="38.0" layoutY="4.0" prefHeight="59.0" prefWidth="119.0" text="10" textFill="#690065cc">
-               <font>
-                  <Font name="Arial" size="55.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="795.0" layoutY="207.0" prefHeight="106.0" prefWidth="195.0" style="-fx-background-color: rgba(192,162,232,0.6); -fx-background-radius: 20;">
-         <children>
-            <Label layoutX="40.0" layoutY="72.0" style="-fx-background-color: transparent;" text="Total products" textFill="#690065cc">
-               <font>
-                  <Font name="Arial Bold" size="19.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelTotalProd" alignment="CENTER" layoutX="38.0" layoutY="4.0" prefHeight="59.0" prefWidth="119.0" text="10" textFill="#690065cc">
-               <font>
-                  <Font name="Arial" size="55.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
+        <ImageView fx:id="youtube" fitHeight="40.0" fitWidth="43.0" layoutX="299.0" layoutY="532.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../assets/youtube_icon.png" />
+            </image>
+        </ImageView>
+      <Label fx:id="labelOffer1" layoutX="40.0" layoutY="169.0" text="uploading products, updating stock, taking orders to managing " textFill="#00000092">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelOffer11" layoutX="40.0" layoutY="188.0" text="customers at ORIE!" textFill="#00000092">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Text fx:id="TextCorporation1" fill="#000000bb" layoutX="78.0" layoutY="399.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lê Văn Thịnh">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
+      <Text fx:id="TextCorporation11" fill="#000000bb" layoutX="77.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Võ Đại Khang">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
+      <Text fx:id="TextCorporation111" fill="#000000bb" layoutX="199.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nguyễn Phan Nhật Hoàng">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
+      <Text fx:id="TextCorporation112" fill="#000000bb" layoutX="32.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sinh viên thực hiện:">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
+      <Text fx:id="TextCorporation1121" fill="#000000bb" layoutX="34.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GVHD:">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
+      <Text fx:id="TextCorporation12" fill="#000000bb" layoutX="81.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lê Thị Mỹ Hạnh">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
+      <Text fx:id="TextCorporation113" fill="#000000bb" layoutX="81.0" layoutY="454.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lê Khanh">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
+      <Label fx:id="labelWelcome1" layoutX="40.0" layoutY="82.0" prefHeight="74.0" prefWidth="435.0" style="-fx-background-color: transparent;" text="For Managing You Shop" textFill="#011212fc">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
