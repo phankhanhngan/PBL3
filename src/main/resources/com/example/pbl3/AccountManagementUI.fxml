@@ -117,35 +117,41 @@
                 <Font name="System Bold" size="25.0" />
             </font>
         </Label>
-        <MenuBar centerShape="false" prefHeight="18.0" prefWidth="1051.0" style="-fx-background-color: rgba(192,162,232,0.6);">
-            <menus>
-                <Menu mnemonicParsing="false" text="Home">
-                    <items>
-                        <MenuItem fx:id="homepage" mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="Dashboard" />
-                        <MenuItem mnemonicParsing="false" onAction="#myAccountMenuItemOnAction" text="My Account" />
-                        <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Manage">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Account" />
-                        <MenuItem mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
-                        <MenuItem mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
-                  <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
-                        <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
-                  <MenuItem fx:id="product1" mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Bill" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Inventory">
+      <MenuBar centerShape="false" prefHeight="26.0" prefWidth="1051.0" style="-fx-background-color: rgba(192,162,232,0.6);">
+         <menus>
+            <Menu mnemonicParsing="false" text="Home">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
-               </items></Menu>
-                <Menu mnemonicParsing="false" text="Request">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
+                  <MenuItem fx:id="homepage" mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="Dashboard" />
+                  <MenuItem fx:id="myaccount" mnemonicParsing="false" onAction="#myAccountMenuItemOnAction" text="My Account" />
+                  <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Manage">
+               <items>
+                  <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
+                  <MenuItem fx:id="customer" mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
+                  <MenuItem fx:id="supplier" mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
+                  <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
+                  <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
+                  <MenuItem fx:id="order" mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Order" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Inventory">
+               <items>
+                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Request">
+               <items>
+                  <MenuItem fx:id="createOrder" mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
+               </items>
+            </Menu>
+            <Menu fx:id="statistics" mnemonicParsing="false" text="Statistics">
+               <items>
+                  <MenuItem fx:id="statistics" mnemonicParsing="false" onAction="#statisticMenuItemOnAction" text="Statistic" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
     </children>
 </AnchorPane>

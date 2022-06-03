@@ -98,7 +98,8 @@ public class StatisticsController implements Initializable {
     private Label txtRenevue;
     @FXML
     private Label labelInfo;
-
+    @FXML
+            private MenuItem account;
     OpenUI openUI = new OpenUI();
 
     XYChart.Series<String,Double> series = new XYChart.Series<>();
@@ -169,7 +170,14 @@ public class StatisticsController implements Initializable {
     public void homePageMenuItemOnAction() {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("HomeUI.fxml");
+        openUI.Open_UI("HomePageUI.fxml");
+    }
+
+    @FXML
+    public void statisticMenuItemOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("StatisticsUI.fxml");
     }
 
     @FXML
@@ -177,6 +185,13 @@ public class StatisticsController implements Initializable {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
+    }
+    public void decentralization()
+    {
+        if(openUI.typecashier == false)
+        {
+            account.setVisible(false);
+        }
     }
 
     DatabaseConnection ConnectNow = new DatabaseConnection();
@@ -395,6 +410,7 @@ public class StatisticsController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        decentralization();
         setTypeCBB();
         typeCBB.setValue("Day");
         barchart_Revenue.setAnimated(false);

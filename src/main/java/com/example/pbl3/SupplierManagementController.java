@@ -56,11 +56,20 @@ public class SupplierManagementController implements Initializable {
     private TextField SupAddressTextField;
     @FXML
     private TextField SupPhoneTextField;
+    @FXML
+            private MenuItem account;
 
     OpenUI openUI = new OpenUI();
     private PreparedStatement add = null;
     private PreparedStatement delete = null;
     private PreparedStatement update = null;
+
+    @FXML
+    public void productMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("ProductManagementUI.fxml");
+    }
 
     @FXML
     public void logOutMenuItemOnAction(ActionEvent event) {
@@ -69,26 +78,25 @@ public class SupplierManagementController implements Initializable {
         openUI.Open_UI("LoginUI.fxml");
     }
 
-    public void accountMenuItemOnAction(ActionEvent event) {
+    @FXML
+    public void accountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("AccountManagementUI.fxml");
     }
 
-    public void homePageMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+    @FXML
+    public void importMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("HomePageUI.fxml");
+        openUI.Open_UI("ImportUI.fxml");
     }
-    public void productMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage) AnchorPane.getScene().getWindow();
-        stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml");
-    }
+
+    @FXML
     public void supplierMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage) AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("SupplierManagement.fxml");
+        openUI.Open_UI("SupplierManagementUI.fxml");
     }
 
     @FXML
@@ -106,13 +114,6 @@ public class SupplierManagementController implements Initializable {
     }
 
     @FXML
-    public void importMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
-        stage.close();
-        openUI.Open_UI("ImportUI.fxml");
-    }
-
-    @FXML
     public void orderMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
@@ -127,14 +128,36 @@ public class SupplierManagementController implements Initializable {
     }
 
     @FXML
+    public void homePageMenuItemOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("HomePageUI.fxml");
+    }
+
+    @FXML
+    public void statisticMenuItemOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("StatisticsUI.fxml");
+    }
+
+    @FXML
     void myAccountMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
     }
+    public void decentralization()
+    {
+        if(openUI.typecashier == false)
+        {
+            account.setVisible(false);
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        decentralization();
 
         DatabaseConnection connection = new DatabaseConnection();
         Connection link = connection.getConnection();

@@ -181,6 +181,7 @@ public class ImportController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        decentralization();
         this.lbStaff.setText(openUI.namecashier);
         receiptAnchorpane.setVisible(false);
         printAnchorPane.setVisible(false);
@@ -201,10 +202,10 @@ public class ImportController implements Initializable {
             }
         });
         this.newItemHyper.setOnAction((e) -> {
-            productMenuItemOnAction();
+            productMenuItemOnAction(e);
         });
         this.newSupplierHyper.setOnAction((e) -> {
-            supplierMenuItemOnAction();
+            supplierMenuItemOnAction(e);
         });
         this.printReceiptButton.setOnAction((e) -> {
             printReceipt();
@@ -645,11 +646,19 @@ public class ImportController implements Initializable {
         }
     }
     @FXML
-    public void logOutMenuItemOnAction() {
+    public void productMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("ProductManagementUI.fxml");
+    }
+
+    @FXML
+    public void logOutMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
     }
+
     @FXML
     public void accountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
@@ -658,35 +667,28 @@ public class ImportController implements Initializable {
     }
 
     @FXML
-    public void homePageMenuItemOnAction() {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+    public void importMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("HomePageUI.fxml");
+        openUI.Open_UI("ImportUI.fxml");
     }
 
     @FXML
-    public void productMenuItemOnAction() {
-        Stage stage = (Stage) AnchorPane.getScene().getWindow();
-        stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml");
-    }
-
-    @FXML
-    public void supplierMenuItemOnAction() {
+    public void supplierMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("SupplierManagementUI.fxml");
     }
 
     @FXML
-    public void categoryMenuItemOnAction() {
+    public void categoryMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CategoryManagementUI.fxml");
     }
 
     @FXML
-    public void customerMenuItemOnAction() {
+    public void customerMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CustomerUI.fxml");
@@ -707,10 +709,31 @@ public class ImportController implements Initializable {
     }
 
     @FXML
+    public void homePageMenuItemOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("HomePageUI.fxml");
+    }
+
+    @FXML
+    public void statisticMenuItemOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("StatisticsUI.fxml");
+    }
+
+    @FXML
     void myAccountMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
+    }
+    public void decentralization()
+    {
+        if(openUI.typecashier == false)
+        {
+            account.setVisible(false);
+        }
     }
 
 }

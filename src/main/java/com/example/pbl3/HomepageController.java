@@ -41,14 +41,9 @@ import java.util.logging.Logger;
 
 public class HomepageController implements Initializable {
 
+
     @FXML
     private AnchorPane AnchorPane;
-
-    @FXML
-    private Text TextBrand;
-
-    @FXML
-    private Text TextCorporation;
 
     @FXML
     private Text TextDevelopBy;
@@ -90,6 +85,18 @@ public class HomepageController implements Initializable {
     private Label labelWelcome;
 
     @FXML
+    private Label labelWelcome1;
+
+    @FXML
+    private Label lb1;
+
+    @FXML
+    private Label lb2;
+
+    @FXML
+    private Label lb3;
+
+    @FXML
     private Line line;
 
     @FXML
@@ -111,6 +118,33 @@ public class HomepageController implements Initializable {
     private MenuItem supplier;
 
     @FXML
+    private Text txt1;
+
+    @FXML
+    private Text txt2;
+
+    @FXML
+    private Text txt3;
+
+    @FXML
+    private Text txt4;
+
+    @FXML
+    private Text txt5;
+
+    @FXML
+    private Text txt6;
+
+    @FXML
+    private Text txt7;
+
+    @FXML
+    private Text txt8;
+
+    @FXML
+    private Text txt9;
+
+    @FXML
     private ImageView youtube;
     private final String FACEBOOK = "https://www.facebook.com/LaynezCode-106644811127683";
 
@@ -122,13 +156,26 @@ public class HomepageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        decentralization();
         setView();
         setURL();
         setTransition();
     }
     private void setView()
     {
-        //imageMain.setVisible(false);
+        labelWelcome1.setVisible(false);
+        lb1.setVisible(false);
+        lb2.setVisible(false);
+        lb3.setVisible(false);
+        txt1.setVisible(false);
+        txt2.setVisible(false);
+        txt3.setVisible(false);
+        txt4.setVisible(false);
+        txt5.setVisible(false);
+        txt6.setVisible(false);
+        txt7.setVisible(false);
+        txt8.setVisible(false);
+        txt9.setVisible(false);
         imageLogo.setVisible(false);
         labelWelcome.setVisible(false);
         buttonStarted.setVisible(false);
@@ -138,25 +185,31 @@ public class HomepageController implements Initializable {
         facebook.setVisible(false);
         google.setVisible(false);
         youtube.setVisible(false);
-        TextBrand.setVisible(false);
-       // TextCorporation.setVisible(false);
     }
     private void setTransition()
     {
         //transition(imageMain,0.5);
-        transition(imageLogo,1);
-        transition(labelWelcome,1.5);
-        transition(buttonStarted,3);
-        transition(TextDevelopBy,3.5);
-        transition(TextOrie,4);
-        transition(line,4.5);
-        transition(facebook,5);
-        transition(google,5.5);
+        transition(labelWelcome,0.5);
+        transition(labelWelcome1,0.75);
+        transition(lb1,1);
+        transition(lb2,1);
+        transition(lb3,1);
+        transition(txt1,1.5);
+        transition(imageLogo,1.5);
+        transition(txt2,2);
+        transition(txt3,2.5);
+        transition(txt4,2.5);
+        transition(txt5,3);
+        transition(txt6,3);
+        transition(txt7,3.5);
+        transition(txt8,4);
+        transition(txt9,4);
+        transition(TextDevelopBy,4.5);
+        transition(TextOrie,4.75);
+        transition(line,5);
+        transition(facebook,5.5);
+        transition(google,5.75);
         transition(youtube,6);
-        transition(TextBrand,6.5);
-       // transition(TextCorporation,7);
-
-
 
     }
     private void transition(Node node, double duration) {
@@ -303,6 +356,13 @@ public class HomepageController implements Initializable {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
+    }
+    public void decentralization()
+    {
+        if(openUI.typecashier == false)
+        {
+            account.setVisible(false);
+        }
     }
 
 }

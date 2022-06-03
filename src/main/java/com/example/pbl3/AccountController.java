@@ -74,6 +74,8 @@ public class AccountController implements Initializable {
     private TableColumn<Account, String> Col_Address;
     @FXML
     private TableColumn<Account, Boolean> Col_TypeOfUser;
+    @FXML
+    private MenuItem account;
 
     private ObservableList<Account> accountsList;
     OpenUI openUI = new OpenUI();
@@ -125,6 +127,7 @@ public class AccountController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        decentralization();
         UpdateListAccount("");
         AccountTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -321,14 +324,13 @@ public class AccountController implements Initializable {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
-        openUI = null;
     }
 
     @FXML
-    public void homePageMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+    public void accountMenuItemOnAction() {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("HomePageUI.fxml");
+        openUI.Open_UI("AccountManagementUI.fxml");
     }
 
     @FXML
@@ -374,10 +376,31 @@ public class AccountController implements Initializable {
     }
 
     @FXML
+    public void homePageMenuItemOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("HomePageUI.fxml");
+    }
+
+    @FXML
+    public void statisticMenuItemOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("StatisticsUI.fxml");
+    }
+
+    @FXML
     void myAccountMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
+    }
+    public void decentralization()
+    {
+        if(openUI.typecashier == false)
+        {
+            account.setVisible(false);
+        }
     }
 }
 

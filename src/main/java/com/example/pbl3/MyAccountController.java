@@ -75,6 +75,8 @@ public class MyAccountController implements Initializable {
 
     @FXML
     private TextField nameTxt;
+    @FXML
+            private MenuItem account;
     int value;
     private OpenUI openUI = new OpenUI();
 
@@ -109,6 +111,7 @@ public class MyAccountController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        decentralization();
         DisableField();
         FillInformation();
 
@@ -286,5 +289,19 @@ public class MyAccountController implements Initializable {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("StatisticsUI.fxml");
+    }
+
+    @FXML
+    void myAccountMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("MyAccountUI.fxml");
+    }
+    public void decentralization()
+    {
+        if(openUI.typecashier == false)
+        {
+            account.setVisible(false);
+        }
     }
 }

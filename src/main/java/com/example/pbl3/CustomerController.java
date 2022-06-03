@@ -76,6 +76,8 @@ public class CustomerController implements Initializable  {
     private Button resetButton;
     @FXML
     private Button updateButton;
+    @FXML
+    private MenuItem account;
 
     private PreparedStatement add = null;
     private PreparedStatement update = null;
@@ -85,6 +87,7 @@ public class CustomerController implements Initializable  {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        decentralization();
 //        birthdayDatePicker.setValue(LocalDate.now());
         DatabaseConnection connection = new DatabaseConnection();
         Connection link = connection.getConnection();
@@ -277,30 +280,31 @@ public class CustomerController implements Initializable  {
         }
     }
     @FXML
+    public void productMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("ProductManagementUI.fxml");
+    }
+
+    @FXML
     public void logOutMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
     }
+
     @FXML
-    public void accountMenuItemOnAction(ActionEvent event) {
+    public void accountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("AccountManagementUI.fxml");
     }
 
     @FXML
-    public void homePageMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+    public void importMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("HomePageUI.fxml");
-    }
-
-    @FXML
-    public void productMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage) AnchorPane.getScene().getWindow();
-        stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml");
+        openUI.Open_UI("ImportUI.fxml");
     }
 
     @FXML
@@ -318,10 +322,10 @@ public class CustomerController implements Initializable  {
     }
 
     @FXML
-    public void importMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+    public void customerMenuItemOnAction(ActionEvent event) {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("ImportUI.fxml");
+        openUI.Open_UI("CustomerUI.fxml");
     }
 
     @FXML
@@ -339,9 +343,30 @@ public class CustomerController implements Initializable  {
     }
 
     @FXML
+    public void homePageMenuItemOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("HomePageUI.fxml");
+    }
+
+    @FXML
+    public void statisticMenuItemOnAction() {
+        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("StatisticsUI.fxml");
+    }
+
+    @FXML
     void myAccountMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
+    }
+    public void decentralization()
+    {
+        if(openUI.typecashier == false)
+        {
+            account.setVisible(false);
+        }
     }
 }

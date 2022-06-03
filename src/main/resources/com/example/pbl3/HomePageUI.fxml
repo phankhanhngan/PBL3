@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="969.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.HomepageController">
+<AnchorPane fx:id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="969.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.HomepageController">
     <children>
         <ImageView fitHeight="625.0" fitWidth="969.0" pickOnBounds="true">
             <image>
@@ -28,7 +34,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Label layoutX="40.0" layoutY="150.0" text="Make your sales increase with centralized management starting from" textFill="#00000092">
+        <Label fx:id="lb1" layoutX="40.0" layoutY="150.0" text="Make your sales increase with centralized management starting from" textFill="#00000092">
             <font>
                 <Font size="13.0" />
             </font>
@@ -43,7 +49,7 @@
                 <Font size="16.0" />
             </font>
         </Text>
-        <Text fx:id="TextBrand" fill="#000000cc" layoutX="34.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PBL3 - Dự án CNPM:">
+        <Text fx:id="txt1" fill="#000000cc" layoutX="34.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PBL3 - Dự án CNPM:">
             <font>
                 <Font size="16.0" />
             </font>
@@ -59,41 +65,10 @@
                 <Image url="@../../../assets/facebook_icon.png" />
             </image>
         </ImageView>
-        <Text fill="#000000bb" layoutX="199.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phan Khánh Ngân">
+        <Text fx:id="txt4" fill="#000000bb" layoutX="199.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phan Khánh Ngân">
          <font>
             <Font size="16.0" />
          </font></Text>
-        <MenuBar centerShape="false" prefHeight="26.0" prefWidth="969.0" style="-fx-background-color: rgba(192,162,232,0.6);">
-            <menus>
-                <Menu mnemonicParsing="false" text="Home">
-                    <items>
-                        <MenuItem fx:id="dashboard" mnemonicParsing="false" text="Dashboard" />
-                        <MenuItem fx:id="myaccount" mnemonicParsing="false" onAction="#myAccountMenuItemOnAction" text="My Account" />
-                        <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Manage">
-                    <items>
-                        <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
-                        <MenuItem fx:id="customer" mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
-                        <MenuItem fx:id="supplier" mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
-                        <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
-                        <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
-                        <MenuItem fx:id="bill" mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Bill" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Inventory">
-                    <items>
-                        <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Request">
-                    <items>
-                        <MenuItem fx:id="order" mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
         <ImageView fx:id="google" fitHeight="36.0" fitWidth="33.0" layoutX="249.0" layoutY="528.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../assets/google_icon.png" />
@@ -104,41 +79,41 @@
                 <Image url="@../../../assets/youtube_icon.png" />
             </image>
         </ImageView>
-      <Label fx:id="labelOffer1" layoutX="40.0" layoutY="169.0" text="uploading products, updating stock, taking orders to managing " textFill="#00000092">
+      <Label fx:id="lb2" layoutX="40.0" layoutY="169.0" text="uploading products, updating stock, taking orders to managing " textFill="#00000092">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label fx:id="labelOffer11" layoutX="40.0" layoutY="188.0" text="customers at ORIE!" textFill="#00000092">
+      <Label fx:id="lb3" layoutX="40.0" layoutY="188.0" text="customers at ORIE!" textFill="#00000092">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Text fx:id="TextCorporation1" fill="#000000bb" layoutX="78.0" layoutY="399.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lê Văn Thịnh">
+      <Text fx:id="txt5" fill="#000000bb" layoutX="78.0" layoutY="399.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lê Văn Thịnh">
          <font>
             <Font size="16.0" />
          </font></Text>
-      <Text fx:id="TextCorporation11" fill="#000000bb" layoutX="77.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Võ Đại Khang">
+      <Text fx:id="txt3" fill="#000000bb" layoutX="77.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Võ Đại Khang">
          <font>
             <Font size="16.0" />
          </font></Text>
-      <Text fx:id="TextCorporation111" fill="#000000bb" layoutX="199.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nguyễn Phan Nhật Hoàng">
+      <Text fx:id="txt6" fill="#000000bb" layoutX="199.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nguyễn Phan Nhật Hoàng">
          <font>
             <Font size="16.0" />
          </font></Text>
-      <Text fx:id="TextCorporation112" fill="#000000bb" layoutX="32.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sinh viên thực hiện:">
+      <Text fx:id="txt2" fill="#000000bb" layoutX="32.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sinh viên thực hiện:">
          <font>
             <Font size="16.0" />
          </font></Text>
-      <Text fx:id="TextCorporation1121" fill="#000000bb" layoutX="34.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GVHD:">
+      <Text fx:id="txt7" fill="#000000bb" layoutX="34.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GVHD:">
          <font>
             <Font size="16.0" />
          </font></Text>
-      <Text fx:id="TextCorporation12" fill="#000000bb" layoutX="81.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lê Thị Mỹ Hạnh">
+      <Text fx:id="txt9" fill="#000000bb" layoutX="81.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lê Thị Mỹ Hạnh">
          <font>
             <Font size="16.0" />
          </font></Text>
-      <Text fx:id="TextCorporation113" fill="#000000bb" layoutX="81.0" layoutY="454.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lê Khanh">
+      <Text fx:id="txt8" fill="#000000bb" layoutX="81.0" layoutY="454.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lê Khanh">
          <font>
             <Font size="16.0" />
          </font></Text>
@@ -147,5 +122,40 @@
             <Font size="34.0" />
          </font>
       </Label>
+      <MenuBar centerShape="false" prefHeight="26.0" prefWidth="969.0" style="-fx-background-color: rgba(192,162,232,0.6);">
+         <menus>
+            <Menu mnemonicParsing="false" text="Home">
+               <items>
+                  <MenuItem fx:id="homepage" mnemonicParsing="false" onAction="#homePageMenuItemOnAction" text="Dashboard" />
+                  <MenuItem fx:id="myaccount" mnemonicParsing="false" onAction="#myAccountMenuItemOnAction" text="My Account" />
+                  <MenuItem fx:id="logout" mnemonicParsing="false" onAction="#logOutMenuItemOnAction" text="Log out" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Manage">
+               <items>
+                  <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountMenuItemOnAction" text="Account" />
+                  <MenuItem fx:id="customer" mnemonicParsing="false" onAction="#customerMenuItemOnAction" text="Customer" />
+                  <MenuItem fx:id="supplier" mnemonicParsing="false" onAction="#supplierMenuItemOnAction" text="Supplier" />
+                  <MenuItem fx:id="category" mnemonicParsing="false" onAction="#categoryMenuItemOnAction" text="Category" />
+                  <MenuItem fx:id="product" mnemonicParsing="false" onAction="#productMenuItemOnAction" text="Product" />
+                  <MenuItem fx:id="order" mnemonicParsing="false" onAction="#billMenuItemOnAction" text="Order" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Inventory">
+               <items>
+                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Request">
+               <items>
+                  <MenuItem fx:id="createOrder" mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
+               </items>
+            </Menu>
+            <Menu fx:id="statistics" mnemonicParsing="false" text="Statistics">
+               <items>
+                  <MenuItem fx:id="statistics" mnemonicParsing="false" onAction="#statisticMenuItemOnAction" text="Statistic" />
+               </items></Menu>
+         </menus>
+      </MenuBar>
     </children>
 </AnchorPane>
