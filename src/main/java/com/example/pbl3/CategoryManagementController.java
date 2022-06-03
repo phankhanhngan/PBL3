@@ -43,6 +43,8 @@ public class CategoryManagementController implements Initializable {
     private TextField CateNameTextField;
     @FXML
             private MenuItem account;
+    @FXML
+    private MenuItem statistics;
 
     OpenUI openUI = new OpenUI();
     private PreparedStatement add = null;
@@ -137,6 +139,7 @@ public class CategoryManagementController implements Initializable {
         if(openUI.typecashier == false)
         {
             account.setVisible(false);
+            statistics.setVisible(false);
         }
     }
 

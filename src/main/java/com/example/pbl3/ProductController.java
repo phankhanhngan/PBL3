@@ -113,6 +113,8 @@ public class ProductController implements Initializable {
     private MenuItem account;
     @FXML
     private MenuItem importPrd;
+    @FXML
+    private MenuItem statistics;
 
     JFXDialog dialog = new JFXDialog();
     private PreparedStatement quantityImport = null;
@@ -120,7 +122,7 @@ public class ProductController implements Initializable {
     //private PreparedStatement prdQuantity = null;
 
     OpenUI openUI = new OpenUI();
-    private File file404 = new File("D:\\PBLLLLLLLLLLLL#\\PBL3\\target\\classes\\assets\\404.png");
+    private File file404 = new File("D:\\PBL3-ORIE\\PBL3\\src\\main\\resources\\assets\\404.jpg");
     private File file;
     private FileChooser fileChooser;
     private Image image;
@@ -176,6 +178,7 @@ public class ProductController implements Initializable {
             }
         });
         menuAdd.setOnAction(e->{
+            this.file = file404;
             showDialogAdd();
         });
         menuEdit.setOnAction(e->{
@@ -284,7 +287,7 @@ public class ProductController implements Initializable {
     {
         return((txtBarcode.getText().trim().isEmpty())  || (txtSalePrice.getText().trim().isEmpty())
                 || (txtProductName.getText().trim().isEmpty()) ||
-                (cbbCategory.getSelectionModel().getSelectedItem() == null) || (this.file == null));
+                (cbbCategory.getSelectionModel().getSelectedItem() == null));
 
     }
 
@@ -296,7 +299,7 @@ public class ProductController implements Initializable {
             this.txtSalePrice.setText(Float.toString(((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getSalePrice()));
             this.cbbCategory.setValue(this.ProductTableView.getSelectionModel().getSelectedItem().getCategory());
             this.txtQuantity.setText(Integer.toString(this.ProductTableView.getSelectionModel().getSelectedItem().getQuantity()));
-            this.file = file404;
+
             try {
                 this.retrive.setString(1, ((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getBarcode());
                 ResultSet result = this.retrive.executeQuery();
@@ -490,7 +493,7 @@ public class ProductController implements Initializable {
                     ResultSet result = this.retrive.executeQuery();
                     if (result.first()) {
                         Blob blob = result.getBlob("ProductImage");
-                        this.update.setBinaryStream(5,blob.getBinaryStream());
+                        this.update.setBinaryStream(4,blob.getBinaryStream());
                     }
                 } catch (SQLException var5) {
                     var5.printStackTrace();
@@ -628,6 +631,7 @@ public class ProductController implements Initializable {
         if(openUI.typecashier == false)
         {
             account.setVisible(false);
+            statistics.setVisible(false);
         }
     }
 }

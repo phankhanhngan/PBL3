@@ -23,6 +23,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -41,7 +42,8 @@ import java.util.logging.Logger;
 
 
 public class CreateNewBillController implements Initializable {
-
+    @FXML
+    private AnchorPane AnchorPane;
     @FXML
     private TableColumn<DetailBill, Double> Col_IntoMoney;
     @FXML
@@ -82,6 +84,9 @@ public class CreateNewBillController implements Initializable {
     private Label customerLabel;
     @FXML
     private Label payLabel;
+    @FXML
+    private Hyperlink newCustomerHyper;
+
     private PreparedStatement quantityImport = null;
     private PreparedStatement quantityBill = null;
     ObservableList<DetailBill> list = FXCollections.observableArrayList();
@@ -342,6 +347,11 @@ public class CreateNewBillController implements Initializable {
         addCBBProduct();
         addCBBPay();
         setDate();
+        newCustomerHyper.setOnAction(e -> {
+            Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
+            stage.close();
+            openUI.Open_UI("CustomerUI.fxml");
+        });
         new AutoCompleteBox(cbbCustomer);
         if(openUI.IDBill == 0)
         {
@@ -565,20 +575,37 @@ public class CreateNewBillController implements Initializable {
         }
     }
 
+//    @FXML
+//    void deleteRow(KeyEvent event) {
+//        if(openUI.IDBill == 0)
+//        {
+//            if(DetailBillTableView.getSelectionModel().getSelectedItem() != null)
+//            {
+//                if(event.getCode() == KeyCode.BACK_SPACE)
+//                {
+//                    list.remove(DetailBillTableView.getSelectionModel().getSelectedItem());
+//                    DetailBillTableView.setItems(list);
+//                }
+//            }
+//        }
+//    }
     @FXML
-    void deleteRow(KeyEvent event) {
-        if(openUI.IDBill == 0)
+void deleteRow(KeyEvent event) {
+    if(openUI.IDBill == 0)
+    {
+        if(DetailBillTableView.getSelectionModel().getSelectedItem() != null)
         {
-            if(DetailBillTableView.getSelectionModel().getSelectedItem() != null)
+            if(event.getCode() == KeyCode.BACK_SPACE)
             {
-                if(event.getCode() == KeyCode.BACK_SPACE)
-                {
-                    list.remove(DetailBillTableView.getSelectionModel().getSelectedItem());
-                    DetailBillTableView.setItems(list);
-                }
+                double total = Double.parseDouble(totalMoneyTextField.getText());
+                total -= DetailBillTableView.getSelectionModel().getSelectedItem().getIntoMoney();
+                totalMoneyTextField.setText(total + "");
+                list.remove(DetailBillTableView.getSelectionModel().getSelectedItem());
+                DetailBillTableView.setItems(list);
             }
         }
     }
+}
 
     public void loaddetailbill()
     {
@@ -641,7 +668,7 @@ public class CreateNewBillController implements Initializable {
         signTable.addCell(new Cell().add(new Paragraph("Cashier\n\n\n" + cashierTextField.getText()).setBold().setTextAlignment(TextAlignment.CENTER).setFontSize(13)).setBorder(Border.NO_BORDER));
 
         document.add(new Paragraph(dateTextField.getText()).setTextAlignment(TextAlignment.RIGHT).setItalic());
-        document.add(new Paragraph("BILL").setTextAlignment(TextAlignment.CENTER).setFontSize(16).setBold());
+        document.add(new Paragraph("Retail Sale Invoice").setTextAlignment(TextAlignment.CENTER).setFontSize(16).setBold());
         document.add(new Paragraph("\n"));
         document.add(informationTable);
         document.add(new Paragraph("\n"));

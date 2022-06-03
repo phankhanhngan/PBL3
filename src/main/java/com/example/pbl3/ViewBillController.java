@@ -38,6 +38,8 @@ public class ViewBillController implements Initializable {
     @FXML
     private MenuItem account;
     @FXML
+    private MenuItem statistics;
+    @FXML
     private MenuItem logout;
     @FXML
     private MenuItem importPrd;
@@ -166,8 +168,8 @@ public class ViewBillController implements Initializable {
     public void loadTableBill()
     {
         String selectBill = "select ID_Bill, customer.ID as IDCustomer, concat(customer.firstname, ' ', customer.lastname) as CustomerName,Date,phone_number,concat(account.firstname, ' ', account.lastname) as CashierName,Total from bill \n" +
-                "inner join customer on bill.ID_Customer = customer.ID\n" +
-                "inner join account on bill.Cashier_Phone = account.phone_number";
+                "left join customer on bill.ID_Customer = customer.ID\n" +
+                "left join account on bill.Cashier_Phone = account.phone_number";
 
         try {
             ResultSet queryResult = bill.executeQuery(selectBill);
@@ -371,6 +373,7 @@ public class ViewBillController implements Initializable {
         if(openUI.typecashier == false)
         {
             account.setVisible(false);
+            statistics.setVisible(false);
         }
     }
 }

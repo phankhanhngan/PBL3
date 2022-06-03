@@ -57,7 +57,7 @@
                 <Font size="14.0" />
             </font>
         </JFXButton>
-      <MenuBar centerShape="false" prefHeight="26.0" prefWidth="1051.0" style="-fx-background-color: rgba(192,162,232,0.6);">
+      <MenuBar centerShape="false" prefHeight="26.0" prefWidth="944.0" style="-fx-background-color: rgba(192,162,232,0.6);">
          <menus>
             <Menu mnemonicParsing="false" text="Home">
                <items>

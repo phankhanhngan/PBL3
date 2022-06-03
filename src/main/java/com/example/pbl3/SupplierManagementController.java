@@ -58,6 +58,8 @@ public class SupplierManagementController implements Initializable {
     private TextField SupPhoneTextField;
     @FXML
             private MenuItem account;
+    @FXML
+    private MenuItem statistics;
 
     OpenUI openUI = new OpenUI();
     private PreparedStatement add = null;
@@ -152,6 +154,7 @@ public class SupplierManagementController implements Initializable {
         if(openUI.typecashier == false)
         {
             account.setVisible(false);
+            statistics.setVisible(false);
         }
     }
 
@@ -220,8 +223,8 @@ public class SupplierManagementController implements Initializable {
             try {
                 this.update.setString(1, this.SupNameTextField.getText());
                 this.update.setString(2, this.SupAddressTextField.getText());
-                this.update.setInt(3,Integer.parseInt(this.SupIdTextField.getText()));
-                this.update.setString(4,this.SupPhoneTextField.getText());
+                this.update.setString(3,this.SupPhoneTextField.getText());
+                this.update.setInt(4,SupplierTableView.getSelectionModel().getSelectedItem().getSup_Id());
                 this.update.execute();
                 butResetOnAction();
                 this.loadTable();

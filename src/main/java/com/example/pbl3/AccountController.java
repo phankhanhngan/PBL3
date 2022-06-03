@@ -76,6 +76,8 @@ public class AccountController implements Initializable {
     private TableColumn<Account, Boolean> Col_TypeOfUser;
     @FXML
     private MenuItem account;
+    @FXML
+    private MenuItem statistics;
 
     private ObservableList<Account> accountsList;
     OpenUI openUI = new OpenUI();
@@ -145,6 +147,7 @@ public class AccountController implements Initializable {
         addressTextField.setText("");
         managerRadioButton.setSelected(false);
         cashierRadioButton.setSelected(false);
+        addButton.setDisable(false);
     }
     private class JFXPasswordCellValueFactory implements Callback<TableColumn.CellDataFeatures<Account, PasswordField>, ObservableValue<PasswordField>> {
 
@@ -400,6 +403,7 @@ public class AccountController implements Initializable {
         if(openUI.typecashier == false)
         {
             account.setVisible(false);
+            statistics.setVisible(false);
         }
     }
 }

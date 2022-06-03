@@ -55,6 +55,9 @@ public class HomepageController implements Initializable {
     private MenuItem account;
 
     @FXML
+    private MenuItem statistics;
+
+    @FXML
     private MenuItem bill;
 
     @FXML
@@ -362,6 +365,7 @@ public class HomepageController implements Initializable {
         if(openUI.typecashier == false)
         {
             account.setVisible(false);
+            statistics.setVisible(false);
         }
     }
 

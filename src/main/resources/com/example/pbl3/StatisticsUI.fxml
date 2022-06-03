@@ -119,5 +119,15 @@
             </Menu>
          </menus>
       </MenuBar>
+      <Label fx:id="piechartNameLabel" layoutX="65.0" layoutY="89.0" prefHeight="18.0" prefWidth="95.0" textFill="#000000a9">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="columnChartNameLabel" layoutX="45.0" layoutY="443.0" prefHeight="18.0" prefWidth="57.0" textFill="#000000a9">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

@@ -99,6 +99,10 @@ public class StatisticsController implements Initializable {
     @FXML
     private Label labelInfo;
     @FXML
+    private Label piechartNameLabel;
+    @FXML
+    private Label columnChartNameLabel;
+    @FXML
             private MenuItem account;
     OpenUI openUI = new OpenUI();
 
@@ -336,7 +340,8 @@ public class StatisticsController implements Initializable {
                 loadBarChart_Revenue(query);
                 String query2= "select sum(detailbill.Quantity*product.SalePrice) as Sale,sum(detailbill.Quantity) as Quantity, product.Category from detailbill inner join product on detailbill.Product = product.ProductName inner join bill on detailbill.ID_Bill = bill.ID_Bill where(Date>= '"+startDate.toString()+"'and Date <='"+endDate.toString()+"') group by product.Category";
                 loadPieChart(query2);
-
+                piechartNameLabel.setText("Doanh thu theo danh mục các sản phẩm bán được theo ngày");
+                columnChartNameLabel.setText("Doanh thu theo ngày");
             }
             else{
                 Notifications.create().text("You need to choose valid date (<= 31 days). Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
@@ -350,11 +355,12 @@ public class StatisticsController implements Initializable {
             end_date.setValue(date_end);
             Date end_Date = Date.valueOf(end_date.getValue());
             Date start_Date = Date.valueOf(start_date.getValue());
-            String query = "select sum(bill.Total) as Sale,count(bill.ID_Bill) as quantityBill, concat(Month(Date),'/',Year(Date)) as NewDate from bill where (Date>= '"+start_Date.toString()+"'and Date <='"+end_Date.toString()+"') group by Month(Date)";
+            String query = "select sum(bill.Total) as Sale,count(bill.ID_Bill) as quantityBill, concat(Month(Date),'/',Year(Date)) as NewDate from bill where (Date>= '"+start_Date.toString()+"'and Date <='"+end_Date.toString()+"') group by Month(Date) order by Date";
             loadBarChart_Revenue(query);
             String query2= "select sum(detailbill.Quantity*product.SalePrice) as Sale,sum(detailbill.Quantity) as Quantity, product.Category from detailbill inner join product on detailbill.Product = product.ProductName inner join bill on detailbill.ID_Bill = bill.ID_Bill where(Date>= '"+startDate.toString()+"'and Date <='"+endDate.toString()+"') group by product.Category";
             loadPieChart(query2);
-
+            piechartNameLabel.setText("Doanh thu theo danh mục các sản phẩm bán được theo tháng");
+            columnChartNameLabel.setText("Doanh thu theo tháng");
         }
     }
 

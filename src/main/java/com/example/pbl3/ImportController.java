@@ -55,6 +55,8 @@ public class ImportController implements Initializable {
     @FXML
     private MenuItem account;
     @FXML
+    private MenuItem statistics;
+    @FXML
     private MenuItem product;
     @FXML
     private MenuItem logout;
@@ -733,6 +735,7 @@ public class ImportController implements Initializable {
         if(openUI.typecashier == false)
         {
             account.setVisible(false);
+            statistics.setVisible(false);
         }
     }
 
