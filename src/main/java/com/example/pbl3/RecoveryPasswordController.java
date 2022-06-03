@@ -6,13 +6,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.Random;
+
+import com.example.pbl3.DatabaseConnection;
+import com.example.pbl3.OpenUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -27,10 +26,8 @@ import javax.mail.Transport;
 import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.lang.invoke.StringConcatFactory;
 import java.util.ResourceBundle;
 
-import static com.sun.tools.javac.jvm.ByteCodes.invokedynamic;
 
 public class RecoveryPasswordController implements Initializable {
     @FXML
@@ -40,8 +37,6 @@ public class RecoveryPasswordController implements Initializable {
     @FXML
     private Button confirmButton;
     @FXML
-    private Button sendResetCodeButton;
-    @FXML
     private TextField userGmailTextField;
     @FXML
     private TextField codeTextField;
@@ -50,10 +45,6 @@ public class RecoveryPasswordController implements Initializable {
     @FXML
     private Hyperlink backToHome;
     int value;
-    String gmail;
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
 
     private OpenUI openUI = new OpenUI();
 
@@ -61,8 +52,6 @@ public class RecoveryPasswordController implements Initializable {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
-    }
-    public RecoveryPasswordController() {
     }
 
     @FXML
@@ -94,13 +83,14 @@ public class RecoveryPasswordController implements Initializable {
         }
     }
 
+
     @FXML
     void confirmOnAcTion(ActionEvent event) {
         String s = String.valueOf(this.value);
         if (this.value == Integer.parseInt(this.codeTextField.getText())) {
             Stage stage = (Stage)this.confirmButton.getScene().getWindow();
             stage.close();
-            this.createForgetPasswordSecondStage(event);
+            openUI.Open_UI("RecoveryPasswordSecondUI.fxml");
         } else {
             this.announceLabel.setText("Password doesn't match!");
         }
@@ -110,17 +100,7 @@ public class RecoveryPasswordController implements Initializable {
     void backToLoginOnAction(ActionEvent event) {
         Stage stage = (Stage)this.backToLoginHyperLink.getScene().getWindow();
         stage.close();
-
-        try {
-            Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("LoginUI.fxml"));
-            Stage forgetpassword = new Stage();
-            forgetpassword.setScene(new Scene(root));
-            forgetpassword.show();
-        } catch (Exception var5) {
-            var5.printStackTrace();
-            var5.getCause();
-        }
-
+        openUI.Open_UI("LoginUI.fxml");
     }
 
     public void SendMail(String to) {
@@ -152,23 +132,6 @@ public class RecoveryPasswordController implements Initializable {
 
     }
 
-    public void createForgetPasswordSecondStage(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("RecoverPasswordSecondUI.fxml"));
-            this.root = (Parent)loader.load();
-            RecoveryPasswordSecondController rpsc = (RecoveryPasswordSecondController)loader.getController();
-            rpsc.gmail = this.userGmailTextField.getText();
-            this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            this.scene = new Scene(this.root);
-            this.stage.setScene(this.scene);
-            this.stage.show();
-        } catch (Exception var4) {
-            var4.printStackTrace();
-            var4.getCause();
-        }
-
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(openUI.namecashier == null) {
@@ -180,3 +143,5 @@ public class RecoveryPasswordController implements Initializable {
         }
     }
 }
+
+

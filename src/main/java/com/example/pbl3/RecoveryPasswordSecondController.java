@@ -1,17 +1,17 @@
 package com.example.pbl3;
 
-import java.sql.Connection;
-import java.sql.Statement;
+import com.example.pbl3.DatabaseConnection;
+import com.example.pbl3.OpenUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
+
+import java.sql.Connection;
+import java.sql.Statement;
 
 public class RecoveryPasswordSecondController {
     @FXML
@@ -41,7 +41,7 @@ public class RecoveryPasswordSecondController {
                 this.announceLabel.setText("Password does not match");
             }
         } else {
-            this.announceLabel.setText("Please enter password and confimPassword!");
+            this.announceLabel.setText("Please enter password and confirmPassword!");
         }
 
     }
@@ -53,6 +53,7 @@ public class RecoveryPasswordSecondController {
         stage.close();
         this.backLoginStage();
     }
+
 
     public void updatePassword() {
         DatabaseConnection connectNow = new DatabaseConnection();
@@ -71,16 +72,7 @@ public class RecoveryPasswordSecondController {
     }
 
     public void backLoginStage() {
-        try {
-            Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("LoginUI.fxml"));
-            Stage forgetpassword = new Stage();
-            forgetpassword.setScene(new Scene(root));
-            forgetpassword.show();
-        } catch (Exception var3) {
-            var3.printStackTrace();
-            var3.getCause();
-        }
-
+        OpenUI openUI = new OpenUI();
+        openUI.Open_UI("LoginUI.fxml");
     }
 }
-
