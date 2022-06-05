@@ -1,5 +1,7 @@
 package com.example.pbl3;
 
+import com.example.pbl3.View.ProductController;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

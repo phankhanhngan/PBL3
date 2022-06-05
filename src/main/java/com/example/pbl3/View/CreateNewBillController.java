@@ -2,31 +2,37 @@ package com.example.pbl3;
 
 import java.io.File;
 import java.io.IOException;
+
+import com.example.pbl3.DAL.DatabaseHelper;
+import com.example.pbl3.View.ProductController;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.IElement;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.sun.mail.imap.protocol.ID;
+import com.jfoenix.controls.JFXDialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.PrinterJob;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Font;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.util.converter.LocalDateStringConverter;
 import org.controlsfx.control.Notifications;
 import com.itextpdf.layout.Document;
 
@@ -55,7 +61,21 @@ public class CreateNewBillController implements Initializable {
     @FXML
     private TableView<DetailBill> DetailBillTableView;
     @FXML
+    private TableColumn<DetailBill, Double> Col_IntoMoney1;
+    @FXML
+    private TableColumn<DetailBill, String> Col_Product1;
+    @FXML
+    private TableColumn<DetailBill, Integer> Col_Quantity1;
+    @FXML
+    private TableColumn<DetailBill, Integer> Col_STT1;
+    @FXML
+    private TableColumn<DetailBill, Double> Col_UnitPrice1;
+    @FXML
+    private TableView<DetailBill> DetailBillTableView1;
+    @FXML
     private Label addressCustomerTextField;
+    @FXML
+    private Label addressCustomerTextField1;
     @FXML
     private JFXButton butAdd;
     @FXML
@@ -64,6 +84,8 @@ public class CreateNewBillController implements Initializable {
     private JFXButton button1;
     @FXML
     private Label cashierTextField;
+    @FXML
+    private Label cashierTextField1;
     @FXML
     private ComboBox<String> cbbCustomer;
     @FXML
@@ -75,13 +97,33 @@ public class CreateNewBillController implements Initializable {
     @FXML
     private Label customerTextField;
     @FXML
+    private Label customerTextField1;
+    @FXML
     private Label dateTextField;
+    @FXML
+    private Label dateTextField1;
     @FXML
     private Label totalMoneyTextField;
     @FXML
+    private Label totalMoneyTextField1;
+    @FXML
     private Label customerLabel;
     @FXML
+    private Label customerLabel1;
+    @FXML
+    private AnchorPane printAnchorPane;
+    @FXML
+    private AnchorPane AnchorPane;
+    @FXML
+    private StackPane stackPane;
+    @FXML
     private Label payLabel;
+    @FXML
+    private Label payLabel1;
+    @FXML
+    private Hyperlink newCustomerHyperLink;
+
+    JFXDialog dialog = new JFXDialog();
     private PreparedStatement quantityImport = null;
     private PreparedStatement quantityBill = null;
     ObservableList<DetailBill> list = FXCollections.observableArrayList();
@@ -321,12 +363,12 @@ public class CreateNewBillController implements Initializable {
             addressCustomerTextField.setText(getAddress(s[0]));
             customerTextField.setText(s[2]);
         }
-
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        printAnchorPane.setVisible(false);
         DatabaseConnection connection = new DatabaseConnection();
         Connection link = connection.getConnection();
         try {
@@ -345,14 +387,16 @@ public class CreateNewBillController implements Initializable {
         new AutoCompleteBox(cbbCustomer);
         if(openUI.IDBill == 0)
         {
+            newCustomerHyperLink.setVisible(true);
             cashierTextField.setText(openUI.namecashier);
             button.setText("Create New Bill");
             button1.setText("Cancel");
         }
         else
         {
-            button.setText("Cancel");
-            button1.setText("Print");
+            newCustomerHyperLink.setVisible(false);
+            button.setText("Print");
+            button1.setText("Cancel");
             ResultSet queryResult = getdetailbill();
             String cashiername = "", customername = "";
             double total = 0;
@@ -539,7 +583,8 @@ public class CreateNewBillController implements Initializable {
         }
         else
         {
-            Stage stage = (Stage) this.button.getScene().getWindow();
+            printBill();
+            Stage stage = (Stage) this.button1.getScene().getWindow();
             stage.close();
             openUI.setIDBill(0);
             openUI.Open_UI("ViewBillUI.fxml");
@@ -549,20 +594,10 @@ public class CreateNewBillController implements Initializable {
     @FXML
     void button1OnAction(ActionEvent event) {
         DetailBill.setSTT();
-        if(openUI.IDBill == 0)
-        {
-            Stage stage = (Stage) this.button1.getScene().getWindow();
-            stage.close();
-            openUI.Open_UI("ViewBillUI.fxml");
-        }
-        else
-        {
-            try {
-                CreateBillPDF();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        Stage stage = (Stage) this.button1.getScene().getWindow();
+        stage.close();
+        openUI.setIDBill(0);
+        openUI.Open_UI("ViewBillUI.fxml");
     }
 
     @FXML
@@ -598,6 +633,32 @@ public class CreateNewBillController implements Initializable {
             this.Col_UnitPrice.setCellValueFactory(new PropertyValueFactory("unitPrice"));
             this.Col_IntoMoney.setCellValueFactory(new PropertyValueFactory("intoMoney"));
             DetailBillTableView.setItems(list);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+    }
+
+    public void loaddetailbill1()
+    {
+        list.clear();
+        DetailBill.setSTT();
+        query = "select * from detailbill where ID_Bill = " + openUI.IDBill;
+        try{
+            PreparedStatement pst = connectDB.prepareStatement(query);
+            ResultSet queryResult = pst.executeQuery();
+            while (queryResult.next())
+            {
+                list.add(new DetailBill(queryResult.getString("Product"), queryResult.getInt("Quantity")));
+            }
+            this.Col_STT1.setCellValueFactory(new PropertyValueFactory("STT"));
+            this.Col_Product1.setCellValueFactory(new PropertyValueFactory("Product"));
+            this.Col_Quantity1.setCellValueFactory(new PropertyValueFactory("Quantity"));
+            this.Col_UnitPrice1.setCellValueFactory(new PropertyValueFactory("unitPrice"));
+            this.Col_IntoMoney1.setCellValueFactory(new PropertyValueFactory("intoMoney"));
+            DetailBillTableView1.setItems(list);
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -677,4 +738,73 @@ public class CreateNewBillController implements Initializable {
         cbbProduct.getSelectionModel().clearSelection();
         cbbQuantity.getSelectionModel().clearSelection();
     }
+
+    public void loadPrintBill() {
+        ResultSet queryResult = getdetailbill();
+        String cashiername = "", customername = "", address = "", pay = "";
+        double total = 0;
+        Date item = null;
+        String labelCustomer = "";
+        try {
+            if(queryResult.next()) {
+                cashiername = queryResult.getString("cashiername");
+                customername = queryResult.getString("customername");
+                address = queryResult.getString("Address");
+                pay = queryResult.getString("Pay");
+                total = queryResult.getDouble("Total");
+                item = queryResult.getDate("Date");
+                labelCustomer = queryResult.getString("customername") + "    SDT:   " + queryResult.getString("phone");
+
+            }
+            customerLabel1.setText(labelCustomer);
+            cashierTextField1.setText(cashiername);
+            customerTextField1.setText(customername);
+            totalMoneyTextField1.setText(total + "");
+            payLabel1.setText(pay);
+            addressCustomerTextField1.setText(address);
+            loaddetailbill1();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            e.getCause();
+        }
+        String s = "Day " + item.getDate() + " Month " + (item.getMonth()+1) + " Year " + (item.getYear()+1900);
+        dateTextField1.setText(s);
+    }
+
+    private void printBill() {
+        printAnchorPane.setVisible(true);
+        loadPrintBill();
+        PrinterJob job = PrinterJob.createPrinterJob();
+        AnchorPane.setEffect(new BoxBlur(3, 3, 3));
+//        printAnchorPane.setEffect(new BoxBlur(3, 3, 3));
+        dialog.setOverlayClose(true);
+        dialog.setContent(printAnchorPane);
+        //dialog.setBackground(Background.EMPTY);
+        dialog.setDialogContainer(stackPane);
+        dialog.getStyleClass().add("jfx-dialog-overlay-pane");
+        dialog.setStyle("-fx-background-color: transparent");
+        dialog.show();
+
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
+        if (printerJob != null) {
+            PageLayout pageLayout = printerJob.getPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, 50,0,40,0);
+            printerJob.showPageSetupDialog(printAnchorPane.getScene().getWindow());
+            printerJob.showPrintDialog(printAnchorPane.getScene().getWindow());
+            boolean success = printerJob.printPage(pageLayout, printAnchorPane);
+            if (success) {
+                printerJob.endJob();
+                dialog.close();
+            }
+        }
+    }
+
+    @FXML
+    void newCustomerOnAction(ActionEvent event) {
+        openUI.setIDBill(0);
+        Stage stage = (Stage) this.newCustomerHyperLink.getScene().getWindow();
+        stage.close();
+        openUI.Open_UI("CustomerUI.fxml");
+    }
+
 }

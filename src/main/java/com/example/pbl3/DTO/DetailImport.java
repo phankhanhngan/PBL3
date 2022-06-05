@@ -5,6 +5,9 @@ public class DetailImport {
     private String product;
     private int quantity;
     private Double unit_price;
+    private int detail_id;
+    private Double amount;
+    private int importID;
 
     public String getProduct() {
         return product;
@@ -30,11 +33,9 @@ public class DetailImport {
         this.detail_id = detail_id;
     }
 
-    private int detail_id;
-    private Double amount;
-    private int importID;
 
-    public DetailImport(String productName, int quantity, Double unitPrice, Double amount) {
+    public DetailImport(int importID,String productName, int quantity, Double unitPrice, Double amount) {
+        this.importID = importID;
         this.detail_id = ++id;
         this.product = productName;
         this.quantity = quantity;

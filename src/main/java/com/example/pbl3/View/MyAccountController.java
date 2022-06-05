@@ -1,15 +1,11 @@
 package com.example.pbl3;
 
+import com.example.pbl3.BLL.BLLProject;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
-import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.Chart;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -19,11 +15,8 @@ import org.controlsfx.control.Notifications;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.PreencodedMimeBodyPart;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.Random;
@@ -135,24 +128,10 @@ public class MyAccountController implements Initializable {
     }
 
     public void sendCode() {
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDb = connectNow.getConnection();
-        String verifyLogin = "SELECT count(1) FROM account WHERE gmail = '" + openUI.gmail + "'";
-
-        try {
-            Statement statement = connectDb.createStatement();
-            ResultSet queryResult = statement.executeQuery(verifyLogin);
-
-            while(queryResult.next()) {
-                if (queryResult.getInt(1) == 1) {
-                    this.SendMail(this.openUI.gmail);
-                    Notifications.create().text("Code sent to your gmail. Check it out!").title("Sent successful!").hideAfter(Duration.seconds(5.0D)).show();
-                    break;
-                }
-            }
-        } catch (Exception var8) {
-            var8.printStackTrace();
-            var8.getCause();
+        if(BLLProject.CheckMail(openUI.gmail))
+        {
+            this.SendMail(this.openUI.gmail);
+            Notifications.create().text("Code sent to your gmail. Check it out!").title("Sent successful!").hideAfter(Duration.seconds(5.0D)).show();
         }
     }
 

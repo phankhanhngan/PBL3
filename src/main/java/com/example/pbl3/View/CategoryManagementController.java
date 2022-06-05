@@ -1,6 +1,6 @@
 package com.example.pbl3;
 
-import com.jfoenix.controls.JFXBadge;
+import com.example.pbl3.DTO.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,28 +8,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.action.Action;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.*;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.Date;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
-public class SupplierManagementController implements Initializable {
+public class CategoryManagementController implements Initializable {
+
     @FXML
-    private Label LabelSupplier;
+    private Label LabelCategory;
     @FXML
-    private AnchorPane AnchorPane;
+    private javafx.scene.layout.AnchorPane AnchorPane;
     @FXML
     private Button addButton;
     @FXML
@@ -39,23 +34,13 @@ public class SupplierManagementController implements Initializable {
     @FXML
     private Button updateButton;
     @FXML
-    private TableView<Supplier> SupplierTableView;
+    private TableView<Category> CategoryTableView;
     @FXML
-    private TableColumn<Supplier, Integer> Col_Id;
+    private TableColumn<Category, Integer> Col_Id;
     @FXML
-    private TableColumn<Supplier, String> Col_Name;
+    private TableColumn<Category, String> Col_Name;
     @FXML
-    private TableColumn<Supplier, String> Col_Address;
-    @FXML
-    private TableColumn<Supplier, String> Col_Phone;
-    @FXML
-    private TextField SupIdTextField;
-    @FXML
-    private TextField SupNameTextField;
-    @FXML
-    private TextField SupAddressTextField;
-    @FXML
-    private TextField SupPhoneTextField;
+    private TextField CateNameTextField;
     @FXML
             private MenuItem account;
 
@@ -158,22 +143,21 @@ public class SupplierManagementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         decentralization();
-
         DatabaseConnection connection = new DatabaseConnection();
         Connection link = connection.getConnection();
         try {
 
-            String queryAdd = "insert into supplier (Supplier_Name,Supplier_Address,Supplier_Phone) values (?,?,?)";
+            String queryAdd = "insert into category (Category_Name) values (?)";
             this.add = link.prepareStatement(queryAdd);
-            String queryDelete = "DELETE FROM supplier WHERE Id  = ? ";
+            String queryDelete = "DELETE FROM category WHERE Id  = ? ";
             this.delete = link.prepareStatement(queryDelete);
-            String queryUpdate = "update supplier set Supplier_Name = ? , Supplier_Address = ?, Supplier_Phone = ? where Id = ?";
+            String queryUpdate = "update supplier set Category_Name = ? where Id = ?";
             this.update = link.prepareStatement(queryUpdate);
 
         } catch (SQLException var7) {
             var7.printStackTrace();
         }
-        LabelSupplier.setText("Add Supplier");
+        LabelCategory.setText("Add Category");
         this.loadTable();
         this.resetButton.setOnAction(e->{
             this.butResetOnAction();
@@ -194,7 +178,7 @@ public class SupplierManagementController implements Initializable {
         this.updateButton.setOnAction(e->{
             this.butUpdateOnAction();
         });
-        this.SupplierTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        this.CategoryTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 this.SelectedRowAction();
             }
@@ -203,59 +187,45 @@ public class SupplierManagementController implements Initializable {
     }
     public void SelectedRowAction()
     {
-        if (((Supplier)this.SupplierTableView.getSelectionModel().getSelectedItem()).getSup_Name() != "") {
+        if (((Category)this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Name() != "") {
             addButton.setDisable(true);
-            LabelSupplier.setText("Supplier Details");
-            this.SupNameTextField.setText(((Supplier)this.SupplierTableView.getSelectionModel().getSelectedItem()).getSup_Name());
-            this.SupAddressTextField.setText(((Supplier)this.SupplierTableView.getSelectionModel().getSelectedItem()).getSup_Address());
-            this.SupPhoneTextField.setText(((Supplier)this.SupplierTableView.getSelectionModel().getSelectedItem()).getSup_Phone());
+            LabelCategory.setText("Category Details");
+            this.CateNameTextField.setText(((Category)this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Name());
+
         }
     }
     public void butUpdateOnAction()
     {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Update the supplier?", ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
-
-        if (alert.getResult() == ButtonType.YES) {
-            try {
-                this.update.setString(1, this.SupNameTextField.getText());
-                this.update.setString(2, this.SupAddressTextField.getText());
-                this.update.setInt(3,Integer.parseInt(this.SupIdTextField.getText()));
-                this.update.setString(4,this.SupPhoneTextField.getText());
-                this.update.execute();
-                butResetOnAction();
-                this.loadTable();
-                Notifications.create().text("You have update product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-            } catch (SQLException e) {
-                Notifications.create().text("You have failed update account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            }
+        try {
+            this.update.setString(1, this.CateNameTextField.getText());
+            this.update.setInt(2,CategoryTableView.getSelectionModel().getSelectedItem().getCate_Id());
+            this.update.execute();
+            butResetOnAction();
+            this.loadTable();
+            Notifications.create().text("You have update product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+        } catch (SQLException e) {
+            Notifications.create().text("You have failed update account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
         }
+
     }
     public void butDeleteOnAction()
     {
-        Supplier selected = SupplierTableView.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete the supplier?", ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
-
-        if (alert.getResult() == ButtonType.YES) {
-            try {
-                this.delete.setInt(1,selected.getSup_Id());
-                delete.execute();
-                Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-                loadTable();
-                butResetOnAction();
-            } catch (Exception var15) {
-                var15.printStackTrace();
-                Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            }
+        Category selected = CategoryTableView.getSelectionModel().getSelectedItem();
+        try {
+            this.delete.setInt(1,selected.getCate_Id());
+            delete.execute();
+            Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+            loadTable();
+            butResetOnAction();
+        } catch (Exception var15) {
+            var15.printStackTrace();
+            Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
         }
     }
     public void butAddOnAction()
     {
         try {
-            this.add.setString(1, this.SupNameTextField.getText());
-            this.add.setString(2,this.SupAddressTextField.getText());
-            this.add.setString(3,this.SupPhoneTextField.getText());
+            this.add.setString(1, this.CateNameTextField.getText());
             this.add.execute();
             Notifications.create().text("You have add product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
             butResetOnAction();
@@ -270,43 +240,34 @@ public class SupplierManagementController implements Initializable {
     {
         //this.loadTable();
         addButton.setDisable(false);
-        LabelSupplier.setText("Add Supplier");
-        SupNameTextField.setText("");
-        SupAddressTextField.setText("");
-        SupPhoneTextField.setText("");
-        this.SupplierTableView.getSelectionModel().clearSelection();
+        LabelCategory.setText("Add Category");
+        CateNameTextField.setText("");
+        this.CategoryTableView.getSelectionModel().clearSelection();
     }
 
-    public ObservableList<Supplier> getAllSupplier()
+    public ObservableList<Category> getAllCategory()
     {
-        ObservableList<Supplier> list = FXCollections.observableArrayList();
         DatabaseConnection ConnectNow = new DatabaseConnection();
         Connection connectDB = ConnectNow.getConnection();
-        String query = "select * from supplier";
+        String query = "select * from category";
+        ObservableList<Category> listCategory = FXCollections.observableArrayList();
         try {
             Statement statement = connectDB.createStatement();
             ResultSet queryResult = statement.executeQuery(query);
 
             while(queryResult.next()) {
-                int Supplier_Id = queryResult.getInt("Id");
-                String Supplier_Name = queryResult.getString("Supplier_Name");
-                String Supplier_Address = queryResult.getString("Supplier_Address");
-                String Supplier_Phone = queryResult.getString("Supplier_Phone");
-
-                Supplier supplier = new Supplier(Supplier_Id,Supplier_Name,Supplier_Address,Supplier_Phone);
-                list.add(supplier);
+                int Category_Id = queryResult.getInt("Id");
+                String Category_Name = queryResult.getString("Category_Name");
+                Category category = new Category(Category_Id,Category_Name);
+                listCategory.add(category);
             }
-
-            this.Col_Id.setCellValueFactory(new PropertyValueFactory("Sup_Id"));
-            this.Col_Name.setCellValueFactory(new PropertyValueFactory("Sup_Name"));
-            this.Col_Address.setCellValueFactory(new PropertyValueFactory("Sup_Address"));
-            this.Col_Phone.setCellValueFactory(new PropertyValueFactory("Sup_Phone"));
-
+            this.Col_Id.setCellValueFactory(new PropertyValueFactory("Cate_Id"));
+            this.Col_Name.setCellValueFactory(new PropertyValueFactory("Cate_Name"));
         } catch (SQLException var14) {
             Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, (String)null, var14);
             var14.printStackTrace();
         }
-        return list;
+        return listCategory;
     }
     public ObservableList<String> getAllSupplierName()
     {
@@ -348,11 +309,11 @@ public class SupplierManagementController implements Initializable {
     }
     public void loadTable()
     {
-        this.SupplierTableView.setItems(this.getAllSupplier());
+        this.CategoryTableView.setItems(this.getAllCategory());
     }
     public boolean ValidationField()
     {
-        return(SupAddressTextField.getText().trim().isEmpty() || SupNameTextField.getText().trim().isEmpty());
+        return( CateNameTextField.getText().trim().isEmpty());
     }
 
 }

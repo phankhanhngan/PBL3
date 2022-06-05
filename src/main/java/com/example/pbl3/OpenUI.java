@@ -1,10 +1,9 @@
-package com.example.pbl3;
+package com.example.pbl3.View;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class OpenUI {
     public static int IDBill = 0;
