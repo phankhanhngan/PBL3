@@ -76,6 +76,8 @@ public class CustomerController implements Initializable  {
     private Button updateButton;
     @FXML
     private MenuItem account;
+    @FXML
+    private MenuItem statistics;
 
     OpenUI openUI = new OpenUI();
 
@@ -170,6 +172,7 @@ public class CustomerController implements Initializable  {
         birthdayDatePicker.setValue(LocalDate.now());
         addButton.setDisable(false);
         CustomerTableView.getSelectionModel().clearSelection();
+        birthdayDatePicker.setValue(null);
     }
 
     public void Delete()
@@ -336,6 +339,7 @@ public class CustomerController implements Initializable  {
         if(BLLProject.typecashier == false)
         {
             account.setVisible(false);
+            statistics.setVisible(false);
         }
     }
 }
