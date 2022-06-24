@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.CategoryManagementController">
+<AnchorPane fx:id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.View.CategoryManagementController">
     <children>
         <AnchorPane layoutX="27.0" layoutY="240.0" prefHeight="234.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
             <children>
@@ -95,7 +95,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Inventory">
                <items>
-                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receive Inventory" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Request">

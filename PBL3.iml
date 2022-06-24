@@ -10,76 +10,23 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://G:/pdfwriter/bcpkix-jdk15on-1.70.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/bcpkix-jdk15on-1.70.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/bcprov-jdk15on-1.70.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/bcutil-jdk15on-1.70.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/commons-7.2.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/io-7.2.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/kernel-7.2.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/layout-7.2.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/slf4j-api-1.7.36.jar!/" />
+          <root url="file://$USER_HOME$/Desktop" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://G:/pdfwriter/bcprov-jdk15on-1.70.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://G:/pdfwriter/bcutil-jdk15on-1.70.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://G:/pdfwriter/commons-7.2.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://G:/pdfwriter/io-7.2.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://G:/pdfwriter/kernel-7.2.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://G:/pdfwriter/layout-7.2.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://G:/pdfwriter/slf4j-api-1.7.36.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$USER_HOME$/Desktop/PBL3-ORIE/src/main/java" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:17.0.1" level="project" />
@@ -101,7 +48,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../drive-download-20220407T065003Z-001/activation-1.1.jar!/" />
+          <root url="jar://G:/AnimationJavafx/AnimateFX-1.2.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -110,7 +57,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../drive-download-20220407T065003Z-001/AnimateFX-1.2.1.jar!/" />
+          <root url="jar://G:/jfoenix/jfoenix-9.0.10.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -119,7 +66,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../drive-download-20220407T065003Z-001/fontawesomefx-8.9.jar!/" />
+          <root url="jar://G:/mailActivation/activation-1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -128,7 +75,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../drive-download-20220407T065003Z-001/javax.mail-1.6.2.jar!/" />
+          <root url="jar://G:/mailActivation/javax.mail-1.6.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -137,38 +84,10 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../drive-download-20220407T065003Z-001/mysql-connector-java-8.0.27.jar!/" />
+          <root url="jar://G:/mysql-connector-java-8.0.27/mysql-connector-java-8.0.27/mysql-connector-java-8.0.27.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../drive-download-20220407T065003Z-001/jfoenix-9.0.10.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/bcpkix-jdk15on-1.70.jar!/" />
-          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/bcprov-jdk15on-1.70.jar!/" />
-          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/bcutil-jdk15on-1.70.jar!/" />
-          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/commons-7.2.2.jar!/" />
-          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/io-7.2.2.jar!/" />
-          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/kernel-7.2.2.jar!/" />
-          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/layout-7.2.2.jar!/" />
-          <root url="jar://$USER_HOME$/Downloads/pdfwriter-20220602T234852Z-001/pdfwriter/slf4j-api-1.7.36.jar!/" />
-          <root url="file://$USER_HOME$/Desktop" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$USER_HOME$/Desktop/PBL3-ORIE/src/main/java" />
-        </SOURCES>
       </library>
     </orderEntry>
   </component>

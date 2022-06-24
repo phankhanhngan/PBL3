@@ -18,7 +18,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPane" prefHeight="568.0" prefWidth="435.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.MyAccountController">
+<AnchorPane fx:id="AnchorPane" prefHeight="568.0" prefWidth="435.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.View.MyAccountController">
     <children>
         <ImageView fitHeight="542.0" fitWidth="498.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -147,7 +147,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Inventory">
                <items>
-                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receive Inventory" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Request">

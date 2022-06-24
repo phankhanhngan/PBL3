@@ -11,26 +11,27 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="727.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.ProductController">
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="727.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.View.ProductController">
     <children>
-        <AnchorPane fx:id="AnchorPane" layoutX="1.0" layoutY="1.0" prefHeight="727.0" prefWidth="674.0">
+        <AnchorPane fx:id="AnchorPane" layoutX="1.0" layoutY="1.0" prefHeight="727.0" prefWidth="810.0">
             <children>
                 <AnchorPane fx:id="AnchorPaneProduct" layoutX="28.0" layoutY="179.0" prefHeight="446.0" prefWidth="634.0" style="-fx-background-radius: 32px; -fx-background-color: rgba(192,162,232,0.3);">
                     <children>
                         <ImageView fx:id="ProductImgView" fitHeight="250.0" fitWidth="298.0" layoutX="21.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
-                        <TextField fx:id="txtProductName" layoutX="457.0" layoutY="120.0" prefHeight="27.0" prefWidth="162.0" promptText="Product Name" />
+                        <TextField fx:id="txtProductName" layoutX="457.0" layoutY="120.0" prefHeight="27.0" prefWidth="162.0" promptText="Product Name" stylesheets="@../../../css/textfield.css" />
                         <Label layoutX="361.0" layoutY="126.0" text="Name" />
-                        <TextField fx:id="txtSalePrice" layoutX="457.0" layoutY="169.0" prefHeight="27.0" prefWidth="162.0" promptText="Sale Price" />
+                        <TextField fx:id="txtSalePrice" layoutX="457.0" layoutY="169.0" prefHeight="27.0" prefWidth="162.0" promptText="Sale Price" stylesheets="@../../../css/textfield.css" />
                         <Label layoutX="362.0" layoutY="169.0" text="Sale Price" />
                         <Label layoutX="360.0" layoutY="78.0" text="Category" />
                         <JFXComboBox fx:id="cbbCategory" focusColor="#a580b7" labelFloat="true" layoutX="457.0" layoutY="70.0" prefHeight="27.0" prefWidth="162.0" unFocusColor="WHITE" />
                         <Label layoutX="362.0" layoutY="218.0" text="Serial" />
-                        <TextField fx:id="txtBarcode" layoutX="457.0" layoutY="218.0" prefHeight="27.0" prefWidth="162.0" promptText="Serial" />
+                        <TextField fx:id="txtBarcode" layoutX="457.0" layoutY="218.0" prefHeight="27.0" prefWidth="162.0" promptText="Serial" stylesheets="@../../../css/textfield.css" />
                         <JFXButton fx:id="butAddOK" layoutX="82.0" layoutY="381.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Ok" />
                         <JFXButton fx:id="butBrowse" layoutX="117.0" layoutY="313.0" styleClass="button-type-4" stylesheets="@../../../css/button.css" text="Browse a picture">
                             <cursor>
@@ -44,12 +45,18 @@
                             </font>
                         </Label>
                         <JFXButton fx:id="butUpdateOK" layoutX="82.0" layoutY="381.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Ok" />
-                        <Label layoutX="362.0" layoutY="265.0" text="Quantity" />
-                        <TextField fx:id="txtQuantity" layoutX="457.0" layoutY="265.0" prefHeight="27.0" prefWidth="162.0" promptText="Quantity" />
+                  <TextField fx:id="txtCategory" layoutX="457.0" layoutY="73.0" prefHeight="27.0" prefWidth="162.0" stylesheets="@../../../css/textfield.css" />
                         <JFXButton fx:id="butDetailCancle" layoutX="271.0" layoutY="381.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-3" stylesheets="@../../../css/button.css" text="Cancel" />
+                  <Label fx:id="quatityLabel" layoutX="363.0" layoutY="272.0" text="Quantity" />
+                  <TextField fx:id="txtQuantity" layoutX="457.0" layoutY="267.0" prefHeight="27.0" prefWidth="162.0" promptText="Quantity" style="-fx-opacity: 0.4;" stylesheets="@../../../css/textfield.css" />
                     </children>
                 </AnchorPane>
-                <TableView fx:id="ProductTableView" layoutX="28.0" layoutY="111.0" prefHeight="589.0" prefWidth="634.0" style="-fx-background-radius: 32px;" stylesheets="@../../../css/account.css">
+            <ImageView fitHeight="727.0" fitWidth="865.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../assets/Great%20marketing.png" />
+               </image>
+            </ImageView>
+                <TableView fx:id="ProductTableView" layoutX="211.0" layoutY="144.0" prefHeight="533.0" prefWidth="634.0" style="-fx-background-radius: 32px;" stylesheets="@../../../css/account.css">
                     <columns>
                         <TableColumn fx:id="Col_Barcode" prefWidth="131.1999568939209" text="Serial" />
                         <TableColumn fx:id="Col_Name" prefWidth="192.800048828125" text="Name" />
@@ -68,10 +75,7 @@
                         </ContextMenu>
                     </contextMenu>
                 </TableView>
-                <JFXComboBox fx:id="cbbprice" focusColor="#a580b7" labelFloat="true" layoutX="390.0" layoutY="63.0" prefHeight="26.0" prefWidth="174.0" promptText="Price" unFocusColor="WHITE" />
-                <TextField fx:id="searchTextField" layoutX="28.0" layoutY="58.0" prefHeight="36.0" prefWidth="298.0" promptText="Type here to search" stylesheets="@../../../css/textfield.css" />
-                <JFXButton fx:id="searchBT" layoutX="584.0" layoutY="62.0" onAction="#searchOnAction" prefHeight="27.0" prefWidth="77.0" ripplerFill="#e47fa2" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Search" />
-            <MenuBar centerShape="false" prefHeight="26.0" prefWidth="684.0" style="-fx-background-color: rgba(192,162,232,0.6);">
+            <MenuBar centerShape="false" prefHeight="26.0" prefWidth="866.0" style="-fx-background-color: rgba(192,162,232,0.6);">
                <menus>
                   <Menu mnemonicParsing="false" text="Home">
                      <items>
@@ -92,7 +96,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Inventory">
                      <items>
-                        <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                        <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receive Inventory" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Request">
@@ -107,6 +111,9 @@
                   </Menu>
                </menus>
             </MenuBar>
+                <JFXComboBox fx:id="cbbprice" focusColor="#a580b7" labelFloat="true" layoutX="535.0" layoutY="87.0" prefHeight="26.0" prefWidth="200.0" promptText="Price" unFocusColor="WHITE" />
+                <TextField fx:id="searchTextField" layoutX="535.0" layoutY="37.0" prefHeight="36.0" prefWidth="298.0" promptText="Type here to search" stylesheets="@../../../css/textfield.css" />
+                <JFXButton fx:id="searchBT" layoutX="755.0" layoutY="87.0" onAction="#searchOnAction" prefHeight="27.0" prefWidth="77.0" ripplerFill="#e47fa2" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Search" />
             </children>
         </AnchorPane>
     </children>

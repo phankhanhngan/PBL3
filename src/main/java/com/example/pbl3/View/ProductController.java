@@ -3,21 +3,17 @@
 // (powered by FernFlower decompiler)
 //
 
-package com.example.pbl3;
+package com.example.pbl3.View;
 
 import java.io.*;
 import java.net.URL;
-import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import com.example.pbl3.DAL.DatabaseHelper;
+import com.example.pbl3.BLL.BLLCategories;
+import com.example.pbl3.BLL.BLLProducts;
+import com.example.pbl3.BLL.BLLProject;
+import com.example.pbl3.DTO.Product;
+import com.example.pbl3.OpenUI;
 import com.jfoenix.controls.JFXDialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,6 +35,8 @@ import org.controlsfx.control.action.Action;
 
 public class ProductController implements Initializable {
     @FXML
+    private Label quatityLabel;
+    @FXML
     Button butBrowse;
     @FXML
     Label ProductLabel;
@@ -50,6 +48,8 @@ public class ProductController implements Initializable {
     TextField txtSalePrice;
     @FXML
     TextField txtBarcode;
+    @FXML
+    TextField txtCategory;
     @FXML
     TextField txtQuantity;
     @FXML
@@ -70,9 +70,6 @@ public class ProductController implements Initializable {
     TableColumn<Product, Integer> Col_Quantity;
     @FXML
     private AnchorPane AnchorPaneProduct;
-
-    @FXML
-    private ContextMenu contextMenu;
     @FXML
     private MenuItem menuAdd;
 
@@ -96,69 +93,31 @@ public class ProductController implements Initializable {
     @FXML
     private Button butUpdateOK;
     @FXML
-    private Button searchBT;
-    @FXML
     private Button butDetailCancle;
-
     @FXML
     private TextField searchTextField;
     @FXML
     private ComboBox<String> cbbprice;
     @FXML
-    private MenuItem logout;
-    @FXML
-    private MenuItem homepage;
-    @FXML
     private MenuItem account;
-    @FXML
-    private MenuItem importPrd;
 
     JFXDialog dialog = new JFXDialog();
-    private PreparedStatement quantityImport = null;
-    private PreparedStatement quantityBill = null;
-    //private PreparedStatement prdQuantity = null;
 
     OpenUI openUI = new OpenUI();
-    private File file404 = new File("D:\\PBLLLLLLLLLLLL#\\PBL3\\target\\classes\\assets\\404.png");
     private File file;
+    private File file404 = new File("D:\\PBLLLLLLLLLLLL#\\PBL3\\target\\classes\\assets\\404.png");
     private FileChooser fileChooser;
     private Image image;
     private FileInputStream fileinputstream;
-    private PreparedStatement store = null;
-    private PreparedStatement retrive = null;
-    private PreparedStatement update = null;
-    private PreparedStatement delete = null;
     int min = 0, max = 0;
-    String condition = "";
 
-
-    public ProductController() {
-    }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         decentralization();
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection link = connection.getConnection();
-        try {
-            String query = "select ProductImage from product where Barcode = (?)";
-            this.retrive = link.prepareStatement(query, 1005, 1008);
-            String query1 = "insert into product (Barcode,ProductName,SalePrice,ProductImage,Category) values (?,?,?,?,?)";
-            this.store = link.prepareStatement(query1);
-            String query2 = "update product set ProductName = ? , SalePrice = ?, Category = ?, ProductImage = ? where Barcode = ?";
-            this.update = link.prepareStatement(query2);
-            String query3 = "DELETE FROM product WHERE Barcode  = ? ";
-            this.delete = link.prepareStatement(query3);
-            String queryQuantityImport = "select sum(quantity) as quantity from detailimport where product = ?  group by product";
-            this.quantityImport = link.prepareStatement(queryQuantityImport);
-            String queryQuantityBill = "select sum(Quantity) as quantity from detailbill left join product " +
-                    "on detailbill.Product = product.ProductName where product.ProductName = ? group by product.ProductName";
-            this.quantityBill = link.prepareStatement(queryQuantityBill);
-        } catch (SQLException var7) {
-            var7.printStackTrace();
-        }
         AnchorPaneProduct.setVisible(false);
-        this.CompletedCombobox();
         this.loadTable("");
+        this.CompletedCombobox();
         min = max = 0;
         this.butBrowse.setOnAction((e) -> {
             this.OpenImageBrowse();
@@ -166,6 +125,9 @@ public class ProductController implements Initializable {
         menuDetail.setOnAction(e->{
             if(!ProductTableView.getSelectionModel().isEmpty())
             {
+                quatityLabel.setVisible(true);
+                txtQuantity.setVisible(true);
+                ProductLabel.setText("Product detail");
                 showDialogDetail();
                 SelectedRowAction();
             }
@@ -175,11 +137,17 @@ public class ProductController implements Initializable {
             }
         });
         menuAdd.setOnAction(e->{
+            quatityLabel.setVisible(false);
+            txtQuantity.setVisible(false);
+            ProductLabel.setText("Add Product");
             showDialogAdd();
         });
         menuEdit.setOnAction(e->{
             if(!ProductTableView.getSelectionModel().isEmpty())
             {
+                quatityLabel.setVisible(false);
+                txtQuantity.setVisible(false);
+                ProductLabel.setText("Edit Product");
                 showDialogUpdate();
                 SelectedRowAction();
             }
@@ -200,21 +168,14 @@ public class ProductController implements Initializable {
             }
         });
         butAddOK.setOnAction(e->{
-            if(!ValidationField())
-            {
-                AddProduct();
-                //closeDialog();
-            }
-            else
-            {
-                Notifications.create().text("You need to fill in all the information. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            }
+            AddProduct();
         });
         butUpdateOK.setOnAction(e->{
             if(!ValidationField())
             {
                 UpdateProduct();
-                //closeDialog();
+                loadTable("");
+                closeDialog();
             }
             else
             {
@@ -241,7 +202,6 @@ public class ProductController implements Initializable {
         dialog.setDialogContainer(stackPane);
         dialog.getStyleClass().add("jfx-dialog-overlay-pane");
         dialog.setStyle("-fx-background-color: transparent");
-        txtQuantity.setEditable(false);
         dialog.show();
     }
     public void closeDialog()
@@ -255,6 +215,12 @@ public class ProductController implements Initializable {
     public void showDialogAdd()
     {
         showDialog();
+        butBrowse.setVisible(true);
+        cbbCategory.setVisible(true);
+        txtCategory.setVisible(false);
+        txtProductName.setEditable(true);
+        txtSalePrice.setEditable(true);
+        txtBarcode.setEditable(true);
         butUpdateOK.setVisible(false);
         butAddOK.setVisible(true);
         butDetailCancle.setVisible(false);
@@ -264,6 +230,12 @@ public class ProductController implements Initializable {
     public void showDialogDetail()
     {
         showDialog();
+        butBrowse.setVisible(false);
+        cbbCategory.setVisible(false);
+        txtCategory.setVisible(true);
+        txtProductName.setEditable(false);
+        txtSalePrice.setEditable(false);
+        txtBarcode.setEditable(false);
         butUpdateOK.setVisible(false);
         butAddOK.setVisible(false);
         butCancle.setVisible(false);
@@ -272,6 +244,12 @@ public class ProductController implements Initializable {
     public void showDialogUpdate()
     {
         showDialog();
+        butBrowse.setVisible(true);
+        cbbCategory.setVisible(true);
+        txtCategory.setVisible(false);
+        txtProductName.setEditable(true);
+        txtSalePrice.setEditable(true);
+        txtBarcode.setEditable(true);
         butUpdateOK.setVisible(true);
         butAddOK.setVisible(false);
         butDetailCancle.setVisible(false);
@@ -283,37 +261,25 @@ public class ProductController implements Initializable {
     {
         return((txtBarcode.getText().trim().isEmpty())  || (txtSalePrice.getText().trim().isEmpty())
                 || (txtProductName.getText().trim().isEmpty()) ||
-                (cbbCategory.getSelectionModel().getSelectedItem() == null) || (this.file == null));
-
+                (cbbCategory.getSelectionModel().getSelectedItem() == null));
     }
 
     public void SelectedRowAction() {
-        if (((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getProductName() != "") {
+        if ((this.ProductTableView.getSelectionModel().getSelectedItem()).getProductName() != "") {
             this.txtBarcode.setEditable(false);
-            this.txtBarcode.setText(((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getBarcode());
-            this.txtProductName.setText(((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getProductName());
-            this.txtSalePrice.setText(Float.toString(((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getSalePrice()));
+            this.txtBarcode.setText((this.ProductTableView.getSelectionModel().getSelectedItem()).getSerial());
+            this.txtProductName.setText((this.ProductTableView.getSelectionModel().getSelectedItem()).getProductName());
+            this.txtSalePrice.setText(Double.toString((this.ProductTableView.getSelectionModel().getSelectedItem()).getSalePrice()));
             this.cbbCategory.setValue(this.ProductTableView.getSelectionModel().getSelectedItem().getCategory());
-            this.txtQuantity.setText(Integer.toString(this.ProductTableView.getSelectionModel().getSelectedItem().getQuantity()));
-            this.file = file404;
-            try {
-                this.retrive.setString(1, ((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getBarcode());
-                ResultSet result = this.retrive.executeQuery();
-                if (result.first()) {
-                    Blob blob = result.getBlob("ProductImage");
-                    InputStream input = blob.getBinaryStream();
-                    Image image = new Image(input);
-                    this.ProductImgView.setImage(image);
-
-                }
-            } catch (SQLException var5) {
-                var5.printStackTrace();
-            }
+            this.txtCategory.setText(this.ProductTableView.getSelectionModel().getSelectedItem().getCategory());
+            this.txtQuantity.setText(this.ProductTableView.getSelectionModel().getSelectedItem().getQuantity()+"");
+            Image image1 = new Image(this.ProductTableView.getSelectionModel().getSelectedItem().getImage());
+            this.ProductImgView.setImage(image1);
         }
-
     }
 
     public void Clear() {
+        loadTable("");
         ProductLabel.setText("Add Product");
         txtProductName.setText("");
         txtSalePrice.setText("");
@@ -323,49 +289,44 @@ public class ProductController implements Initializable {
         cbbCategory.getSelectionModel().clearSelection();
         ProductTableView.getSelectionModel().clearSelection();
         searchTextField.setText("");
-        txtQuantity.setText("");
+//        closeDialog();
+
         this.file = null;
     }
 
-    public void DisableEditableField()
-    {
-        txtProductName.setEditable(false);
-        txtSalePrice.setEditable(false);
-        txtBarcode.setEditable(false);
-        cbbCategory.setEditable(false);
-        //ButDelete.setDisable(true);
-        //ButUpdate.setDisable(true);
-        butBrowse.setDisable(true);
-    }
-    public void EnableEditableField()
-    {
-        txtProductName.setEditable(true);
-        txtSalePrice.setEditable(true);
-        txtBarcode.setEditable(true);
-        cbbCategory.setEditable(true);
-        //ButDelete.setDisable(false);
-        //ButUpdate.setDisable(false);
-        butBrowse.setDisable(false);
-    }
-
     public void AddProduct() {
-        try {
-            this.store.setString(1, this.txtBarcode.getText());
-            this.store.setString(2, this.txtProductName.getText());
-            this.store.setFloat(3, Float.parseFloat(this.txtSalePrice.getText()));
-            this.fileinputstream = new FileInputStream(this.file);
-            this.store.setBinaryStream(4, this.fileinputstream, (int)this.file.length());
-            this.store.setString(5, ((String)this.cbbCategory.getSelectionModel().getSelectedItem()).toString());
-            this.store.execute();
-            Notifications.create().text("You have add product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-            Clear();
-            this.loadTable("");
-            min = max = 0;
-        } catch (SQLException | FileNotFoundException var2) {
-            Notifications.create().text("You have failed add product in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            System.err.println(var2);
-        }
+        if(!ValidationField() && file != null)
+        {
+            if(BLLProject.CheckSerial(txtBarcode.getText()))
+            {
+                Notifications.create().text("Serial already exist. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+                return;
+            }
+            try {
+                this.fileinputstream = new FileInputStream(this.file);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
 
+            Product p = new Product(txtBarcode.getText(),txtProductName.getText(),Double.parseDouble(txtSalePrice.getText()),
+                    this.fileinputstream,this.cbbCategory.getSelectionModel().getSelectedItem(),0);
+            if(BLLProducts.AddProduct(p))
+            {
+                Notifications.create().text("You have add product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                Clear();
+                min = max = 0;
+            }
+            else {
+                Notifications.create().text("You have failed add product in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            }
+            loadTable("");
+            closeDialog();
+        }
+        else
+        {
+            Notifications.create().text("You need to fill in all the information. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+        }
     }
 
     public void CompletedCombobox() {
@@ -379,58 +340,19 @@ public class ProductController implements Initializable {
 
     private ObservableList<String> getAllCategory() {
         ObservableList<String> list = FXCollections.observableArrayList();
-        DatabaseConnection ConnectNow = new DatabaseConnection();
-        Connection connectDB = ConnectNow.getConnection();
-        String query = "select Category_Name from category";
-        try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(query);
-            while(queryResult.next()) {
-                String Category_Name = queryResult.getString("Category_Name");
-                list.add(Category_Name);
-            }
-        } catch (SQLException var14) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, (String)null, var14);
-            var14.printStackTrace();
-        }
+        for (int i = 0; i< BLLCategories.getListCategory().size(); i++)
+            list.add(BLLCategories.getListCategory().get(i).getCate_Name());
         return list;
     }
 
     public void loadTable(String txt) {
-        ObservableList<Product> list = FXCollections.observableArrayList();
-        DatabaseConnection ConnectNow = new DatabaseConnection();
-        Connection connectDB = ConnectNow.getConnection();
-        String accountQuery = "select Barcode,ProductName,SalePrice,Category from product" +
-                " where (ProductName LIKE '%" + txt + "%' OR Category = '" + txt + "') AND (" + "SalePrice" + " >= " + min;
-        if(max != 0)
-            accountQuery += " AND " + condition + " < " + max + ")";
-        else accountQuery += ")";
-
-
-        try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(accountQuery);
-            while(queryResult.next()) {
-                String ProductName = queryResult.getString("ProductName");
-                String Barcode = queryResult.getString("Barcode");
-                Float SalePrice = queryResult.getFloat("SalePrice");
-                String Category = queryResult.getString("Category");
-                Integer Quantity = DatabaseHelper.GetQuantityByProductname(ProductName);
-                Product product = new Product(Barcode, ProductName, SalePrice, Category, Quantity);
-                list.add(product);
-            }
-
-            this.Col_Barcode.setCellValueFactory(new PropertyValueFactory("Barcode"));
-            this.Col_Name.setCellValueFactory(new PropertyValueFactory("ProductName"));
-            this.Col_SalePrice.setCellValueFactory(new PropertyValueFactory("salePrice"));
-            this.Col_Category.setCellValueFactory(new PropertyValueFactory("Category"));
-            this.Col_Quantity.setCellValueFactory(new PropertyValueFactory("Quantity"));
-            this.ProductTableView.setItems(list);
-        } catch (SQLException var14) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, (String)null, var14);
-            var14.printStackTrace();
-        }
-
+        ObservableList<Product> list = FXCollections.observableArrayList(BLLProducts.searchProduct(txt,min,max));
+        this.Col_Barcode.setCellValueFactory(new PropertyValueFactory("serial"));
+        this.Col_Name.setCellValueFactory(new PropertyValueFactory("ProductName"));
+        this.Col_SalePrice.setCellValueFactory(new PropertyValueFactory("salePrice"));
+        this.Col_Category.setCellValueFactory(new PropertyValueFactory("Category"));
+        this.Col_Quantity.setCellValueFactory(new PropertyValueFactory("quantity"));
+        this.ProductTableView.setItems(list);
     }
 
     public void OpenImageBrowse() {
@@ -444,7 +366,6 @@ public class ProductController implements Initializable {
             this.ProductImgView.fitWidthProperty();
             this.ProductImgView.setPreserveRatio(true);
         }
-
     }
 
     @FXML
@@ -473,70 +394,50 @@ public class ProductController implements Initializable {
     }
     @FXML
     private void UpdateProduct() {
-        try {
-            this.update.setString(1, this.txtProductName.getText());
-            this.update.setFloat(2, Float.parseFloat(this.txtSalePrice.getText()));
-            this.update.setString(3, ((String)this.cbbCategory.getSelectionModel().getSelectedItem()));
-            if(file != null)
-            {
+        fileinputstream = null;
+        if(file != null)
+        {
+            try {
                 this.fileinputstream = new FileInputStream(this.file);
-                this.update.setBinaryStream(4, this.fileinputstream, (int)this.file.length());
-            }
-            else
+            } catch (Exception e)
             {
-                try {
-                    this.retrive.setString(1, ((Product)this.ProductTableView.getSelectionModel().getSelectedItem()).getBarcode());
-                    ResultSet result = this.retrive.executeQuery();
-                    if (result.first()) {
-                        Blob blob = result.getBlob("ProductImage");
-                        this.update.setBinaryStream(5,blob.getBinaryStream());
-                    }
-                } catch (SQLException var5) {
-                    var5.printStackTrace();
-                }
+                e.printStackTrace();
             }
-            this.update.setString(5, this.txtBarcode.getText());
-            this.update.execute();
-
+        }
+        Product p = this.ProductTableView.getSelectionModel().getSelectedItem();
+        Product product = new Product(p.getSerial(),txtProductName.getText(), Double.parseDouble(txtSalePrice.getText()),
+                fileinputstream,cbbCategory.getSelectionModel().getSelectedItem(),p.getQuantity());
+        if(BLLProducts.UpdateProduct(product))
+        {
             Clear();
             this.loadTable("");
             Notifications.create().text("You have update product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
             min = max = 0;
-        } catch (SQLException | FileNotFoundException var2) {
+        }
+        else
+        {
             Notifications.create().text("You have failed update account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            System.err.println(var2);
+
         }
     }
 
     public void Delete()
     {
-        Product selected = ProductTableView.getSelectionModel().getSelectedItem();
-        try {
-            this.delete.setString(1,selected.getBarcode());
-            delete.execute();
-            Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-            loadTable("");
-            Clear();
-        } catch (Exception var15) {
-            var15.printStackTrace();
-            Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-        }
-    }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete this product?", ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
 
-    private int getQuantityByProductName(String product_name) throws SQLException {
-        int imp = 0,bill =0;
-        try {
-            this.quantityImport.setString(1, product_name);
-            this.quantityBill.setString(1, product_name);
-            ResultSet rs1 = this.quantityImport.executeQuery();
-            ResultSet rs2 = this.quantityBill.executeQuery();
-
-            if (rs1.next()) {imp = rs1.getInt("quantity");}
-            if (rs2.next()) {bill = rs2.getInt("quantity");}
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (alert.getResult() == ButtonType.YES) {
+            if(BLLProducts.DeleteProduct(ProductTableView.getSelectionModel().getSelectedItem().getSerial()))
+            {
+                Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                loadTable("");
+                Clear();
+            }
+            else
+            {
+                Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            }
         }
-        return (imp - bill);
     }
 
     @FXML
@@ -624,7 +525,7 @@ public class ProductController implements Initializable {
     }
     public void decentralization()
     {
-        if(openUI.typecashier == false)
+        if(BLLProject.typecashier == false)
         {
             account.setVisible(false);
         }

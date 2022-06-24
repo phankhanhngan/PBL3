@@ -3,14 +3,17 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPane" prefHeight="738.0" prefWidth="895.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 2em;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.CreateNewBillController">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.View.CreateNewBillController">
+<AnchorPane fx:id="AnchorPane" prefHeight="738.0" prefWidth="895.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 2em;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <TableView fx:id="DetailBillTableView" layoutX="22.0" layoutY="298.0" onKeyPressed="#deleteRow" prefHeight="226.0" prefWidth="854.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
             <columns>
@@ -21,49 +24,44 @@
                 <TableColumn fx:id="Col_IntoMoney" prefWidth="229.5999755859375" text="Into Money" />
             </columns>
         </TableView>
-        <Label alignment="CENTER" layoutX="286.0" layoutY="72.0" prefHeight="70.0" prefWidth="322.0" text="HÓA ĐƠN BÁN HÀNG" textFill="RED">
+        <Label alignment="CENTER" layoutX="286.0" layoutY="72.0" prefHeight="70.0" prefWidth="322.0" text="RETAIL SALE INVOICE" textFill="RED">
             <font>
-                <Font name="Maiandra GD" size="24.0" />
+                <Font size="24.0" />
             </font>
         </Label>
         <Line endX="828.0" endY="-40.600006103515625" layoutX="67.0" layoutY="171.0" startX="-67.00001525878906" startY="-40.600006103515625" />
-        <Label layoutX="22.0" layoutY="142.0" prefHeight="18.0" prefWidth="172.0" text="Họ tên người mua hàng :">
+        <Label layoutX="22.0" layoutY="144.0" prefHeight="18.0" prefWidth="172.0" text="Name Customer :">
             <font>
                 <Font name="System Bold Italic" size="14.0" />
             </font>
         </Label>
-        <Label layoutX="22.0" layoutY="171.0" prefHeight="18.0" prefWidth="172.0" text="Tên đơn vị :">
+        <Label layoutX="22.0" layoutY="183.0" prefHeight="18.0" prefWidth="172.0" text="Store :">
             <font>
                 <Font name="System Bold Italic" size="14.0" />
             </font>
         </Label>
-        <Label layoutX="22.0" layoutY="202.0" prefHeight="18.0" prefWidth="172.0" text="Mã số thuế :">
+        <Label layoutX="22.0" layoutY="218.0" prefHeight="18.0" prefWidth="172.0" text="Address :">
             <font>
                 <Font name="System Bold Italic" size="14.0" />
             </font>
         </Label>
-        <Label layoutX="22.0" layoutY="232.0" prefHeight="18.0" prefWidth="172.0" text="Địa chỉ :">
-            <font>
-                <Font name="System Bold Italic" size="14.0" />
-            </font>
-        </Label>
-        <Label layoutX="22.0" layoutY="261.0" prefHeight="18.0" prefWidth="172.0" text="Hình thức thanh toán :">
+        <Label layoutX="22.0" layoutY="255.0" prefHeight="18.0" prefWidth="172.0" text="Pay :">
             <font>
                 <Font name="System Bold Italic" size="14.0" />
             </font>
         </Label>
         <JFXComboBox fx:id="cbbCustomer" editable="true" layoutX="203.0" layoutY="139.0" onAction="#setCustomer" prefHeight="26.0" prefWidth="264.0" style="-fx-background-radius: 0.5em; -fx-background-color: ffffff;" visibleRowCount="3" />
-        <Label layoutX="203.0" layoutY="171.0" prefHeight="20.0" prefWidth="43.0" text="ORIE">
+        <Label layoutX="203.0" layoutY="183.0" prefHeight="20.0" prefWidth="43.0" text="ORIE">
             <font>
                 <Font name="System Italic" size="14.0" />
             </font>
         </Label>
-        <Label fx:id="addressCustomerTextField" layoutX="203.0" layoutY="232.0" prefHeight="20.0" prefWidth="264.0" text="ORIE">
+        <Label fx:id="addressCustomerTextField" layoutX="203.0" layoutY="218.0" prefHeight="20.0" prefWidth="264.0" text="ORIE">
             <font>
                 <Font name="System Italic" size="14.0" />
             </font>
         </Label>
-        <JFXComboBox fx:id="cbbPay" editable="true" layoutX="203.0" layoutY="258.0" prefHeight="26.0" prefWidth="264.0" style="-fx-background-radius: 0.5em; -fx-background-color: ffffff;" visibleRowCount="3" />
+        <JFXComboBox fx:id="cbbPay" editable="true" layoutX="203.0" layoutY="249.0" prefHeight="26.0" prefWidth="264.0" style="-fx-background-radius: 0.5em; -fx-background-color: ffffff;" visibleRowCount="3" />
         <Line endX="753.300048828125" layoutX="122.0" layoutY="556.0" startX="-100.0" />
         <Line endX="752.5" layoutX="121.0" layoutY="591.0" startX="-100.0" />
         <Label layoutX="275.0" layoutY="531.0" prefHeight="18.0" prefWidth="172.0" text="Total Money :">
@@ -76,19 +74,14 @@
                 <Font name="System Bold Italic" size="14.0" />
             </font>
         </Label>
-        <Label layoutX="108.0" layoutY="606.0" prefHeight="18.0" prefWidth="172.0" text="Người mua">
+        <Label layoutX="108.0" layoutY="606.0" prefHeight="18.0" prefWidth="172.0" text="Customer">
             <font>
                 <Font name="System Bold Italic" size="14.0" />
             </font>
         </Label>
-        <Label layoutX="616.0" layoutY="606.0" prefHeight="18.0" prefWidth="172.0" text="Người bán hàng">
+        <Label layoutX="638.0" layoutY="606.0" prefHeight="20.0" prefWidth="58.0" text="Cashier">
             <font>
                 <Font name="System Bold Italic" size="14.0" />
-            </font>
-        </Label>
-        <Label layoutX="203.0" layoutY="202.0" prefHeight="20.0" prefWidth="264.0" text="15968746">
-            <font>
-                <Font name="System Italic" size="14.0" />
             </font>
         </Label>
         <Label fx:id="customerTextField" alignment="CENTER" layoutX="11.0" layoutY="666.0" prefHeight="20.0" prefWidth="264.0" text="Người mua">
@@ -102,7 +95,7 @@
             </font>
         </Label>
         <JFXComboBox fx:id="cbbProduct" layoutX="62.0" layoutY="561.0" onAction="#addCBBQuantity" prefHeight="26.0" prefWidth="264.0" promptText="Product" style="-fx-background-radius: 0.5em; -fx-background-color: ffffff;" visibleRowCount="3" />
-        <JFXButton fx:id="butAdd" buttonType="RAISED" layoutX="692.0" layoutY="559.0" onAction="#addOnAcTion" prefHeight="30.0" prefWidth="117.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Add" textFill="WHITE">
+        <JFXButton fx:id="butAdd" buttonType="RAISED" layoutX="692.0" layoutY="559.0" onAction="#addOnAction" prefHeight="30.0" prefWidth="117.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Add" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -129,7 +122,7 @@
                 <Font name="System Italic" size="14.0" />
             </font>
         </Label>
-        <Label fx:id="payLabel" layoutX="201.0" layoutY="258.0" prefHeight="26.0" prefWidth="158.0">
+        <Label fx:id="payLabel" layoutX="201.0" layoutY="249.0" prefHeight="26.0" prefWidth="158.0">
             <font>
                 <Font name="System Italic" size="14.0" />
             </font>
@@ -142,5 +135,116 @@
                 <Font size="14.0" />
             </font>
         </JFXButton>
+         <AnchorPane fx:id="printAnchorPane" layoutX="88.0" layoutY="59.0" prefHeight="649.0" prefWidth="570.0">
+            <children>
+               <Label alignment="CENTER" layoutX="106.0" layoutY="83.0" prefHeight="26.0" prefWidth="322.0" text="RETAIL SALE INVOICE" textFill="RED">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+               <Label layoutX="20.0" layoutY="127.0" prefHeight="18.0" prefWidth="172.0" text="Name Customer :">
+                  <font>
+                     <Font name="System Bold Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="customerLabel1" layoutX="223.0" layoutY="124.0" prefHeight="26.0" prefWidth="331.0">
+                  <font>
+                     <Font name="System Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label layoutX="20.0" layoutY="160.0" prefHeight="18.0" prefWidth="172.0" text="Store :">
+                  <font>
+                     <Font name="System Bold Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label layoutX="221.0" layoutY="160.0" prefHeight="20.0" prefWidth="43.0" text="ORIE">
+                  <font>
+                     <Font name="System Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label layoutX="20.0" layoutY="193.0" prefHeight="18.0" prefWidth="172.0" text="Address :">
+                  <font>
+                     <Font name="System Bold Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="addressCustomerTextField1" layoutX="221.0" layoutY="193.0" prefHeight="20.0" prefWidth="258.0" text="ORIE">
+                  <font>
+                     <Font name="System Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label layoutX="20.0" layoutY="224.0" prefHeight="18.0" prefWidth="172.0" text="Pay :">
+                  <font>
+                     <Font name="System Bold Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="payLabel1" layoutX="223.0" layoutY="221.0" prefHeight="26.0" prefWidth="158.0">
+                  <font>
+                     <Font name="System Italic" size="14.0" />
+                  </font>
+               </Label>
+               <TableView fx:id="DetailBillTableView1" layoutX="14.0" layoutY="274.0" prefHeight="200.0" prefWidth="550.0">
+                 <columns>
+                   <TableColumn fx:id="Col_STT1" prefWidth="57.600006103515625" text="STT" />
+                   <TableColumn fx:id="Col_Product1" prefWidth="128.800048828125" text="Product" />
+                     <TableColumn fx:id="Col_Quantity1" prefWidth="113.60003662109375" text="Quantity" />
+                     <TableColumn fx:id="Col_UnitPrice1" prefWidth="128.0" text="Unit Price" />
+                     <TableColumn fx:id="Col_IntoMoney1" prefWidth="135.20001220703125" text="Into Money" />
+                 </columns>
+               </TableView>
+               <Label layoutX="49.0" layoutY="493.0" prefHeight="18.0" prefWidth="172.0" text="Total Money :">
+                  <font>
+                     <Font name="System Bold Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="totalMoneyTextField1" alignment="CENTER" layoutX="326.0" layoutY="493.0" prefHeight="18.0" prefWidth="172.0" text="0">
+                  <font>
+                     <Font name="System Bold Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label layoutX="100.0" layoutY="568.0" prefHeight="18.0" prefWidth="172.0" text="Customer">
+                  <font>
+                     <Font name="System Bold Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="customerTextField1" alignment="CENTER" layoutX="3.0" layoutY="612.0" prefHeight="20.0" prefWidth="264.0" text="Người mua">
+                  <font>
+                     <Font name="System Bold Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label layoutX="383.0" layoutY="568.0" prefHeight="20.0" prefWidth="58.0" text="Cashier">
+                  <font>
+                     <Font name="System Bold Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="cashierTextField1" alignment="CENTER" layoutX="276.0" layoutY="612.0" prefHeight="20.0" prefWidth="294.0" text="Người bán">
+                  <font>
+                     <Font name="System Bold Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="dateTextField1" alignment="CENTER" layoutX="280.0" layoutY="19.0" prefHeight="20.0" prefWidth="264.0" text="Date">
+                  <font>
+                     <Font name="System Bold Italic" size="14.0" />
+                  </font>
+               </Label>
+               <Label layoutX="14.0" layoutY="12.0" prefHeight="18.0" prefWidth="220.0" text="STORE: ORIE">
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Label>
+               <Label layoutX="14.0" layoutY="35.0" prefHeight="20.0" prefWidth="264.0" text="K144/H34/01 Nguyen Luong Bang">
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Label>
+               <Line endX="410.29998779296875" endY="-40.600006103515625" layoutX="119.0" layoutY="153.0" startX="-88.0" startY="-40.600006103515625" />
+               <Label layoutX="14.0" layoutY="57.0" prefHeight="20.0" prefWidth="264.0" text="Contact: 0387128521">
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Label>
+            </children>
+         </AnchorPane>
+         <Hyperlink fx:id="newCustomerHyperLink" layoutX="502.0" layoutY="141.0" onAction="#newCustomerOnAction" text="New Customer?" />
     </children>
 </AnchorPane>
+</StackPane>

@@ -1,4 +1,4 @@
-package com.example.pbl3;
+package com.example.pbl3.DTO;
 
 public class Category {
     private int Cate_Id;

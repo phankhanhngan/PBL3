@@ -1,13 +1,8 @@
-package com.example.pbl3;
+package com.example.pbl3.DTO;
 
-import com.example.pbl3.View.ProductController;
+import com.example.pbl3.BLL.BLLProducts;
+import com.example.pbl3.BLL.BLLProject;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DetailBill {
     static int stt = 0;
@@ -22,20 +17,18 @@ public class DetailBill {
         STT = stt;
         this.Product = Product;
         this.Quantity = Quantity;
-        DatabaseConnection ConnectNow = new DatabaseConnection();
-        Connection connectDB = ConnectNow.getConnection();
-        String query = "select SalePrice from product where ProductName = '" + Product + "'";
-        try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(query);
-            while(queryResult.next()) {
-                unitPrice = queryResult.getDouble("SalePrice");
-            }
-        } catch (SQLException var14) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, (String)null, var14);
-            var14.printStackTrace();
-        }
+        this.unitPrice = BLLProducts.getProductByProductName(Product).getSalePrice();
         intoMoney = unitPrice * Quantity;
+    }
+
+    public DetailBill(String Product, int Quantity, double unitPrice)
+    {
+        stt++;
+        STT = stt;
+        this.Product = Product;
+        this.Quantity = Quantity;
+        this.unitPrice = unitPrice;
+        this.intoMoney = unitPrice * Quantity;
     }
 
     public String getProduct() {

@@ -17,16 +17,16 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPane" prefHeight="676.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.AccountController">
+<AnchorPane fx:id="AnchorPane" prefHeight="676.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.View.AccountController">
     <children>
         <ImageView fitHeight="774.0" fitWidth="1051.0" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
             <image>
                 <Image url="@../../../assets/Background2.png" />
             </image>
         </ImageView>
-      <ImageView fitHeight="186.0" fitWidth="275.0" layoutX="-16.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="767.0" fitWidth="1050.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../assets/account.png" />
+            <Image url="@../../../assets/accountback.png" />
          </image>
       </ImageView>
         <AnchorPane layoutX="42.0" layoutY="158.0" prefHeight="535.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
@@ -99,24 +99,19 @@
                </font>
             </JFXButton>
             </children></AnchorPane>
-        <TextField fx:id="searchTextField" layoutX="340.0" layoutY="93.0" onKeyPressed="#pressEnterOnAction" prefHeight="26.0" prefWidth="669.0" promptText="Search" style="-fx-background-color: #FFFFFF;" />
-        <TableView fx:id="AccountTableView" layoutX="340.0" layoutY="138.0" prefHeight="576.0" prefWidth="679.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
+        <TextField fx:id="searchTextField" layoutX="350.0" layoutY="97.0" onKeyPressed="#pressEnterOnAction" prefHeight="26.0" prefWidth="568.0" promptText="Search" stylesheets="@../../../css/textfield.css" />
+        <TableView fx:id="AccountTableView" layoutX="340.0" layoutY="138.0" prefHeight="576.0" prefWidth="679.0" stylesheets="@../../../css/account.css">
             <columns>
                 <TableColumn fx:id="Col_FName" prefWidth="90.13330078125" text="Firstname" />
                 <TableColumn fx:id="Col_LName" prefWidth="77.06661987304688" text="Lastname" />
-                <TableColumn fx:id="Col_Username" prefWidth="82.39996337890625" text="Username" />
-                <TableColumn fx:id="Col_Password" prefWidth="69.60003662109375" text="Password" />
-                <TableColumn fx:id="Col_Gmail" prefWidth="88.7999267578125" text="Gmail" />
-                <TableColumn fx:id="Col_Phone" prefWidth="76.79986572265625" text="Phone" />
-                <TableColumn fx:id="Col_Address" prefWidth="106.933349609375" text="Address" />
-                <TableColumn fx:id="Col_TypeOfUser" prefWidth="87.19989013671875" text="Type" />
+                <TableColumn fx:id="Col_Username" prefWidth="171.20001220703125" text="Username" />
+                <TableColumn fx:id="Col_Password" minWidth="0.0" prefWidth="0.0" text="Password" />
+                <TableColumn fx:id="Col_Gmail" minWidth="0.0" prefWidth="183.20001220703125" text="Gmail" />
+                <TableColumn fx:id="Col_Phone" prefWidth="63.199951171875" text="Phone" />
+                <TableColumn fx:id="Col_Address" minWidth="1.5999755859375" prefWidth="1.5999755859375" text="Address" />
+                <TableColumn fx:id="Col_TypeOfUser" prefWidth="96.800048828125" text="Type" />
             </columns>
         </TableView>
-        <Label layoutX="340.0" layoutY="41.0" text="ACCOUNT MANAGEMENT" textFill="#892872">
-            <font>
-                <Font name="System Bold" size="25.0" />
-            </font>
-        </Label>
       <MenuBar centerShape="false" prefHeight="26.0" prefWidth="1051.0" style="-fx-background-color: rgba(192,162,232,0.6);">
          <menus>
             <Menu mnemonicParsing="false" text="Home">
@@ -138,7 +133,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Inventory">
                <items>
-                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receive Inventory" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Request">
@@ -153,5 +148,6 @@
             </Menu>
          </menus>
       </MenuBar>
+      <JFXButton fx:id="searchButton" layoutX="931.0" layoutY="98.0" prefHeight="26.0" prefWidth="82.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Search" />
     </children>
 </AnchorPane>

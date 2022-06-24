@@ -1,4 +1,4 @@
-package com.example.pbl3;
+package com.example.pbl3.DTO;
 
 public class DetailImport {
     static private int id = 0;
@@ -8,6 +8,7 @@ public class DetailImport {
     private int detail_id;
     private Double amount;
     private int importID;
+    private String product_id;
 
     public String getProduct() {
         return product;
@@ -34,10 +35,11 @@ public class DetailImport {
     }
 
 
-    public DetailImport(int importID,String productName, int quantity, Double unitPrice, Double amount) {
+    public DetailImport(int importID,String productName, String product_id, int quantity, Double unitPrice, Double amount) {
         this.importID = importID;
         this.detail_id = ++id;
         this.product = productName;
+        this.product_id = product_id;
         this.quantity = quantity;
         this.unit_price = unitPrice;
         this.amount = amount;
@@ -69,4 +71,11 @@ public class DetailImport {
         this.quantity = quantity;
     }
 
+    public String getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
+    }
 }

@@ -1,6 +1,9 @@
-package com.example.pbl3;
+package com.example.pbl3.View;
 
+import com.example.pbl3.BLL.BLLCategories;
+import com.example.pbl3.BLL.BLLProject;
 import com.example.pbl3.DTO.Category;
+import com.example.pbl3.OpenUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,10 +17,7 @@ import org.controlsfx.control.Notifications;
 import org.controlsfx.control.action.Action;
 
 import java.net.URL;
-import java.sql.*;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CategoryManagementController implements Initializable {
 
@@ -42,12 +42,9 @@ public class CategoryManagementController implements Initializable {
     @FXML
     private TextField CateNameTextField;
     @FXML
-            private MenuItem account;
+    private MenuItem account;
 
     OpenUI openUI = new OpenUI();
-    private PreparedStatement add = null;
-    private PreparedStatement delete = null;
-    private PreparedStatement update = null;
 
     @FXML
     public void productMenuItemOnAction(ActionEvent event) {
@@ -134,7 +131,7 @@ public class CategoryManagementController implements Initializable {
     }
     public void decentralization()
     {
-        if(openUI.typecashier == false)
+        if(BLLProject.typecashier == false)
         {
             account.setVisible(false);
         }
@@ -143,20 +140,6 @@ public class CategoryManagementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         decentralization();
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection link = connection.getConnection();
-        try {
-
-            String queryAdd = "insert into category (Category_Name) values (?)";
-            this.add = link.prepareStatement(queryAdd);
-            String queryDelete = "DELETE FROM category WHERE Id  = ? ";
-            this.delete = link.prepareStatement(queryDelete);
-            String queryUpdate = "update supplier set Category_Name = ? where Id = ?";
-            this.update = link.prepareStatement(queryUpdate);
-
-        } catch (SQLException var7) {
-            var7.printStackTrace();
-        }
         LabelCategory.setText("Add Category");
         this.loadTable();
         this.resetButton.setOnAction(e->{
@@ -187,54 +170,66 @@ public class CategoryManagementController implements Initializable {
     }
     public void SelectedRowAction()
     {
-        if (((Category)this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Name() != "") {
+        if ((this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Name() != "") {
             addButton.setDisable(true);
             LabelCategory.setText("Category Details");
-            this.CateNameTextField.setText(((Category)this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Name());
+            this.CateNameTextField.setText((this.CategoryTableView.getSelectionModel().getSelectedItem()).getCate_Name());
 
         }
     }
     public void butUpdateOnAction()
     {
-        try {
-            this.update.setString(1, this.CateNameTextField.getText());
-            this.update.setInt(2,CategoryTableView.getSelectionModel().getSelectedItem().getCate_Id());
-            this.update.execute();
-            butResetOnAction();
-            this.loadTable();
-            Notifications.create().text("You have update product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-        } catch (SQLException e) {
-            Notifications.create().text("You have failed update account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-        }
+        if(CategoryTableView.getSelectionModel().isEmpty())
+        {
+            Notifications.create().text("Please choice Category").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
 
+        }
+        else
+        {
+            Category c = new Category(CategoryTableView.getSelectionModel().getSelectedItem().getCate_Id(),CateNameTextField.getText());
+            if(BLLCategories.UpdateCategory(c))
+            {
+                butResetOnAction();
+                this.loadTable();
+                Notifications.create().text("You have update category successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+            }
+            else
+            {
+                Notifications.create().text("You have failed update category in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            }
+        }
     }
     public void butDeleteOnAction()
     {
-        Category selected = CategoryTableView.getSelectionModel().getSelectedItem();
-        try {
-            this.delete.setInt(1,selected.getCate_Id());
-            delete.execute();
-            Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-            loadTable();
-            butResetOnAction();
-        } catch (Exception var15) {
-            var15.printStackTrace();
-            Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete this category?", ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            if(BLLCategories.DeleteCategory(CategoryTableView.getSelectionModel().getSelectedItem().getCate_Id()))
+            {
+                Notifications.create().text("Successfully.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                loadTable();
+                butResetOnAction();
+            }
+            else
+            {
+                Notifications.create().text("Error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            }
         }
     }
     public void butAddOnAction()
     {
-        try {
-            this.add.setString(1, this.CateNameTextField.getText());
-            this.add.execute();
+        Category c = new Category(0,CateNameTextField.getText());
+        if(BLLCategories.AddCategory(c))
+        {
             Notifications.create().text("You have add product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
             butResetOnAction();
             this.loadTable();
-        } catch (SQLException e ) {
-            Notifications.create().text("You have failed add product in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-
         }
-
+        else
+        {
+            Notifications.create().text("You have failed add product in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+        }
     }
     public void butResetOnAction()
     {
@@ -244,72 +239,12 @@ public class CategoryManagementController implements Initializable {
         CateNameTextField.setText("");
         this.CategoryTableView.getSelectionModel().clearSelection();
     }
-
-    public ObservableList<Category> getAllCategory()
-    {
-        DatabaseConnection ConnectNow = new DatabaseConnection();
-        Connection connectDB = ConnectNow.getConnection();
-        String query = "select * from category";
-        ObservableList<Category> listCategory = FXCollections.observableArrayList();
-        try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(query);
-
-            while(queryResult.next()) {
-                int Category_Id = queryResult.getInt("Id");
-                String Category_Name = queryResult.getString("Category_Name");
-                Category category = new Category(Category_Id,Category_Name);
-                listCategory.add(category);
-            }
-            this.Col_Id.setCellValueFactory(new PropertyValueFactory("Cate_Id"));
-            this.Col_Name.setCellValueFactory(new PropertyValueFactory("Cate_Name"));
-        } catch (SQLException var14) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, (String)null, var14);
-            var14.printStackTrace();
-        }
-        return listCategory;
-    }
-    public ObservableList<String> getAllSupplierName()
-    {
-        ObservableList<String> list = FXCollections.observableArrayList();
-        DatabaseConnection ConnectNow = new DatabaseConnection();
-        Connection connectDB = ConnectNow.getConnection();
-        String query = "select Supplier_Name from supplier";
-        try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(query);
-            while(queryResult.next()) {
-                String Supplier_Name = queryResult.getString("Supplier_Name");
-                list.add(Supplier_Name);
-            }
-        } catch (SQLException var14) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, (String)null, var14);
-            var14.printStackTrace();
-        }
-        return list;
-    }
-    public ObservableList<String> getAllProductName()
-    {
-        ObservableList<String> list = FXCollections.observableArrayList();
-        DatabaseConnection ConnectNow = new DatabaseConnection();
-        Connection connectDB = ConnectNow.getConnection();
-        String query = "select ProductName from products";
-        try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(query);
-            while(queryResult.next()) {
-                String Supplier_Name = queryResult.getString("ProductName");
-                list.add(Supplier_Name);
-            }
-        } catch (SQLException var14) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, (String)null, var14);
-            var14.printStackTrace();
-        }
-        return list;
-    }
     public void loadTable()
     {
-        this.CategoryTableView.setItems(this.getAllCategory());
+        ObservableList<Category> list = FXCollections.observableArrayList(BLLCategories.getListCategory());
+        this.Col_Id.setCellValueFactory(new PropertyValueFactory("Cate_Id"));
+        this.Col_Name.setCellValueFactory(new PropertyValueFactory("Cate_Name"));
+        this.CategoryTableView.setItems(list);
     }
     public boolean ValidationField()
     {

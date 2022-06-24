@@ -1,6 +1,9 @@
-package com.example.pbl3;
+package com.example.pbl3.View;
 
+import com.example.pbl3.BLL.BLLCustomers;
+import com.example.pbl3.BLL.BLLProject;
 import com.example.pbl3.DTO.Customer;
+import com.example.pbl3.OpenUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,8 +22,6 @@ import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CustomerController implements Initializable  {
     @FXML
@@ -76,28 +77,11 @@ public class CustomerController implements Initializable  {
     @FXML
     private MenuItem account;
 
-    private PreparedStatement add = null;
-    private PreparedStatement update = null;
-    private PreparedStatement delete = null;
-
     OpenUI openUI = new OpenUI();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         decentralization();
-//        birthdayDatePicker.setValue(LocalDate.now());
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection link = connection.getConnection();
-        try {
-            String query1 = "insert into customer(firstname,lastname,gmail,phone,gender,birthday,address) values(?,?,?,?,?,?,?)";
-            this.add = link.prepareStatement(query1);
-            String query2 = "update customer set firstname = ? , lastname = ?, gmail = ?, phone = ?, gender = ?, birthday = ?,address =? where ID = ?";
-            this.update = link.prepareStatement(query2);
-            String query3 = "DELETE FROM customer WHERE ID  = ? ";
-            this.delete = link.prepareStatement(query3);
-        } catch (SQLException var7) {
-            var7.printStackTrace();
-        }
         this.loadTable("");
         this.addButton.setOnAction((e) ->
         {
@@ -127,43 +111,16 @@ public class CustomerController implements Initializable  {
     }
 
     public void loadTable(String txt) {
-        ObservableList<Customer> list = FXCollections.observableArrayList();
-        DatabaseConnection ConnectNow = new DatabaseConnection();
-        Connection connectDB = ConnectNow.getConnection();
-        String sql = "SELECT * FROM customer WHERE lastname = " + "'" + txt + "' OR firstname LIKE '%" + txt
-                + "%' OR gmail LIKE '%" + txt + "%' OR phone LIKE '%" + txt +"%'";
-
-        try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(sql);
-
-            while(queryResult.next()) {
-                int ID = queryResult.getInt("ID");
-                String firstname = queryResult.getString("firstname");
-                String lastname = queryResult.getString("lastname");
-                String gmail = queryResult.getString("gmail");
-                String phone = queryResult.getString("phone");
-                String gender = queryResult.getString("gender");
-                Date birthday = queryResult.getDate("birthday");
-                String address = queryResult.getString("address");
-                Customer customer = new Customer(ID, firstname, lastname, gmail, phone, gender, birthday,address);
-                list.add(customer);
-            }
-
-            this.Col_ID.setCellValueFactory(new PropertyValueFactory("ID"));
-            this.Col_FName.setCellValueFactory(new PropertyValueFactory("firstname"));
-            this.Col_LName.setCellValueFactory(new PropertyValueFactory("lastname"));
-            this.Col_Gmail.setCellValueFactory(new PropertyValueFactory("gmail"));
-            this.Col_Phone.setCellValueFactory(new PropertyValueFactory("phone"));
-            this.Col_Gender.setCellValueFactory(new PropertyValueFactory("gender"));
-            this.Col_Birthday.setCellValueFactory(new PropertyValueFactory("birthday"));
-            this.Col_Address.setCellValueFactory(new PropertyValueFactory("address"));
-            this.CustomerTableView.setItems(list);
-        } catch (SQLException var14) {
-            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, (String)null, var14);
-            var14.printStackTrace();
-        }
-
+        ObservableList<Customer> list = FXCollections.observableArrayList(BLLCustomers.searchCustomer(txt));
+        this.Col_ID.setCellValueFactory(new PropertyValueFactory("ID"));
+        this.Col_FName.setCellValueFactory(new PropertyValueFactory("firstname"));
+        this.Col_LName.setCellValueFactory(new PropertyValueFactory("lastname"));
+        this.Col_Gmail.setCellValueFactory(new PropertyValueFactory("gmail"));
+        this.Col_Address.setCellValueFactory(new PropertyValueFactory("address"));
+        this.Col_Phone.setCellValueFactory(new PropertyValueFactory("phone"));
+        this.Col_Gender.setCellValueFactory(new PropertyValueFactory("gender"));
+        this.Col_Birthday.setCellValueFactory(new PropertyValueFactory("birthday"));
+        this.CustomerTableView.setItems(list);
     }
 
     public boolean ValidationField()
@@ -174,26 +131,31 @@ public class CustomerController implements Initializable  {
     }
 
     public void addCustomer() {
-        try {
-            this.add.setString(1, this.firstnameTextField.getText());
-            this.add.setString(2, this.lastnameTextField.getText());
-            this.add.setString(3, this.gmailTextField.getText());
-            this.add.setString(4,this.phoneTextField.getText());
-            this.add.setString(7,this.addressTextField.getText());
-            String gender;
-            if(maleRadioButton.isSelected()) gender = "Male";
-            else if(femaleRadioButton.isSelected()) gender = "Female";
-            else gender = "Other";
-            this.add.setString(5,gender);
-            this.add.setDate(6, java.sql.Date.valueOf((LocalDate)this.birthdayDatePicker.getValue()));
-            this.add.execute();
+        if(!BLLProject.CheckPhone(phoneTextField.getText()))
+        {
+            Notifications.create().text("Invalid phone number. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        if(!BLLProject.CheckMail(gmailTextField.getText()))
+        {
+            Notifications.create().text("Invalid gmail. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        String gender;
+        if(maleRadioButton.isSelected()) gender = "Male";
+        else if(femaleRadioButton.isSelected()) gender = "Female";
+        else gender = "Other";
+        Customer c = new Customer(0,firstnameTextField.getText(),lastnameTextField.getText(),gmailTextField.getText(),
+                phoneTextField.getText(),gender,java.sql.Date.valueOf(this.birthdayDatePicker.getValue()),addressTextField.getText());
+        if(BLLCustomers.AddCustomer(c))
+        {
             Clear();
-            Notifications.create().text("You have add customer successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+            Notifications.create().text("You have added customer successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
             this.loadTable("");
-        } catch (SQLException var2) {
+        }
+        else
+        {
             Notifications.create().text("You have failed add customer in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            System.err.println(var2);
-            var2.printStackTrace();
         }
     }
 
@@ -212,60 +174,70 @@ public class CustomerController implements Initializable  {
 
     public void Delete()
     {
-        Customer selected = CustomerTableView.getSelectionModel().getSelectedItem();
-        try {
-            this.delete.setInt(1,selected.getID());
-            delete.execute();
-            Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-            loadTable("");
-            Clear();
-        } catch (Exception var15) {
-            var15.printStackTrace();
-            Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete this customer?", ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            if(BLLCustomers.DeleteCustomer(CustomerTableView.getSelectionModel().getSelectedItem().getID()))
+            {
+                Notifications.create().text("Successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                loadTable("");
+                Clear();
+            }
+            else
+            {
+                Notifications.create().text("Error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            }
         }
     }
 
     public void SelectedRowAction()
     {
-        if (((Customer)this.CustomerTableView.getSelectionModel().getSelectedItem()).getFirstname() != "")
+        if ((this.CustomerTableView.getSelectionModel().getSelectedItem()).getFirstname() != "")
         {
             addButton.setDisable(true);
-            this.firstnameTextField.setText(((Customer)this.CustomerTableView.getSelectionModel().getSelectedItem()).getFirstname());
-            this.lastnameTextField.setText(((Customer)this.CustomerTableView.getSelectionModel().getSelectedItem()).getLastname());
-            this.gmailTextField.setText(((Customer)this.CustomerTableView.getSelectionModel().getSelectedItem()).getGmail());
-            this.phoneTextField.setText(((Customer)this.CustomerTableView.getSelectionModel().getSelectedItem()).getPhone());
+            this.firstnameTextField.setText((this.CustomerTableView.getSelectionModel().getSelectedItem()).getFirstname());
+            this.lastnameTextField.setText((this.CustomerTableView.getSelectionModel().getSelectedItem()).getLastname());
+            this.gmailTextField.setText((this.CustomerTableView.getSelectionModel().getSelectedItem()).getGmail());
+            this.phoneTextField.setText((this.CustomerTableView.getSelectionModel().getSelectedItem()).getPhone());
             Date date = this.CustomerTableView.getSelectionModel().getSelectedItem().getBirthday();
-            this.addressTextField.setText(((Customer)this.CustomerTableView.getSelectionModel().getSelectedItem()).getAddress());
+            this.addressTextField.setText((this.CustomerTableView.getSelectionModel().getSelectedItem()).getAddress());
             this.birthdayDatePicker.setValue(LocalDate.of(date.getYear()+1900, date.getMonth()+1, date.getDate()));
-            String gender = ((Customer)this.CustomerTableView.getSelectionModel().getSelectedItem()).getGender();
+            String gender = (this.CustomerTableView.getSelectionModel().getSelectedItem()).getGender();
             if(gender.equals("Male")) maleRadioButton.setSelected(true);
-            else if(gender.equals("Female")) maleRadioButton.setSelected(true);
+            else if(gender.equals("Female")) femaleRadioButton.setSelected(true);
             else otherRadioButton.setSelected(true);
         }
     }
 
     public void Update()
     {
-        try {
-            this.update.setString(1, this.firstnameTextField.getText());
-            this.update.setString(2, this.lastnameTextField.getText());
-            this.update.setString(3, this.gmailTextField.getText());
-            this.update.setString(4, this.phoneTextField.getText());
-            String gender;
-            if(maleRadioButton.isSelected()) gender = "Male";
-            else if(femaleRadioButton.isSelected()) gender = "Female";
-            else gender = "Other";
-            this.update.setString(5,gender);
-            this.update.setDate(6, java.sql.Date.valueOf((LocalDate)this.birthdayDatePicker.getValue()));
-            this.update.setString(7,this.addressTextField.getText());
-            this.update.setInt(8,((Customer)CustomerTableView.getSelectionModel().getSelectedItem()).getID());
-            System.out.print(update);
-            this.update.execute();
-            Notifications.create().text("You have add product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+        if(!BLLProject.CheckPhone(phoneTextField.getText()))
+        {
+            Notifications.create().text("Invalid phone number. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        if(!BLLProject.CheckMail(gmailTextField.getText()))
+        {
+            Notifications.create().text("Invalid gmail. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        int id = CustomerTableView.getSelectionModel().getSelectedItem().getID();
+        String gender;
+        if(maleRadioButton.isSelected()) gender = "Male";
+        else if(femaleRadioButton.isSelected()) gender = "Female";
+        else gender = "Other";
+        Customer c = new Customer(id,firstnameTextField.getText(),lastnameTextField.getText(),gmailTextField.getText(),
+                phoneTextField.getText(),gender,java.sql.Date.valueOf((LocalDate)this.birthdayDatePicker.getValue()),addressTextField.getText());
+        if(BLLCustomers.UpdateCustomer(c))
+        {
+            Notifications.create().text("You have updated customer successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
             this.loadTable("");
-        } catch (SQLException var2) {
-            Notifications.create().text("You have failed add product in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            System.err.println(var2);
+            Clear();
+        }
+        else
+        {
+            Notifications.create().text("You have failed update customer in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
         }
     }
     @FXML
@@ -361,7 +333,7 @@ public class CustomerController implements Initializable  {
     }
     public void decentralization()
     {
-        if(openUI.typecashier == false)
+        if(BLLProject.typecashier == false)
         {
             account.setVisible(false);
         }

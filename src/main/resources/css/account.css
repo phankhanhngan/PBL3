@@ -1,5 +1,5 @@
 .table-view {
-    -fx-background-color:  rgba(192,162,232,0.35);
+    -fx-background-color: rgba(215, 199, 241, 0.79);
     -fx-background-radius: 32px 32px 0 0;
     -fx-text-alignment: center;
 }
@@ -31,7 +31,7 @@
     -fx-text-background-color: red;
 }
 .table-row-cell:odd{
-    -fx-background-color: #93f9b911;
+    -fx-background-color: rgba(200, 238, 213, 0.07);
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
 }

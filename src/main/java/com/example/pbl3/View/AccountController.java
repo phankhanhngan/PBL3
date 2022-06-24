@@ -1,12 +1,14 @@
-package com.example.pbl3;
+package com.example.pbl3.View;
 
 import java.net.URL;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
+import com.example.pbl3.BLL.BLLAccounts;
+import com.example.pbl3.BLL.BLLProject;
 import com.example.pbl3.DTO.Account;
+import com.example.pbl3.OpenUI;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -28,14 +30,6 @@ public class AccountController implements Initializable {
     @FXML
     private AnchorPane AnchorPane;
     @FXML
-    private MenuItem product;
-    @FXML
-    private MenuItem homepage;
-    @FXML
-    private MenuItem logout;
-    @FXML
-    private MenuItem importPrd;
-    @FXML
     private TextField firstnameTextField;
     @FXML
     private TextField lastnameTextField;
@@ -53,6 +47,8 @@ public class AccountController implements Initializable {
     private TextField searchTextField;
     @FXML
     private Button addButton;
+    @FXML
+    private Button searchButton;
     @FXML
     private TableView<Account> AccountTableView;
     @FXML
@@ -95,31 +91,34 @@ public class AccountController implements Initializable {
 
     }
 
-    private void addAccount() throws SQLException {
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connectDB = connection.getConnection();
-        String firstname = this.firstnameTextField.getText();
-        String lastname = this.lastnameTextField.getText();
-        String username = this.phoneTextField.getText();
-        String password = "123456";
-        String gmail = this.gmailTextField.getText();
-        String phone = this.phoneTextField.getText();
-        String address = this.addressTextField.getText();
-        int isManager = this.managerRadioButton.isSelected() ? 1 : 0;
-        String insertFields = "insert into account(firstname, lastname, gmail, phone_number, username,password, address, type_customer) values ('";
-        String insertValues = firstname + "','" + lastname + "','" + gmail + "','" + phone + "','" + username + "','" + password + "','" + address + "','" + isManager + "')";
-        String insertToRegister = insertFields + insertValues;
-
-        try {
-            Statement statement = connectDB.createStatement();
-            statement.executeUpdate(insertToRegister);
+    private void addAccount() {
+        if(!BLLProject.CheckPhone(phoneTextField.getText()))
+        {
+            Notifications.create().text("Invalid phone number. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        if(!BLLProject.CheckMail(gmailTextField.getText()))
+        {
+            Notifications.create().text("Invalid gmail. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        String typeOfUser = this.managerRadioButton.isSelected() ? "Manager" : "Cashier";
+        Random generator = new Random();
+        int value = generator.nextInt(900000) + 100000;
+        Account a = new Account(firstnameTextField.getText(),lastnameTextField.getText(),gmailTextField.getText(),
+                phoneTextField.getText(),phoneTextField.getText(),value+"",addressTextField.getText(),typeOfUser);
+        if(BLLAccounts.AddAccount(a))
+        {
             Notifications.create().text("You have add account successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+            BLLProject.SendMail(gmailTextField.getText(),"This is your account information. You can use this to log into ORIE.\nUsername: " + phoneTextField.getText() + "\nPassword: " + value, "Your ORIE Account Information");
             resetInputField();
             UpdateListAccount("");
-        } catch (Exception var15) {
-            Notifications.create().text("You have failed add account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
         }
+        else
+        {
+            Notifications.create().text("You have failed add account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
 
+        }
     }
 
     @Override
@@ -131,8 +130,10 @@ public class AccountController implements Initializable {
                 showButtonOnAction();
             }
         });
+        searchButton.setOnAction(e -> {
+            UpdateListAccount(searchTextField.getText());
+        });
     }
-
 
     public void resetInputField() {
         firstnameTextField.setText("");
@@ -142,7 +143,12 @@ public class AccountController implements Initializable {
         addressTextField.setText("");
         managerRadioButton.setSelected(false);
         cashierRadioButton.setSelected(false);
+        AccountTableView.getSelectionModel().clearSelection();
+        gmailTextField.setEditable(true);
+        gmailTextField.setStyle("-fx-background-color: #FFFFFF");
+        addButton.setDisable(false);
     }
+
     private class JFXPasswordCellValueFactory implements Callback<TableColumn.CellDataFeatures<Account, PasswordField>, ObservableValue<PasswordField>> {
 
         @Override
@@ -153,89 +159,86 @@ public class AccountController implements Initializable {
             password.setEditable(false);
             password.setPrefWidth(Col_Password.getWidth() / 0.5);
             password.setText(item.getPassword());
-            password.getStyleClass().addAll("password-field-cell", "table-row-cell");
-
             return new SimpleObjectProperty<>(password);
         }
     }
 
-
     public void showButtonOnAction() {
-        if (AccountTableView.getSelectionModel().getSelectedItem().username != "") {
-            firstnameTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().firstName);
-            lastnameTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().lastName);
-            gmailTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().gmail);
-            addressTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().address);
-            phoneTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().phone);
-            managerRadioButton.setSelected(AccountTableView.getSelectionModel().getSelectedItem().typeOfUser == "Manager" ? true : false);
-            cashierRadioButton.setSelected(AccountTableView.getSelectionModel().getSelectedItem().typeOfUser == "Cashier" ? true : false);
+        if (AccountTableView.getSelectionModel().getSelectedItem().getUsername() != "") {
+            firstnameTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().getFirstName());
+            lastnameTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().getLastName());
+            gmailTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().getGmail());
+            addressTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().getAddress());
+            phoneTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().getPhone());
+            managerRadioButton.setSelected(AccountTableView.getSelectionModel().getSelectedItem().isTypeOfUser().equals("Manager") ? true : false);
+            cashierRadioButton.setSelected(AccountTableView.getSelectionModel().getSelectedItem().isTypeOfUser().equals("Cashier") ? true : false);
             addButton.setDisable(true);
+            gmailTextField.setEditable(false);
+            gmailTextField.setStyle("-fx-background-color:  rgba(255,255,255,0.4)");
         } else {
             Notifications.create().text("Please select an account to show")
-                    .title("Notification");
+                    .title("Notification").show();
         }
     }
 
     @FXML
     private void updateButtonOnAction() {
-        if (AccountTableView.getSelectionModel().getSelectedItem() != null) {
-            Account account = AccountTableView.getSelectionModel().getSelectedItem();
-            UpdateRow(firstnameTextField.getText(), lastnameTextField.getText(), account.username, account.password, gmailTextField.getText(), addressTextField.getText(), phoneTextField.getText(), managerRadioButton.isSelected());
-
-        } else {
-            Notifications.create().text("Please select an account to update")
-                    .title("Notification");
+        if(!BLLProject.CheckPhone(phoneTextField.getText()))
+        {
+            Notifications.create().text("Invalid phone number. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            return;
         }
-    }
-
-    public String updateQuery(String firstname, String lastname, String username, String password, String gmail, String address, String phone, boolean isManager) {
-        int type;
-        if (isManager) type = 1;
-        else type = 0;
-        String query = "update account set firstname = '" + firstname + "', lastname = '" + lastname + "', password = '" + password + "', gmail = '" + gmail
-                + "', address = '" + address + "', phone_number = '" + phone + "', type_customer = '" + type + "' where username = '" + username + "'";
-        return query;
-    }
-
-    public void UpdateRow(String firstname, String lastname, String username, String password, String gmail, String address, String phone, boolean isManager) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Update the account?", ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
-
-        if (alert.getResult() == ButtonType.YES) {
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connectDB = connection.getConnection();
-            String updateAccount = updateQuery(firstname,lastname,username,password,gmail,address,phone,isManager);
-
-            try {
-                Statement statement = connectDB.createStatement();
-                statement.executeUpdate(updateAccount);
+        if(!BLLProject.CheckMail(gmailTextField.getText()))
+        {
+            Notifications.create().text("Invalid gmail. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        if (!AccountTableView.getSelectionModel().isEmpty()) {
+            String type = managerRadioButton.isSelected() ? "Manager" : "Cashier";
+            Account account = AccountTableView.getSelectionModel().getSelectedItem();
+            Account account1 = new Account(firstnameTextField.getText(),lastnameTextField.getText(),gmailTextField.getText(),
+                    phoneTextField.getText(),account.getUsername(),account.getPassword(),addressTextField.getText(),type);
+            System.out.println(account.getPassword());
+            if(BLLAccounts.UpdateAccount(account1))
+            {
                 Notifications.create().text("You have update account successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
                 resetInputField();
                 UpdateListAccount("");
-            } catch (Exception var15) {
+            }
+            else
+            {
                 Notifications.create().text("You have failed update account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
             }
+        } else {
+            Notifications.create().text("Please select an account to update")
+                    .title("Notification").show();
         }
     }
+
     @FXML
     private void deleteButtonOnAction() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete the account?", ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
+        if(AccountTableView.getSelectionModel().isEmpty())
+        {
+            System.out.println(12);
+            Notifications.create().text("Please select an account to update")
+                    .title("Notification").show();
+        }
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete this account?", ButtonType.YES, ButtonType.CANCEL);
+            alert.showAndWait();
 
-        if (alert.getResult() == ButtonType.YES) {
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connectDB = connection.getConnection();
-            Account selected = AccountTableView.getSelectionModel().getSelectedItem();
-            String query = "DELETE FROM account WHERE username  = '" + selected.getUsername() + "'";
-            try {
-                Statement statement = connectDB.createStatement();
-                statement.executeUpdate(query);
-                Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-                UpdateListAccount("");
-                resetInputField();
-            } catch (Exception var15) {
-                var15.printStackTrace();
-                Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            if (alert.getResult() == ButtonType.YES) {
+                if(BLLAccounts.DeleteAccount(AccountTableView.getSelectionModel().getSelectedItem().getUsername()))
+                {
+                    Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                    UpdateListAccount("");
+                    resetInputField();
+                }
+                else
+                {
+                    Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+                }
             }
         }
     }
@@ -263,44 +266,7 @@ public class AccountController implements Initializable {
     }
     public List<Account> Search(String txt)
     {
-        List<Account> accounts = new ArrayList<Account>();
-        String sql = "SELECT * FROM account WHERE lastname = " + "'" + txt + "' OR firstname LIKE '%" + txt
-                + "%' OR username LIKE '%" + txt + "%' OR gmail LIKE '%" + txt + "%' OR phone_number LIKE '%"
-                + txt +"%' OR address LIKE '%" + txt + "%'";
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDb = connectNow.getConnection();
-
-        try {
-            PreparedStatement pst = connectDb.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next())
-            {
-                String firstname = rs.getString(1);
-                String lastname = rs.getString(2);
-                String gmail = rs.getString(3);
-                String phone = rs.getString(4);
-                String username = rs.getString(5);
-                String password = rs.getString(6);
-                String address = rs.getString(7);
-                boolean type_admin = rs.getBoolean(8);
-                String type;
-                if(type_admin) type = "Manager";
-                else type = "Cashier";
-                accounts.add(new Account(firstname,lastname,gmail,phone,username,password,address,type));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                connectDb.close();
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
-        }
+        List<Account> accounts = BLLAccounts.SearchAccount(txt);
         return accounts;
     }
 
@@ -394,7 +360,7 @@ public class AccountController implements Initializable {
     }
     public void decentralization()
     {
-        if(openUI.typecashier == false)
+        if(BLLProject.typecashier == false)
         {
             account.setVisible(false);
         }

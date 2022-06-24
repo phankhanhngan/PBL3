@@ -1,4 +1,4 @@
-package com.example.pbl3;
+package com.example.pbl3.DTO;
 
 public class Supplier {
     private int Sup_Id;

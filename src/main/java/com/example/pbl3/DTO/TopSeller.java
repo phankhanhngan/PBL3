@@ -1,6 +1,6 @@
-package com.example.pbl3;
+package com.example.pbl3.DTO;
 
-public class TopSeller {
+public class TopSeller implements Comparable<TopSeller> {
     private int no;
     private String seller_Name;
     private double revenue;
@@ -21,5 +21,22 @@ public class TopSeller {
 
     public double getRevenue() {
         return revenue;
+    }
+
+    public void setSeller_Name(String seller_Name) {
+        this.seller_Name = seller_Name;
+    }
+
+    public void setRevenue(double revenue) {
+        this.revenue = revenue;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
+
+    @Override
+    public int compareTo(TopSeller o) {
+        return  (int)(o.getRevenue() - this.getRevenue());
     }
 }

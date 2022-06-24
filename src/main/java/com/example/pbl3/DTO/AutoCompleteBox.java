@@ -1,8 +1,5 @@
-package com.example.pbl3;
+package com.example.pbl3.DTO;
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -11,7 +8,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 
 public class AutoCompleteBox implements EventHandler{
     private ComboBox comboBox;
@@ -35,9 +31,6 @@ public class AutoCompleteBox implements EventHandler{
     private void doAutoCompleteBox() {
         this.comboBox.setEditable(true);
         this.comboBox.getEditor().focusedProperty().addListener((observable, oldValue, newValue) -> {
-//            if(newValue){//mean onfocus
-////                this.comboBox.show();
-//            }
         });
 
         this.comboBox.getEditor().setOnMouseClicked(event ->{
@@ -46,7 +39,6 @@ public class AutoCompleteBox implements EventHandler{
                     return;
                 }
             }
-//            this.comboBox.show();
         });
 
         this.comboBox.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
@@ -75,7 +67,6 @@ public class AutoCompleteBox implements EventHandler{
         if(list.isEmpty()) this.comboBox.hide();
 
         this.comboBox.setItems(list);
-//        this.comboBox.show();
     }
 
     private void moveCaret(int textLength) {

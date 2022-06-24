@@ -18,19 +18,19 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPane" prefHeight="676.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.CustomerController">
+<AnchorPane fx:id="AnchorPane" prefHeight="676.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.View.CustomerController">
     <children>
         <ImageView fitHeight="774.0" fitWidth="1051.0" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
             <image>
                 <Image url="@../../../assets/Background2.png" />
             </image>
         </ImageView>
-      <ImageView fitHeight="281.0" fitWidth="383.0" layoutX="36.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="774.0" fitWidth="1051.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../assets/customer.png" />
+            <Image url="@../../../assets/customerback.png" />
          </image>
       </ImageView>
-        <AnchorPane layoutX="59.0" layoutY="216.0" prefHeight="399.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
+        <AnchorPane layoutX="62.0" layoutY="166.0" prefHeight="399.0" prefWidth="246.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 32;">
             <children>
                 <TextField fx:id="firstnameTextField" layoutX="14.0" layoutY="75.0" prefHeight="34.0" prefWidth="217.0" promptText="Firstname" stylesheets="@../../../css/textfield.css" />
                 <TextField fx:id="lastnameTextField" layoutX="14.0" layoutY="120.0" prefHeight="34.0" prefWidth="217.0" promptText="Lastname" stylesheets="@../../../css/textfield.css" />
@@ -80,8 +80,8 @@
                 </JFXRadioButton>
             <TextField fx:id="addressTextField" layoutX="13.0" layoutY="165.0" prefHeight="34.0" prefWidth="217.0" promptText="Address" stylesheets="@../../../css/textfield.css" />
             </children></AnchorPane>
-        <TextField fx:id="searchTextField" layoutX="369.0" layoutY="93.0" onKeyPressed="#pressEnterOnAction" prefHeight="26.0" prefWidth="656.0" promptText="Search" style="-fx-background-color: #FFFFFF;" />
-        <TableView fx:id="CustomerTableView" layoutX="361.0" layoutY="138.0" prefHeight="576.0" prefWidth="668.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
+        <TextField fx:id="searchTextField" layoutX="367.0" layoutY="98.0" onKeyPressed="#pressEnterOnAction" prefHeight="26.0" prefWidth="656.0" promptText="Search" style="-fx-background-color: #FFFFFF;" />
+        <TableView fx:id="CustomerTableView" layoutX="361.0" layoutY="142.0" prefHeight="576.0" prefWidth="668.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
             <columns>
                 <TableColumn fx:id="Col_ID" prefWidth="44.26666259765625" text="ID" />
                 <TableColumn fx:id="Col_FName" prefWidth="84.53338623046875" text="Firstname" />
@@ -93,12 +93,7 @@
                 <TableColumn fx:id="Col_Birthday" prefWidth="82.933349609375" text="Birtthday" />
             </columns>
         </TableView>
-        <Label layoutX="701.0" layoutY="43.0" text="CUSTOMER MANAGEMENT" textFill="#892872">
-            <font>
-                <Font name="System Bold" size="25.0" />
-            </font>
-        </Label>
-        <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="74.0" layoutY="639.0" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Add" textFill="WHITE">
+        <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="77.0" layoutY="592.0" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Add" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -106,7 +101,7 @@
                 <Font size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton fx:id="resetButton" buttonType="RAISED" layoutX="197.0" layoutY="638.0" prefHeight="31.0" prefWidth="93.0" ripplerFill="#e1b3b3" style="-fx-background-color: rgba(255,255,255,0.5); -fx-background-radius: 8; -fx-border-color: #FFFFFF; -fx-border-radius: 8;" text="Reset" textFill="#a16767">
+        <JFXButton fx:id="resetButton" buttonType="RAISED" layoutX="200.0" layoutY="591.0" prefHeight="31.0" prefWidth="93.0" ripplerFill="#e1b3b3" style="-fx-background-color: rgba(255,255,255,0.5); -fx-background-radius: 8; -fx-border-color: #FFFFFF; -fx-border-radius: 8;" text="Reset" textFill="#a16767">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -114,7 +109,7 @@
                 <Font size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton fx:id="deleteButton" buttonType="RAISED" layoutX="74.0" layoutY="683.0" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: rgba(169,25,25,0.6); -fx-background-radius: 8;" text="Delete" textFill="WHITE">
+        <JFXButton fx:id="deleteButton" buttonType="RAISED" layoutX="77.0" layoutY="636.0" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: rgba(169,25,25,0.6); -fx-background-radius: 8;" text="Delete" textFill="WHITE">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -122,7 +117,7 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton fx:id="updateButton" buttonType="RAISED" layoutX="197.0" layoutY="682.0" prefHeight="31.0" prefWidth="93.0" ripplerFill="#e1b3b3" style="-fx-background-color: rgba(255,255,255,0.5); -fx-background-radius: 8; -fx-border-color: #FFFFFF; -fx-border-radius: 8;" text="Update" textFill="#8168a3">
+        <JFXButton fx:id="updateButton" buttonType="RAISED" layoutX="200.0" layoutY="635.0" prefHeight="31.0" prefWidth="93.0" ripplerFill="#e1b3b3" style="-fx-background-color: rgba(255,255,255,0.5); -fx-background-radius: 8; -fx-border-color: #FFFFFF; -fx-border-radius: 8;" text="Update" textFill="#8168a3">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -151,7 +146,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Inventory">
                <items>
-                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receive Inventory" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Request">

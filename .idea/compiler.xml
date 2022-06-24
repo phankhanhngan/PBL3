@@ -15,7 +15,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="PBL3" options="--add-exports jdk.compiler/com.sun.tools.javac.jvm=com.example.pbl3" />
+      <module name="PBL3" options="" />
     </option>
   </component>
 </project>

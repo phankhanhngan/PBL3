@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -12,13 +13,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="969.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.HomepageController">
+<AnchorPane fx:id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="969.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.View.HomepageController">
     <children>
         <ImageView fitHeight="625.0" fitWidth="969.0" pickOnBounds="true">
             <image>
                 <Image url="@../../../assets/Background.png" />
             </image>
         </ImageView>
+      <ImageView fitHeight="625.0" fitWidth="969.0" pickOnBounds="true" style="-fx-opacity: 0.8;">
+         <image>
+            <Image url="@../../../assets/homepageCompo.png" />
+         </image>
+      </ImageView>
         <ImageView fx:id="imageMain" fitHeight="573.0" fitWidth="794.0" layoutX="425.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../assets/homepage_pana.png" />
@@ -33,6 +39,9 @@
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
         </Button>
         <Label fx:id="lb1" layoutX="40.0" layoutY="150.0" text="Make your sales increase with centralized management starting from" textFill="#00000092">
             <font>
@@ -143,7 +152,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Inventory">
                <items>
-                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receipt" />
+                  <MenuItem fx:id="receipt" mnemonicParsing="false" onAction="#importMenuItemOnAction" text="Receive Inventory" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Request">

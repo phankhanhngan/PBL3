@@ -1,6 +1,8 @@
-package com.example.pbl3;
+package com.example.pbl3.View;
 
+import com.example.pbl3.BLL.BLLAccounts;
 import com.example.pbl3.BLL.BLLProject;
+import com.example.pbl3.OpenUI;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.event.ActionEvent;
@@ -12,13 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.Statement;
-import java.util.Properties;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -69,10 +65,10 @@ public class MyAccountController implements Initializable {
     @FXML
     private TextField nameTxt;
     @FXML
-            private MenuItem account;
-    int value;
-    private OpenUI openUI = new OpenUI();
+    private MenuItem account;
 
+    int value;
+    OpenUI openUI = new OpenUI();
 
 
     public void DisableField() {
@@ -86,12 +82,12 @@ public class MyAccountController implements Initializable {
     }
 
     public void FillInformation() {
-        nameTxt.setText(openUI.namecashier);
-        gmailTxt.setText(openUI.gmail);
-        phoneTxt.setText(openUI.phonecashier);
-        usernameTxt.setText(openUI.username);
-        addressTxt.setText(openUI.address);
-        if(openUI.typecashier) managerRadioBtn.setSelected(true);
+        nameTxt.setText(BLLProject.namecashier);
+        gmailTxt.setText(BLLProject.gmail);
+        phoneTxt.setText(BLLProject.phonecashier);
+        usernameTxt.setText(BLLProject.username);
+        addressTxt.setText(BLLProject.address);
+        if(BLLProject.typecashier) managerRadioBtn.setSelected(true);
         else cashierRadioBtn.setSelected(true);
         nameLabel.setText(nameTxt.getText() + "!");
     }
@@ -118,6 +114,7 @@ public class MyAccountController implements Initializable {
 
         submitButton.setOnAction(e -> {
             confirm();
+            resetField();
         });
     }
 
@@ -128,68 +125,42 @@ public class MyAccountController implements Initializable {
     }
 
     public void sendCode() {
-        if(BLLProject.CheckMail(openUI.gmail))
+        if(BLLAccounts.CheckMail(BLLProject.gmail))
         {
-            this.SendMail(this.openUI.gmail);
+            Random generator = new Random();
+            this.value = generator.nextInt(9000) + 1000;
+            BLLProject.SendMail(BLLProject.gmail,"Your confirmation code is: " + value + "\nDo not share this to anyone.", "Your Confirmation Code");
             Notifications.create().text("Code sent to your gmail. Check it out!").title("Sent successful!").hideAfter(Duration.seconds(5.0D)).show();
         }
     }
 
-    public void SendMail(String to) {
-        Random generator = new Random();
-        this.value = generator.nextInt(9000) + 1000;
-        String host = "smtp.gmail.com";
-        Properties properties = System.getProperties();
-        properties.put("mail.smtp.host", host);
-        properties.put("mail.smtp.port", "465");
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.auth", "true");
-        Session session = Session.getInstance(properties, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("vokhuong1403@gmail.com", "blackdiablo1403");
-            }
-        });
-        session.setDebug(true);
-
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("vokhuong1403@gmail.com"));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject("Confirmation code");
-            message.setText(String.valueOf(this.value));
-            Transport.send(message);
-        } catch (MessagingException var7) {
-            var7.printStackTrace();
-        }
-
+    public boolean inputEmpty() {
+        return newPassConfirm.getText().isEmpty() || newPass.getText().isEmpty() || code.getText().isEmpty();
     }
 
     public void confirm() {
-        String s = String.valueOf(this.value);
-        if (this.value == Integer.parseInt(this.code.getText())) {
-            if (newPass.getText().equals(newPassConfirm.getText())) {
-                updatePassword();
+        if (!inputEmpty()) {
+            String s = String.valueOf(this.value);
+            if (this.value == Integer.parseInt(this.code.getText())) {
+                if (newPass.getText().equals(newPassConfirm.getText())) {
+                    updatePassword();
+                } else {
+                    Notifications.create().text("Your password doesn't match!").title("Oh snap!").hideAfter(Duration.seconds(5.0D)).show();
+                }
             } else {
-                Notifications.create().text("Your password doesn't match!").title("Oh snap!").hideAfter(Duration.seconds(5.0D)).show();
+                Notifications.create().text("Incorrect confirmation code. Check it again!").title("Oh snap!").hideAfter(Duration.seconds(5.0D)).show();
             }
         } else {
-            Notifications.create().text("Incorrect confirmation code. Check it again!").title("Oh snap!").hideAfter(Duration.seconds(5.0D)).show();
+            Notifications.create().text("Please fill in all fields!").title("Oh snap!").hideAfter(Duration.seconds(5.0D)).show();
         }
+
     }
 
     public void updatePassword() {
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDb = connectNow.getConnection();
         String var10000 = this.newPass.getText();
-        String verifyLogin = "UPDATE account SET password = '" + var10000 + "' WHERE gmail = '" + openUI.gmail + "'";
-
-        try {
-            Statement statement = connectDb.createStatement();
-            statement.executeUpdate(verifyLogin);
+        if(BLLAccounts.UpdatePasswordAccount(var10000))
+        {
             Notifications.create().text("Your password has been changed!").title("Great!").hideAfter(Duration.seconds(5.0D)).show();
-        } catch (Exception var5) {
-            var5.printStackTrace();
-            var5.getCause();
         }
     }
 
@@ -278,7 +249,7 @@ public class MyAccountController implements Initializable {
     }
     public void decentralization()
     {
-        if(openUI.typecashier == false)
+        if(BLLProject.typecashier == false)
         {
             account.setVisible(false);
         }

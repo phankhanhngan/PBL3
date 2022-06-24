@@ -1,14 +1,14 @@
-package com.example.pbl3;
+package com.example.pbl3.DTO;
 
 public class Account {
-    public String firstName;
-    public String lastName;
-    public String gmail;
-    public String phone;
-    public String username;
-    public String password;
-    public String address;
-    public String typeOfUser;
+    private String firstName;
+    private String lastName;
+    private String gmail;
+    private String phone;
+    private String username;
+    private String password;
+    private String address;
+    private String typeOfUser;
 
     public Account(String fName, String lName, String gmail, String phone, String username, String password, String address, String typeOfUser) {
         this.firstName = fName;
@@ -85,3 +85,4 @@ public class Account {
         return typeOfUser;
     }
 }
+

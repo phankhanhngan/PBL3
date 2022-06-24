@@ -1,12 +1,10 @@
-package com.example.pbl3;
+package com.example.pbl3.View;
 
-import java.sql.Connection;
-import java.sql.Statement;
+
+import com.example.pbl3.BLL.BLLAccounts;
+import com.example.pbl3.OpenUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -41,7 +39,7 @@ public class RecoveryPasswordSecondController {
                 this.announceLabel.setText("Password does not match");
             }
         } else {
-            this.announceLabel.setText("Please enter password and confimPassword!");
+            this.announceLabel.setText("Please enter password and confirmPassword!");
         }
 
     }
@@ -55,32 +53,12 @@ public class RecoveryPasswordSecondController {
     }
 
     public void updatePassword() {
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDb = connectNow.getConnection();
-        String var10000 = this.passwordField.getText();
-        String verifyLogin = "UPDATE account SET password = '" + var10000 + "' WHERE gmail = '" + this.gmail + "'";
-
-        try {
-            Statement statement = connectDb.createStatement();
-            statement.executeUpdate(verifyLogin);
-        } catch (Exception var5) {
-            var5.printStackTrace();
-            var5.getCause();
-        }
-
+        BLLAccounts.UpdatePasswordAccount(passwordField.getText());
     }
 
     public void backLoginStage() {
-        try {
-            Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("LoginUI.fxml"));
-            Stage forgetpassword = new Stage();
-            forgetpassword.setScene(new Scene(root));
-            forgetpassword.show();
-        } catch (Exception var3) {
-            var3.printStackTrace();
-            var3.getCause();
-        }
-
+        OpenUI BLLProject = new OpenUI();
+        BLLProject.Open_UI("LoginUI.fxml");
     }
 }
 

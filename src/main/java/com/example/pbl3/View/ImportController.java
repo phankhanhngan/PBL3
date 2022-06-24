@@ -1,6 +1,15 @@
-package com.example.pbl3;
+package com.example.pbl3.View;
 
-import com.example.pbl3.View.ProductController;
+import com.example.pbl3.BLL.BLLImports;
+import com.example.pbl3.BLL.BLLProducts;
+import com.example.pbl3.BLL.BLLProject;
+import com.example.pbl3.BLL.BLLSuppliers;
+import com.example.pbl3.DTO.AutoCompleteBox;
+import com.example.pbl3.DTO.Import;
+import com.example.pbl3.DTO.Product;
+import com.example.pbl3.DTO.Supplier;
+import com.example.pbl3.DTO.DetailImport;
+import com.example.pbl3.OpenUI;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,14 +29,12 @@ import org.controlsfx.control.Notifications;
 import org.controlsfx.control.action.Action;
 import com.jfoenix.controls.JFXDialog;
 
+import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ImportController implements Initializable {
     @FXML
@@ -164,25 +171,15 @@ public class ImportController implements Initializable {
     JFXDialog dialog = new JFXDialog();
     private Double totalCal = Double.valueOf(0);
 
-    private PreparedStatement update = null;
-    private PreparedStatement add = null;
-    private PreparedStatement delete = null;
-    private PreparedStatement loadSupplierInfo = null;
-    private PreparedStatement addDetail = null;
-    private PreparedStatement getImportID = null;
-    private PreparedStatement loadDetailImport = null;
-    private PreparedStatement deleteDetailImport = null;
-
     private ObservableList<Import> importList;
     private ObservableList<DetailImport> importDetailList = FXCollections.observableArrayList();
     private ObservableList<Double> amountList = FXCollections.observableArrayList();
     OpenUI openUI = new OpenUI();
-    private static DatabaseConnection  conn = new DatabaseConnection();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         decentralization();
-        this.lbStaff.setText(openUI.namecashier);
+        this.lbStaff.setText(BLLProject.namecashier);
         receiptAnchorpane.setVisible(false);
         printAnchorPane.setVisible(false);
         this.makeReceiptButton.setOnAction((e) -> {
@@ -217,27 +214,18 @@ public class ImportController implements Initializable {
         this.addItemButton.setOnAction((e) -> {
             addAnItem();
         });
-        try {
-            UpdateListImport("");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        UpdateListImport("");
 
         showSupplierComboBoxItem();
         showItemComboboxItem();
         new AutoCompleteBox(itemCBBox);
         new AutoCompleteBox(supplierCBBox);
-        supplierCBBox.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue ov, String t, String t1) {
-                if (supplierCBBox.getSelectionModel().getSelectedItem() != null) {
-                    fillSupplierInfo();
-                    lbSupplier.setText(supplierCBBox.getSelectionModel().getSelectedItem().toString());
-                }
+        supplierCBBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> {
+            if (supplierCBBox.getSelectionModel().getSelectedItem() != null) {
+                fillSupplierInfo();
+                lbSupplier.setText(supplierCBBox.getSelectionModel().getSelectedItem().toString());
             }
         });
-
-
 
         ImportTableView.setOnMouseClicked( event -> {
             if( event.getClickCount() == 2 && !ImportTableView.getSelectionModel().isEmpty()) {
@@ -245,37 +233,11 @@ public class ImportController implements Initializable {
                 loadReceipt();
             }});
 
-
-        //
         showContextMenu();
         deleteDetailContextMenu.setOnAction((e) -> {
             deleteAnItem();
         });
-        //
-
-
-        Connection link = conn.getConnection();
-        try {
-            String queryAdd = "Insert into import(supplier, date , cashier, total) values (?, ?, ?, ?)";
-            String queryDelete = "Delete from import where import_id = ?";
-            String queryLoadSupplier = "Select * from supplier where supplier_name = ?";
-            String queryAddDetail = "Insert into detailimport(import_id, quantity, product, unit_price, amount) values (?,?,?,?,?)";
-            String queryLoadDetailImport = "Select * from detailimport where import_id = ?";
-            String queryDeleteDetailImport = "delete from detailimport where import_id = ?";
-            String queryImportID = "select * from import ORDER BY import_id DESC LIMIT 1";
-            this.add = link.prepareStatement(queryAdd);
-            this.delete = link.prepareStatement(queryDelete);
-            this.loadSupplierInfo = link.prepareStatement(queryLoadSupplier);
-            this.addDetail = link.prepareStatement(queryAddDetail);
-            this.loadDetailImport = link.prepareStatement(queryLoadDetailImport);
-            this.getImportID = link.prepareStatement(queryImportID);
-            this.deleteDetailImport = link.prepareStatement(queryDeleteDetailImport);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
     }
-
-
 
     private void showSupplierComboBoxItem() {
         this.supplierCBBox.setItems(this.getAllSupplierName());
@@ -286,40 +248,27 @@ public class ImportController implements Initializable {
     }
 
     private void fillSupplierInfo() {
-        try {
-            this.loadSupplierInfo.setString(1,supplierCBBox.getValue().toString());
-            ResultSet rs = this.loadSupplierInfo.executeQuery();
-            while(rs.next()) {
-                supplierPhoneTxt.setText(rs.getString("Supplier_Phone"));
-                supplierAddressTxt.setText(rs.getString("Supplier_Address"));
-                supplierPhonePrint.setText(rs.getString("Supplier_Phone"));
-                supplierAddressPrint.setText(rs.getString("Supplier_Address"));
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        supplierPhoneTxt.setText(BLLSuppliers.getSupplierByNameSupplier(supplierCBBox.getSelectionModel().getSelectedItem().toString()).getSup_Phone());
+        supplierAddressTxt.setText(BLLSuppliers.getSupplierByNameSupplier(supplierCBBox.getSelectionModel().getSelectedItem().toString()).getSup_Address());
+        supplierPhonePrint.setText(BLLSuppliers.getSupplierByNameSupplier(supplierCBBox.getSelectionModel().getSelectedItem().toString()).getSup_Phone());
+        supplierAddressPrint.setText(BLLSuppliers.getSupplierByNameSupplier(supplierCBBox.getSelectionModel().getSelectedItem().toString()).getSup_Address());
     }
 
     private void loadReceipt() {
         this.supplierCBBox.setValue(this.ImportTableView.getSelectionModel().getSelectedItem().getSupplier_name());
         fillSupplierInfo();
-        java.util.Date date = this.ImportTableView.getSelectionModel().getSelectedItem().getImport_date();
+        Date date = this.ImportTableView.getSelectionModel().getSelectedItem().getImport_date();
         this.importDate.setValue(LocalDate.of(date.getYear()+1900, date.getMonth()+1, date.getDate()));
         receiptDatePrint.setText(date.toString());
         this.lbSupplier.setText(this.ImportTableView.getSelectionModel().getSelectedItem().getSupplier_name());
         this.lbTotal.setText(String.valueOf(this.ImportTableView.getSelectionModel().getSelectedItem().getTotal()));
-        try {
-            this.loadDetailImport.setInt(1,ImportTableView.getSelectionModel().getSelectedItem().getImport_id());
-            ResultSet rs = loadDetailImport.executeQuery();
-            while (rs.next())
-            {
-                importDetailList.add(new DetailImport(rs.getString("product"),rs.getInt("quantity"),rs.getDouble("unit_price"),rs.getDouble("amount")));
-            }
-        loadDetailImportTable(importDetailList);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        List<DetailImport> listDetailImport = BLLImports.getListDetailImportByIDImport(ImportTableView.getSelectionModel().getSelectedItem().getImport_id());
+        importDetailList.clear();
+        for(int i=0; i<listDetailImport.size(); i++)
+        {
+            importDetailList.add(listDetailImport.get(i));
         }
+        loadDetailImportTable(importDetailList);
         deleteDetailContextMenu.setDisable(true);
         printReceiptButton.setVisible(true);
         addSubmitButton.setVisible(false);
@@ -345,47 +294,19 @@ public class ImportController implements Initializable {
         ImportTableView.getSelectionModel().clearSelection();
         importDate.setValue(null);
     }
+
     public void resetDetailInputField() {
         quantityTxt.setText("");
         unitPriceTxt.setText("");
         itemCBBox.getSelectionModel().clearSelection();
     }
+
     @FXML
     public List<Import> Search(String txt) {
-        List<Import> imports = new ArrayList<>();
-        String sql = "SELECT * FROM import WHERE supplier LIKE '%" + txt
-                + "%'";
-        Connection connectDb = conn.getConnection();
-        try {
-            PreparedStatement pst = connectDb.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next())
-            {
-                int id = rs.getInt("import_id");
-                String supplier= rs.getString("supplier");
-                Date date = rs.getDate("date");
-                Double total = rs.getDouble("total");
-                String cashier = rs.getString("cashier");
-
-                imports.add(new Import(id,supplier,date,total,cashier));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                connectDb.close();
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        return imports;
+        return BLLImports.searchImport(txt);
     }
 
-    private void UpdateListImport(String s) throws SQLException {
+    private void UpdateListImport(String s){
         importList = FXCollections.observableArrayList(Search(s));
         Col_supplier.setCellValueFactory(new PropertyValueFactory("supplier_name"));
         Col_importID.setCellValueFactory(new PropertyValueFactory("import_id"));
@@ -400,13 +321,6 @@ public class ImportController implements Initializable {
         UpdateListImport(searchtxt.getText());
     }
 
-    public String getIDImport() throws SQLException {
-        ResultSet rs = this.getImportID.executeQuery();
-        while(rs.next()) {
-            return rs.getString(1);
-        }
-        return "";
-    }
 
     public void addSubmitButtonOnAction() throws SQLException {
 
@@ -416,7 +330,7 @@ public class ImportController implements Initializable {
 
                 if (alert.getResult() == ButtonType.YES) {
                     this.addImport();
-                    this.addDetailImport(getIDImport());
+                    this.addDetailImport();
                     importDetailList.clear();
                     UpdateListImport("");
                     CloseDialogReceipt();
@@ -428,41 +342,34 @@ public class ImportController implements Initializable {
             }
         }
 
-
-    public void addDetailImport(String idImport) {
-        importDetailList.forEach(DetailImport -> {
-            try {
-                System.out.println(DetailImport.getProduct() + " " + idImport);
-                this.addDetail.setString(1,idImport);
-                this.addDetail.setInt(2,DetailImport.getQuantity());
-                this.addDetail.setString(3, DetailImport.getProduct());
-                this.addDetail.setDouble(4,DetailImport.getUnit_price());
-                this.addDetail.setDouble(5,DetailImport.getAmount());
-                this.addDetail.execute();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
-        importDetailList.clear();
-    }
-
     public void addImport() {
-            try {
-                this.add.setString(1, (String) supplierCBBox.getValue());
-                this.add.setDate(2, Date.valueOf(importDate.getValue()));
-                this.add.setString(3, lbStaff.getText());
-                this.add.setDouble(4,Double.parseDouble(lbTotal.getText()));
-                this.add.execute();
+        if (!isInputFieldEmpty()) {
+            Import i = new Import(0,BLLSuppliers.getSupplierByNameSupplier((String) supplierCBBox.getValue()).getSup_Id(),(String) supplierCBBox.getValue(),Date.valueOf(importDate.getValue()),Double.parseDouble(lbTotal.getText()),lbStaff.getText(),BLLProject.gmail);
+            if(BLLImports.AddImport(i))
+            {
                 Notifications.create().text("Add successfully!")
                         .title("Notification")
                         .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            }
+            else
+            {
                 Notifications.create().text("Add Failure!")
                         .title("Notification")
                         .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
             }
+        } else {
+            Notifications.create().text("Please fill in all fields!")
+                    .title("Notification")
+                    .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+        }
+    }
 
+    public void addDetailImport() {
+        importDetailList.forEach(DetailImport -> {
+            DetailImport detailImport = new DetailImport(BLLImports.getMaxImportID(),DetailImport.getProduct(),BLLProducts.getProductByProductName(DetailImport.getProduct()).getSerial(),DetailImport.getQuantity(),DetailImport.getUnit_price(),DetailImport.getAmount());
+            BLLImports.AddDetailImport(detailImport);
+        });
+        importDetailList.clear();
     }
 
     public void deleteButtonOnAction() {
@@ -471,17 +378,16 @@ public class ImportController implements Initializable {
 
         if (alert.getResult() == ButtonType.YES) {
             if(!ImportTableView.getSelectionModel().isEmpty()) {
-                try {
-                    this.delete.setInt(1, ImportTableView.getSelectionModel().getSelectedItem().getImport_id());
-                    this.delete.execute();
-                    this.deleteDetailImport.setInt(1, ImportTableView.getSelectionModel().getSelectedItem().getImport_id());
-                    this.deleteDetailImport.execute();
+                if(BLLImports.DeleteImport(ImportTableView.getSelectionModel().getSelectedItem().getImport_id()))
+                {
                     Notifications.create().text("Successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
                     UpdateListImport("");
                     resetInputField();
-                } catch (Exception var15) {
-                    var15.printStackTrace();
-                    Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+                }
+                else
+                {
+                    Notifications.create().text("Error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+
                 }
             }
             else
@@ -489,44 +395,6 @@ public class ImportController implements Initializable {
                 Notifications.create().text("Please pick a row to delete.").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
             }
         }
-    }
-
-
-    public ObservableList<String> getAllSupplierName()
-    {
-        ObservableList<String> list = FXCollections.observableArrayList();
-        Connection connectDB = conn.getConnection();
-        String query = "select Supplier_Name from supplier";
-        try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(query);
-            while(queryResult.next()) {
-                String Supplier_Name = queryResult.getString("Supplier_Name");
-                list.add(Supplier_Name);
-            }
-        } catch (SQLException var14) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, (String)null, var14);
-            var14.printStackTrace();
-        }
-        return list;
-    }
-    public ObservableList<String> getAllProductName()
-    {
-        ObservableList<String> list = FXCollections.observableArrayList();
-        Connection connectDB = conn.getConnection();
-        String query = "select ProductName from product";
-        try {
-            Statement statement = connectDB.createStatement();
-            ResultSet queryResult = statement.executeQuery(query);
-            while(queryResult.next()) {
-                String Supplier_Name = queryResult.getString("ProductName");
-                list.add(Supplier_Name);
-            }
-        } catch (SQLException var14) {
-            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, (String)null, var14);
-            var14.printStackTrace();
-        }
-        return list;
     }
 
     public void ShowDialogReceipt()
@@ -578,10 +446,26 @@ public class ImportController implements Initializable {
         }
     }
 
+    public ObservableList<String> getAllSupplierName()
+    {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        List<Supplier> supplierList = BLLSuppliers.getListSupplier();
+        for(int i=0; i<supplierList.size(); i++)
+            list.add(supplierList.get(i).getSup_Name());
+        return list;
+    }
+    public ObservableList<String> getAllProductName()
+    {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        List<Product> productList = BLLProducts.getListProduct();
+        for(int i=0; i<productList.size(); i++)
+            list.add(productList.get(i).getProductName());
+        return list;
+    }
 
     private void addAnItem() {
         if (!itemCBBox.getSelectionModel().isEmpty() && !quantityTxt.getText().isEmpty() && !unitPriceTxt.getText().isEmpty()) {
-            DetailImport di = new DetailImport(itemCBBox.getSelectionModel().getSelectedItem().toString(),Integer.parseInt(quantityTxt.getText()), Double.parseDouble(unitPriceTxt.getText()),
+            DetailImport di = new DetailImport(0,itemCBBox.getSelectionModel().getSelectedItem().toString(),BLLProducts.getProductByProductName(itemCBBox.getSelectionModel().getSelectedItem().toString()).getSerial(),Integer.parseInt(quantityTxt.getText()), Double.parseDouble(unitPriceTxt.getText()),
                     Double.parseDouble(quantityTxt.getText()) * Double.parseDouble(unitPriceTxt.getText()));
             importDetailList.add(di);
             totalCal += Double.parseDouble(quantityTxt.getText()) * Double.parseDouble(unitPriceTxt.getText());
@@ -615,7 +499,7 @@ public class ImportController implements Initializable {
         receiptIDPrint.setText(String.valueOf(ImportTableView.getSelectionModel().getSelectedItem().getImport_id()));
         supplierNamePrint.setText(this.ImportTableView.getSelectionModel().getSelectedItem().getSupplier_name());
         supplierPrint.setText(supplierNamePrint.getText());
-        staffPrint.setText(openUI.namecashier);
+        staffPrint.setText(BLLProject.namecashier);
         totalPrint.setText(String.valueOf(this.ImportTableView.getSelectionModel().getSelectedItem().getTotal()));
     }
 
@@ -730,7 +614,7 @@ public class ImportController implements Initializable {
     }
     public void decentralization()
     {
-        if(openUI.typecashier == false)
+        if(BLLProject.typecashier == false)
         {
             account.setVisible(false);
         }

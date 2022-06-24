@@ -1,36 +1,38 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
+package com.example.pbl3.DTO;
 
-package com.example.pbl3;
-
-import java.util.Date;
+import java.io.InputStream;
 
 public class Product {
-    private String Barcode;
+    private String serial;
     private String ProductName;
-    private float salePrice;
+    private double salePrice;
+    private InputStream image;
     private String Category;
     private int quantity;
 
-    public Product(String barcode, String productName, float salePrice, String category, int quantity) {
-        this.Barcode = barcode;
+    public Product(String serial, String productName, double salePrice, InputStream image, String category, int quantity) {
+        this.serial = serial;
         this.ProductName = productName;
         this.salePrice = salePrice;
+        this.image = image;
         this.Category = category;
         this.quantity = quantity;
     }
 
-    public String getBarcode() {
-        return this.Barcode;
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
     }
 
     public String getProductName() {
         return this.ProductName;
     }
 
-    public float getSalePrice() {
+    public double getSalePrice() {
         return this.salePrice;
     }
 
@@ -40,15 +42,11 @@ public class Product {
 
     public int getQuantity() {return this.quantity;}
 
-    public void setBarcode(String barcode) {
-        this.Barcode = barcode;
-    }
-
     public void setProductName(String productName) {
         this.ProductName = productName;
     }
 
-    public void setSalePrice(float salePrice) {
+    public void setSalePrice(double salePrice) {
         this.salePrice = salePrice;
     }
 
@@ -57,4 +55,12 @@ public class Product {
     }
 
     public void setQuantity(int quant) { this.quantity = quant; }
+
+    public InputStream getImage() {
+        return image;
+    }
+
+    public void setImage(InputStream image) {
+        this.image = image;
+    }
 }

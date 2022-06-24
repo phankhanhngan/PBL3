@@ -1,6 +1,6 @@
-package com.example.pbl3;
+package com.example.pbl3.DTO;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Customer {
     private int ID;

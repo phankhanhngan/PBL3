@@ -1,25 +1,29 @@
-package com.example.pbl3;
+package com.example.pbl3.DTO;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Bill {
     private int ID_Bill;
     private int ID_Customer;
     private String customerName;
-    private String Cashier_Phone;
+    private String cashier_gmail;
     private String cashierName;
     private Date date;
     private double Total_Money;
+    private String pay;
+    private boolean status;
 
-    public Bill(int ID_Bill, int ID_Customer, String customerName, String cashier_Phone, String cashierName, Date date, double total_Money)
+    public Bill(int ID_Bill, int ID_Customer, String customerName, String cashier_gmail, String cashierName, Date date, double total_Money, String pay, boolean status)
     {
         this.ID_Bill = ID_Bill;
         this.ID_Customer = ID_Customer;
         this.customerName = customerName;
-        this.Cashier_Phone = cashier_Phone;
+        this.cashier_gmail = cashier_gmail;
         this.cashierName = cashierName;
         this.date = date;
         this.Total_Money = total_Money;
+        this.pay = pay;
+        this.status = status;
     }
 
     public String getCustomerName() {
@@ -54,12 +58,12 @@ public class Bill {
         this.ID_Customer = ID_Customer;
     }
 
-    public String getCashier_Phone() {
-        return Cashier_Phone;
+    public String getCashier_gmail() {
+        return cashier_gmail;
     }
 
-    public void setCashier_Phone(String cashier_Phone) {
-        Cashier_Phone = cashier_Phone;
+    public void setCashier_gmail(String cashier_gmail) {
+        this.cashier_gmail = cashier_gmail;
     }
 
     public Date getDate() {
@@ -76,5 +80,21 @@ public class Bill {
 
     public void setTotal_Money(double total_Money) {
         Total_Money = total_Money;
+    }
+
+    public String getPay() {
+        return pay;
+    }
+
+    public void setPay(String pay) {
+        this.pay = pay;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

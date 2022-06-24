@@ -1,21 +1,48 @@
-package com.example.pbl3;
+package com.example.pbl3.DTO;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.sql.Date;
 
 public class Import {
     private int import_id;
+    private int supplier_id;
     private String supplier_name;
     private Date import_date;
     private Double total;
-    private String cashier;
+    private String cashier_name;
+    private String cashier_gmail;
 
-    public Import(int import_id, String supplier_name, Date import_date, Double total, String cashier) {
+    public Import(int import_id, int supplier_id ,String supplier_name, Date import_date, Double total, String cashier_name,String cashier_gmail) {
         this.import_id = import_id;
+        this.supplier_id = supplier_id;
         this.supplier_name = supplier_name;
         this.import_date = import_date;
         this.total = total;
-        this.cashier = cashier;
+        this.cashier_name = cashier_name;
+        this.cashier_gmail = cashier_gmail;
+    }
+
+    public int getSupplier_id() {
+        return supplier_id;
+    }
+
+    public void setSupplier_id(int supplier_id) {
+        this.supplier_id = supplier_id;
+    }
+
+    public String getCashier_name() {
+        return cashier_name;
+    }
+
+    public void setCashier_name(String cashier_name) {
+        this.cashier_name = cashier_name;
+    }
+
+    public String getCashier_gmail() {
+        return cashier_gmail;
+    }
+
+    public void setCashier_gmail(String cashier_gmail) {
+        this.cashier_gmail = cashier_gmail;
     }
 
     public int getImport_id() {
@@ -51,10 +78,10 @@ public class Import {
     }
 
     public String getCashier() {
-        return cashier;
+        return cashier_name;
     }
 
     public void setCashier(String cashier) {
-        this.cashier = cashier;
+        this.cashier_name = cashier;
     }
 }
