@@ -37,6 +37,17 @@ public class RecoveryPasswordController implements Initializable {
 
     private OpenUI openUI = new OpenUI();
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(BLLProject.namecashier == null) {
+            backToHome.setVisible(false);
+            backToLoginHyperLink.setVisible(true);
+        } else {
+            backToHome.setVisible(true);
+            backToLoginHyperLink.setVisible(false);
+        }
+    }
+
     public void backToHomeOnAction() {
         Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
         stage.close();
@@ -49,7 +60,8 @@ public class RecoveryPasswordController implements Initializable {
         {
             Random generator = new Random();
             this.value = generator.nextInt(9000) + 1000;
-            BLLProject.SendMail(this.userGmailTextField.getText(),"Your confirmation code is: " + value + "\nDo not share this to anyone.", "Your Confirmation Code");
+            BLLProject.SendMail(this.userGmailTextField.getText(),"Your confirmation code is: " + value +
+                    "\nDo not share this to anyone.", "Your Confirmation Code");
         }
         else
         {
@@ -74,17 +86,5 @@ public class RecoveryPasswordController implements Initializable {
         Stage stage = (Stage)this.backToLoginHyperLink.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
-    }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        if(BLLProject.namecashier == null) {
-            backToHome.setVisible(false);
-            backToLoginHyperLink.setVisible(true);
-        } else {
-            backToHome.setVisible(true);
-            backToLoginHyperLink.setVisible(false);
-        }
     }
 }

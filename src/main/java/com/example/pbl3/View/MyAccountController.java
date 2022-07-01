@@ -70,6 +70,33 @@ public class MyAccountController implements Initializable {
     int value;
     OpenUI openUI = new OpenUI();
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        decentralization();
+        DisableField();
+        FillInformation();
+
+        resetButton.setOnAction(e -> {
+            resetField();
+        });
+
+        sendCodeButton.setOnAction(e -> {
+            sendCode();
+        });
+
+        submitButton.setOnAction(e -> {
+            confirm();
+            resetField();
+        });
+    }
+
+    public void decentralization()
+    {
+        if(BLLProject.typecashier == false)
+        {
+            account.setVisible(false);
+        }
+    }
 
     public void DisableField() {
         nameTxt.setEditable(false);
@@ -92,32 +119,6 @@ public class MyAccountController implements Initializable {
         nameLabel.setText(nameTxt.getText() + "!");
     }
 
-    public void changePassword() {
-        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
-        stage.close();
-        openUI.Open_UI("RecoveryPasswordUI.fxml");
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        decentralization();
-        DisableField();
-        FillInformation();
-
-        resetButton.setOnAction(e -> {
-            resetField();
-        });
-
-        sendCodeButton.setOnAction(e -> {
-            sendCode();
-        });
-
-        submitButton.setOnAction(e -> {
-            confirm();
-            resetField();
-        });
-    }
-
     public void resetField() {
         newPass.setText("");
         newPassConfirm.setText("");
@@ -129,8 +130,10 @@ public class MyAccountController implements Initializable {
         {
             Random generator = new Random();
             this.value = generator.nextInt(9000) + 1000;
-            BLLProject.SendMail(BLLProject.gmail,"Your confirmation code is: " + value + "\nDo not share this to anyone.", "Your Confirmation Code");
-            Notifications.create().text("Code sent to your gmail. Check it out!").title("Sent successful!").hideAfter(Duration.seconds(5.0D)).show();
+            BLLProject.SendMail(BLLProject.gmail,"Your confirmation code is: " + value +
+                    "\nDo not share this to anyone.", "Your Confirmation Code");
+            Notifications.create().text("Code sent to your gmail. Check it out!").title("Sent successful!")
+                    .hideAfter(Duration.seconds(5.0D)).show();
         }
     }
 
@@ -145,13 +148,16 @@ public class MyAccountController implements Initializable {
                 if (newPass.getText().equals(newPassConfirm.getText())) {
                     updatePassword();
                 } else {
-                    Notifications.create().text("Your password doesn't match!").title("Oh snap!").hideAfter(Duration.seconds(5.0D)).show();
+                    Notifications.create().text("Your password doesn't match!").title("Oh snap!")
+                            .hideAfter(Duration.seconds(5.0D)).show();
                 }
             } else {
-                Notifications.create().text("Incorrect confirmation code. Check it again!").title("Oh snap!").hideAfter(Duration.seconds(5.0D)).show();
+                Notifications.create().text("Incorrect confirmation code. Check it again!").title("Oh snap!")
+                        .hideAfter(Duration.seconds(5.0D)).show();
             }
         } else {
-            Notifications.create().text("Please fill in all fields!").title("Oh snap!").hideAfter(Duration.seconds(5.0D)).show();
+            Notifications.create().text("Please fill in all fields!").title("Oh snap!")
+                    .hideAfter(Duration.seconds(5.0D)).show();
         }
 
     }
@@ -160,7 +166,8 @@ public class MyAccountController implements Initializable {
         String var10000 = this.newPass.getText();
         if(BLLAccounts.UpdatePasswordAccount(var10000))
         {
-            Notifications.create().text("Your password has been changed!").title("Great!").hideAfter(Duration.seconds(5.0D)).show();
+            Notifications.create().text("Your password has been changed!").title("Great!")
+                    .hideAfter(Duration.seconds(5.0D)).show();
         }
     }
 
@@ -168,7 +175,7 @@ public class MyAccountController implements Initializable {
     public void productMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml");
+        openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
@@ -182,7 +189,7 @@ public class MyAccountController implements Initializable {
     public void accountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("AccountManagementUI.fxml");
+        openUI.Open_UI("AccountUI.fxml");
     }
 
     @FXML
@@ -196,14 +203,14 @@ public class MyAccountController implements Initializable {
     public void supplierMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("SupplierManagementUI.fxml");
+        openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
     public void categoryMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("CategoryManagementUI.fxml");
+        openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
@@ -246,12 +253,5 @@ public class MyAccountController implements Initializable {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
-    }
-    public void decentralization()
-    {
-        if(BLLProject.typecashier == false)
-        {
-            account.setVisible(false);
-        }
     }
 }

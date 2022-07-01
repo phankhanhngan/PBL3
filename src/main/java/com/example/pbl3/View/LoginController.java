@@ -30,19 +30,18 @@ public class LoginController {
     }
 
     @FXML
-    void cancelButtonOnAction(ActionEvent event) {
+    void cancelButtonOnAction() {
         Stage stage = (Stage) this.cancelButton.getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    void signInButtonOnAction(ActionEvent event) {
+    void signInButtonOnAction() {
         if (!this.usernameTextField.getText().isBlank() && !this.passwordField.getText().isBlank()) {
             this.validateLogin();
         } else {
-            this.loginMessageLabel.setText("Please enter username and password");
+            this.loginMessageLabel.setText("Please enter username and password!");
         }
-
     }
 
     @FXML
@@ -54,11 +53,11 @@ public class LoginController {
 
     public void validateLogin() {
         if (BLLAccounts.CheckAccount(usernameTextField.getText(), passwordField.getText())) {
-            Stage stage = (Stage)this.usernameTextField.getScene().getWindow();
+            Stage stage = (Stage) this.usernameTextField.getScene().getWindow();
             stage.close();
             openUI.Open_UI("HomePageUI.fxml");
         } else {
-            this.loginMessageLabel.setText("Please try again");
+            this.loginMessageLabel.setText("Please try again!");
         }
     }
 

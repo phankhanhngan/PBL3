@@ -35,7 +35,7 @@ import org.controlsfx.control.action.Action;
 
 public class ProductController implements Initializable {
     @FXML
-    private Label quatityLabel;
+    private Label quantityLabel;
     @FXML
     Button butBrowse;
     @FXML
@@ -105,7 +105,6 @@ public class ProductController implements Initializable {
 
     OpenUI openUI = new OpenUI();
     private File file;
-    private File file404 = new File("D:\\PBLLLLLLLLLLLL#\\PBL3\\target\\classes\\assets\\404.png");
     private FileChooser fileChooser;
     private Image image;
     private FileInputStream fileinputstream;
@@ -125,7 +124,7 @@ public class ProductController implements Initializable {
         menuDetail.setOnAction(e->{
             if(!ProductTableView.getSelectionModel().isEmpty())
             {
-                quatityLabel.setVisible(true);
+                quantityLabel.setVisible(true);
                 txtQuantity.setVisible(true);
                 ProductLabel.setText("Product detail");
                 showDialogDetail();
@@ -133,11 +132,12 @@ public class ProductController implements Initializable {
             }
             else
             {
-                Notifications.create().text("You need to choose a row to show detail. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+                Notifications.create().text("You need to pick a row to see detail. Try again!").title("Oh Snap!")
+                        .hideAfter(Duration.seconds(5.0D)).show();
             }
         });
         menuAdd.setOnAction(e->{
-            quatityLabel.setVisible(false);
+            quantityLabel.setVisible(false);
             txtQuantity.setVisible(false);
             ProductLabel.setText("Add Product");
             showDialogAdd();
@@ -145,7 +145,7 @@ public class ProductController implements Initializable {
         menuEdit.setOnAction(e->{
             if(!ProductTableView.getSelectionModel().isEmpty())
             {
-                quatityLabel.setVisible(false);
+                quantityLabel.setVisible(false);
                 txtQuantity.setVisible(false);
                 ProductLabel.setText("Edit Product");
                 showDialogUpdate();
@@ -153,7 +153,8 @@ public class ProductController implements Initializable {
             }
             else
             {
-                Notifications.create().text("You need to choose a row to update. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+                Notifications.create().text("You need to pick a row to update. Try again!").title("Oh Snap!")
+                        .hideAfter(Duration.seconds(5.0D)).show();
             }
 
         });
@@ -164,7 +165,8 @@ public class ProductController implements Initializable {
             }
             else
             {
-                Notifications.create().text("You need to choose a row to delete. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+                Notifications.create().text("You need to pick a row to delete. Try again!").title("Oh Snap!")
+                        .hideAfter(Duration.seconds(5.0D)).show();
             }
         });
         butAddOK.setOnAction(e->{
@@ -179,7 +181,8 @@ public class ProductController implements Initializable {
             }
             else
             {
-                Notifications.create().text("You need to fill in all the information. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+                Notifications.create().text("Please fill in all fields. Try again!").title("Oh Snap!").
+                        hideAfter(Duration.seconds(5.0D)).show();
             }
         });
         butCancle.setOnAction(e->{
@@ -192,18 +195,27 @@ public class ProductController implements Initializable {
         });
 
     }
+
+    public void decentralization()
+    {
+        if(BLLProject.typecashier == false)
+        {
+            account.setVisible(false);
+        }
+    }
+
     public void showDialog()
     {
         AnchorPane.setEffect(new BoxBlur(3, 3, 3));
         AnchorPaneProduct.setVisible(true);
         dialog.setOverlayClose(false);
         dialog.setContent(AnchorPaneProduct);
-        //dialog.setBackground(Background.EMPTY);
         dialog.setDialogContainer(stackPane);
         dialog.getStyleClass().add("jfx-dialog-overlay-pane");
         dialog.setStyle("-fx-background-color: transparent");
         dialog.show();
     }
+
     public void closeDialog()
     {
         dialog.close();
@@ -212,6 +224,7 @@ public class ProductController implements Initializable {
         txtBarcode.setEditable(true);
         ProductTableView.getSelectionModel().clearSelection();
     }
+
     public void showDialogAdd()
     {
         showDialog();
@@ -225,8 +238,8 @@ public class ProductController implements Initializable {
         butAddOK.setVisible(true);
         butDetailCancle.setVisible(false);
         butCancle.setVisible(true);
-
     }
+
     public void showDialogDetail()
     {
         showDialog();
@@ -241,6 +254,7 @@ public class ProductController implements Initializable {
         butCancle.setVisible(false);
         butDetailCancle.setVisible(true);
     }
+
     public void showDialogUpdate()
     {
         showDialog();
@@ -289,8 +303,6 @@ public class ProductController implements Initializable {
         cbbCategory.getSelectionModel().clearSelection();
         ProductTableView.getSelectionModel().clearSelection();
         searchTextField.setText("");
-//        closeDialog();
-
         this.file = null;
     }
 
@@ -299,7 +311,8 @@ public class ProductController implements Initializable {
         {
             if(BLLProject.CheckSerial(txtBarcode.getText()))
             {
-                Notifications.create().text("Serial already exist. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+                Notifications.create().text("Serial already exists. Try again!").title("Oh Snap!")
+                        .hideAfter(Duration.seconds(5.0D)).show();
                 return;
             }
             try {
@@ -313,19 +326,22 @@ public class ProductController implements Initializable {
                     this.fileinputstream,this.cbbCategory.getSelectionModel().getSelectedItem(),0);
             if(BLLProducts.AddProduct(p))
             {
-                Notifications.create().text("You have add product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                Notifications.create().text("You have added product successfully into our system.").title("Well-done!")
+                        .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
                 Clear();
                 min = max = 0;
             }
             else {
-                Notifications.create().text("You have failed add product in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+                Notifications.create().text("You have failed to add product into our System. Try again!").title("Oh Snap!")
+                        .hideAfter(Duration.seconds(5.0D)).show();
             }
             loadTable("");
             closeDialog();
         }
         else
         {
-            Notifications.create().text("You need to fill in all the information. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            Notifications.create().text("You need to fill in all fields. Try again!").title("Oh Snap!")
+                    .hideAfter(Duration.seconds(5.0D)).show();
         }
     }
 
@@ -411,13 +427,14 @@ public class ProductController implements Initializable {
         {
             Clear();
             this.loadTable("");
-            Notifications.create().text("You have update product successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+            Notifications.create().text("You have updated product successfully into our system.").title("Well-done!")
+                    .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
             min = max = 0;
         }
         else
         {
-            Notifications.create().text("You have failed update account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-
+            Notifications.create().text("You have failed to update account into our System. Try again!").title("Oh Snap!")
+                    .hideAfter(Duration.seconds(5.0D)).show();
         }
     }
 
@@ -429,13 +446,15 @@ public class ProductController implements Initializable {
         if (alert.getResult() == ButtonType.YES) {
             if(BLLProducts.DeleteProduct(ProductTableView.getSelectionModel().getSelectedItem().getSerial()))
             {
-                Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                Notifications.create().text("You have deleted this product successfully.").title("Well-done!")
+                        .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
                 loadTable("");
                 Clear();
             }
             else
             {
-                Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+                Notifications.create().text("You have failed to delete this product!").title("Oh Snap!")
+                        .hideAfter(Duration.seconds(5.0D)).show();
             }
         }
     }
@@ -444,7 +463,7 @@ public class ProductController implements Initializable {
     public void productMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml");
+        openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
@@ -458,7 +477,7 @@ public class ProductController implements Initializable {
     public void accountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("AccountManagementUI.fxml");
+        openUI.Open_UI("AccountUI.fxml");
     }
 
     @FXML
@@ -472,14 +491,14 @@ public class ProductController implements Initializable {
     public void supplierMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("SupplierManagementUI.fxml");
+        openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
     public void categoryMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("CategoryManagementUI.fxml");
+        openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
@@ -522,12 +541,5 @@ public class ProductController implements Initializable {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
-    }
-    public void decentralization()
-    {
-        if(BLLProject.typecashier == false)
-        {
-            account.setVisible(false);
-        }
     }
 }

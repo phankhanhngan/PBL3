@@ -77,62 +77,22 @@ public class AccountController implements Initializable {
     public AccountController() {
     }
 
-    public boolean isInputFieldEmpty() {
-        return this.firstnameTextField.getText().trim().isEmpty() || this.lastnameTextField.getText().trim().isEmpty() || this.gmailTextField.getText().trim().isEmpty() || this.phoneTextField.getText().trim().isEmpty() || this.addressTextField.getText().trim().isEmpty() || !this.managerRadioButton.isSelected() && !this.cashierRadioButton.isSelected();
-    }
-
-    public void addOnAction(ActionEvent event) throws Exception {
-        if (!this.isInputFieldEmpty()) {
-            this.addAccount();
-            UpdateListAccount("");
-        } else {
-            Notifications.create().text("Please fill in all fields.").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-        }
-
-    }
-
-    private void addAccount() {
-        if(!BLLProject.CheckPhone(phoneTextField.getText()))
-        {
-            Notifications.create().text("Invalid phone number. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            return;
-        }
-        if(!BLLProject.CheckMail(gmailTextField.getText()))
-        {
-            Notifications.create().text("Invalid gmail. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            return;
-        }
-        String typeOfUser = this.managerRadioButton.isSelected() ? "Manager" : "Cashier";
-        Random generator = new Random();
-        int value = generator.nextInt(900000) + 100000;
-        Account a = new Account(firstnameTextField.getText(),lastnameTextField.getText(),gmailTextField.getText(),
-                phoneTextField.getText(),phoneTextField.getText(),value+"",addressTextField.getText(),typeOfUser);
-        if(BLLAccounts.AddAccount(a))
-        {
-            Notifications.create().text("You have add account successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-            BLLProject.SendMail(gmailTextField.getText(),"This is your account information. You can use this to log into ORIE.\nUsername: " + phoneTextField.getText() + "\nPassword: " + value, "Your ORIE Account Information");
-            resetInputField();
-            UpdateListAccount("");
-        }
-        else
-        {
-            Notifications.create().text("You have failed add account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-
-        }
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         decentralization();
         UpdateListAccount("");
         AccountTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                showButtonOnAction();
+                showAccountDetail();
             }
         });
         searchButton.setOnAction(e -> {
             UpdateListAccount(searchTextField.getText());
         });
+    }
+
+    public boolean isInputFieldEmpty() {
+        return this.firstnameTextField.getText().trim().isEmpty() || this.lastnameTextField.getText().trim().isEmpty() || this.gmailTextField.getText().trim().isEmpty() || this.phoneTextField.getText().trim().isEmpty() || this.addressTextField.getText().trim().isEmpty() || !this.managerRadioButton.isSelected() && !this.cashierRadioButton.isSelected();
     }
 
     public void resetInputField() {
@@ -149,12 +109,63 @@ public class AccountController implements Initializable {
         addButton.setDisable(false);
     }
 
+    @FXML
+    private void resetButtonOnAction() {
+        resetInputField();
+    }
+
+    public void decentralization() {
+        if (BLLProject.typecashier == false) {
+            account.setVisible(false);
+        }
+    }
+
+    //Add account /////////////////////////////////////////////////////
+    public void addOnAction(ActionEvent event) throws Exception {
+        if (!this.isInputFieldEmpty()) {
+            this.addAccount();
+            UpdateListAccount("");
+        } else {
+            Notifications.create().text("Please fill in all fields.").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+        }
+    }
+
+    private void addAccount() {
+        if (!BLLProject.CheckPhone(phoneTextField.getText())) {
+            Notifications.create().text("Invalid phone number. Try again!").title("Oh Snap!")
+                    .hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        if (!BLLProject.CheckMail(gmailTextField.getText())) {
+            Notifications.create().text("Invalid gmail. Try again!").title("Oh Snap!")
+                    .hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        String typeOfUser = this.managerRadioButton.isSelected() ? "Manager" : "Cashier";
+        Random generator = new Random();
+        int value = generator.nextInt(900000) + 100000;
+        Account a = new Account(firstnameTextField.getText(), lastnameTextField.getText(), gmailTextField.getText(),
+                phoneTextField.getText(), phoneTextField.getText(), value + "", addressTextField.getText(), typeOfUser);
+        if (BLLAccounts.AddAccount(a)) {
+            Notifications.create().text("You have added account successfully into our system.").title("Well-done!")
+                    .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+            BLLProject.SendMail(gmailTextField.getText(), "This is your account information. You can use this to log into ORIE.\nUsername: "
+                    + phoneTextField.getText() + "\nPassword: " + value, "Your ORIE Account Information");
+            resetInputField();
+            UpdateListAccount("");
+        } else {
+            Notifications.create().text("You have failed to add account into our System. Try again!").title("Oh Snap!")
+                    .hideAfter(Duration.seconds(5.0D)).show();
+
+        }
+    }
+
+    ////////////Show
     private class JFXPasswordCellValueFactory implements Callback<TableColumn.CellDataFeatures<Account, PasswordField>, ObservableValue<PasswordField>> {
 
         @Override
         public ObservableValue<PasswordField> call(TableColumn.CellDataFeatures<Account, PasswordField> param) {
             Account item = param.getValue();
-
             PasswordField password = new PasswordField();
             password.setEditable(false);
             password.setPrefWidth(Col_Password.getWidth() / 0.5);
@@ -163,7 +174,7 @@ public class AccountController implements Initializable {
         }
     }
 
-    public void showButtonOnAction() {
+    public void showAccountDetail() {
         if (AccountTableView.getSelectionModel().getSelectedItem().getUsername() != "") {
             firstnameTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().getFirstName());
             lastnameTextField.setText(AccountTableView.getSelectionModel().getSelectedItem().getLastName());
@@ -175,84 +186,10 @@ public class AccountController implements Initializable {
             addButton.setDisable(true);
             gmailTextField.setEditable(false);
             gmailTextField.setStyle("-fx-background-color:  rgba(255,255,255,0.4)");
-        } else {
-            Notifications.create().text("Please select an account to show")
-                    .title("Notification").show();
         }
     }
 
-    @FXML
-    private void updateButtonOnAction() {
-        if(!BLLProject.CheckPhone(phoneTextField.getText()))
-        {
-            Notifications.create().text("Invalid phone number. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            return;
-        }
-        if(!BLLProject.CheckMail(gmailTextField.getText()))
-        {
-            Notifications.create().text("Invalid gmail. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            return;
-        }
-        if (!AccountTableView.getSelectionModel().isEmpty()) {
-            String type = managerRadioButton.isSelected() ? "Manager" : "Cashier";
-            Account account = AccountTableView.getSelectionModel().getSelectedItem();
-            Account account1 = new Account(firstnameTextField.getText(),lastnameTextField.getText(),gmailTextField.getText(),
-                    phoneTextField.getText(),account.getUsername(),account.getPassword(),addressTextField.getText(),type);
-            System.out.println(account.getPassword());
-            if(BLLAccounts.UpdateAccount(account1))
-            {
-                Notifications.create().text("You have update account successfully into our system.").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-                resetInputField();
-                UpdateListAccount("");
-            }
-            else
-            {
-                Notifications.create().text("You have failed update account in to our System. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            }
-        } else {
-            Notifications.create().text("Please select an account to update")
-                    .title("Notification").show();
-        }
-    }
-
-    @FXML
-    private void deleteButtonOnAction() {
-        if(AccountTableView.getSelectionModel().isEmpty())
-        {
-            System.out.println(12);
-            Notifications.create().text("Please select an account to update")
-                    .title("Notification").show();
-        }
-        else
-        {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete this account?", ButtonType.YES, ButtonType.CANCEL);
-            alert.showAndWait();
-
-            if (alert.getResult() == ButtonType.YES) {
-                if(BLLAccounts.DeleteAccount(AccountTableView.getSelectionModel().getSelectedItem().getUsername()))
-                {
-                    Notifications.create().text("successfully .").title("Well-done!").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-                    UpdateListAccount("");
-                    resetInputField();
-                }
-                else
-                {
-                    Notifications.create().text("error!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-                }
-            }
-        }
-    }
-    @FXML
-    void pressEnterOnAction(KeyEvent event) {
-        if(event.getCode().toString() == "ENTER")
-        {
-            UpdateListAccount(searchTextField.getText());
-
-        }
-    }
-
-    public void UpdateListAccount(String txt)
-    {
+    public void UpdateListAccount(String txt) {
         accountsList = FXCollections.observableArrayList(Search(txt));
         Col_FName.setCellValueFactory(new PropertyValueFactory<Account, String>("firstName"));
         Col_LName.setCellValueFactory(new PropertyValueFactory<Account, String>("lastName"));
@@ -264,27 +201,90 @@ public class AccountController implements Initializable {
         Col_TypeOfUser.setCellValueFactory(new PropertyValueFactory<>("typeOfUser"));
         AccountTableView.setItems(accountsList);
     }
-    public List<Account> Search(String txt)
-    {
-        List<Account> accounts = BLLAccounts.SearchAccount(txt);
-        return accounts;
+
+    //////////////Update
+    @FXML
+    private void updateButtonOnAction() {
+        if (!BLLProject.CheckPhone(phoneTextField.getText())) {
+            Notifications.create().text("Invalid phone number. Try again!").title("Oh Snap!")
+                    .hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        if (!BLLProject.CheckMail(gmailTextField.getText())) {
+            Notifications.create().text("Invalid gmail. Try again!").title("Oh Snap!")
+                    .hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        if (!AccountTableView.getSelectionModel().isEmpty()) {
+            String type = managerRadioButton.isSelected() ? "Manager" : "Cashier";
+            Account account = AccountTableView.getSelectionModel().getSelectedItem();
+            Account account1 = new Account(firstnameTextField.getText(), lastnameTextField.getText(), gmailTextField.getText(),
+                    phoneTextField.getText(), account.getUsername(), account.getPassword(), addressTextField.getText(), type);
+            System.out.println(account.getPassword());
+            if (BLLAccounts.UpdateAccount(account1)) {
+                Notifications.create().text("You have updated account successfully into our system.").title("Well-done!").
+                        hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                resetInputField();
+                UpdateListAccount("");
+            } else {
+                Notifications.create().text("You have failed to update account into our System. Try again!").title("Oh Snap!")
+                        .hideAfter(Duration.seconds(5.0D)).show();
+            }
+        } else {
+            Notifications.create().text("Please select an account to update")
+                    .title("Notification").show();
+        }
     }
 
+    ////////////Delete
     @FXML
-    private void resetButtonOnAction() {
-        resetInputField();
+    private void deleteButtonOnAction() {
+        if (AccountTableView.getSelectionModel().isEmpty()) {
+            System.out.println(12);
+            Notifications.create().text("Please select an account to update")
+                    .title("Notification").show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete this account?", ButtonType.YES, ButtonType.CANCEL);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                if (BLLAccounts.DeleteAccount(AccountTableView.getSelectionModel().getSelectedItem().getUsername())) {
+                    Notifications.create().text("You have deleted this account successfully.").title("Well-done!")
+                            .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                    UpdateListAccount("");
+                    resetInputField();
+                } else {
+                    Notifications.create().text("You have failed to delete this account!").title("Oh Snap!")
+                            .hideAfter(Duration.seconds(5.0D)).show();
+                }
+            }
+        }
+    }
+
+    ///////////Search
+    @FXML
+    void pressEnterOnAction(KeyEvent event) {
+        if (event.getCode().toString() == "ENTER") {
+            UpdateListAccount(searchTextField.getText());
+
+        }
+    }
+
+    public List<Account> Search(String txt) {
+        List<Account> accounts = BLLAccounts.SearchAccount(txt);
+        return accounts;
     }
 
     @FXML
     public void productMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml");
+        openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
     public void logOutMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
     }
@@ -293,7 +293,7 @@ public class AccountController implements Initializable {
     public void accountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("AccountManagementUI.fxml");
+        openUI.Open_UI("AccountUI.fxml");
     }
 
     @FXML
@@ -307,14 +307,14 @@ public class AccountController implements Initializable {
     public void supplierMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("SupplierManagementUI.fxml");
+        openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
     public void categoryMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("CategoryManagementUI.fxml");
+        openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
@@ -340,14 +340,14 @@ public class AccountController implements Initializable {
 
     @FXML
     public void homePageMenuItemOnAction() {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("HomePageUI.fxml");
     }
 
     @FXML
     public void statisticMenuItemOnAction() {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("StatisticsUI.fxml");
     }
@@ -357,13 +357,6 @@ public class AccountController implements Initializable {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
-    }
-    public void decentralization()
-    {
-        if(BLLProject.typecashier == false)
-        {
-            account.setVisible(false);
-        }
     }
 }
 

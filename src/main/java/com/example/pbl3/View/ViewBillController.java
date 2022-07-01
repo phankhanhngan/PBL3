@@ -34,15 +34,15 @@ public class ViewBillController implements Initializable {
     @FXML
     TableView<Bill> BillTableView;
     @FXML
-    TableColumn<Bill,Integer> Col_IDBill;
+    TableColumn<Bill, Integer> Col_IDBill;
     @FXML
-    TableColumn<Bill,String> Col_CustomerName;
+    TableColumn<Bill, String> Col_CustomerName;
     @FXML
     TableColumn<Bill, Date> Col_Date;
     @FXML
-    TableColumn<Bill,String> Col_CashierName;
+    TableColumn<Bill, String> Col_CashierName;
     @FXML
-    TableColumn<Bill,Double> Col_Total;
+    TableColumn<Bill, Double> Col_Total;
     @FXML
     private JFXButton butCreateNewBill;
     @FXML
@@ -55,34 +55,48 @@ public class ViewBillController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         decentralization();
         loadTableBill("");
-        BillTableView.setOnMouseClicked( event -> {
-            if( event.getClickCount() == 2 && !BillTableView.getSelectionModel().isEmpty()) {
+        BillTableView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && !BillTableView.getSelectionModel().isEmpty()) {
                 BLLProject.setIDBill(BillTableView.getSelectionModel().getSelectedItem().getID_Bill());
                 Stage stage = (Stage) this.BillTableView.getScene().getWindow();
                 stage.close();
                 openUI.Open_UI("CreateNewBillUI.fxml");
-            }});
+            }
+        });
+    }
 
+    public void decentralization() {
+        if (BLLProject.typecashier == false) {
+            account.setVisible(false);
+        }
+    }
+
+    public void loadTableBill(String txt) {
+        ObservableList<Bill> list = FXCollections.observableArrayList(BLLBills.searchBill(txt));
+        this.Col_IDBill.setCellValueFactory(new PropertyValueFactory("ID_Bill"));
+        this.Col_CustomerName.setCellValueFactory(new PropertyValueFactory("customerName"));
+        this.Col_Date.setCellValueFactory(new PropertyValueFactory("date"));
+        this.Col_CashierName.setCellValueFactory(new PropertyValueFactory("cashierName"));
+        this.Col_Total.setCellValueFactory(new PropertyValueFactory("Total_Money"));
+        this.BillTableView.setItems(list);
     }
 
     @FXML
-    void search(ActionEvent event) {
+    void search() {
         loadTableBill(searchTextField.getText());
     }
 
     @FXML
-    void createNewBillOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.butCreateNewBill.getScene().getWindow();
+    void createNewBillOnAction() {
+        Stage stage = (Stage) this.butCreateNewBill.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CreateNewBillUI.fxml");
     }
 
     @FXML
     void deleteRow(KeyEvent event) {
-        if(BillTableView.getSelectionModel().getSelectedItem() != null)
-        {
-            if(event.getCode() == KeyCode.BACK_SPACE)
-            {
+        if (BillTableView.getSelectionModel().getSelectedItem() != null) {
+            if (event.getCode() == KeyCode.BACK_SPACE) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete this bill?", ButtonType.YES, ButtonType.CANCEL);
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.YES) {
@@ -92,9 +106,7 @@ public class ViewBillController implements Initializable {
                 } else {
                     Notifications.create().text("Please select row!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
                 }
-            }
-            else
-            {
+            } else {
                 Notifications.create().text("Please select row!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
             }
         }
@@ -104,12 +116,12 @@ public class ViewBillController implements Initializable {
     public void productMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml");
+        openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
     public void logOutMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
     }
@@ -118,7 +130,7 @@ public class ViewBillController implements Initializable {
     public void accountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("AccountManagementUI.fxml");
+        openUI.Open_UI("AccountUI.fxml");
     }
 
     @FXML
@@ -132,14 +144,14 @@ public class ViewBillController implements Initializable {
     public void supplierMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("SupplierManagementUI.fxml");
+        openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
     public void categoryMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("CategoryManagementUI.fxml");
+        openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
@@ -165,14 +177,14 @@ public class ViewBillController implements Initializable {
 
     @FXML
     public void homePageMenuItemOnAction() {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("HomePageUI.fxml");
     }
 
     @FXML
     public void statisticMenuItemOnAction() {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("StatisticsUI.fxml");
     }
@@ -182,24 +194,5 @@ public class ViewBillController implements Initializable {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
-    }
-
-    public void decentralization()
-    {
-        if(BLLProject.typecashier == false)
-        {
-            account.setVisible(false);
-        }
-    }
-
-    public void loadTableBill(String txt)
-    {
-        ObservableList<Bill> list = FXCollections.observableArrayList(BLLBills.searchBill(txt));
-        this.Col_IDBill.setCellValueFactory(new PropertyValueFactory("ID_Bill"));
-        this.Col_CustomerName.setCellValueFactory(new PropertyValueFactory("customerName"));
-        this.Col_Date.setCellValueFactory(new PropertyValueFactory("date"));
-        this.Col_CashierName.setCellValueFactory(new PropertyValueFactory("cashierName"));
-        this.Col_Total.setCellValueFactory(new PropertyValueFactory("Total_Money"));
-        this.BillTableView.setItems(list);
     }
 }

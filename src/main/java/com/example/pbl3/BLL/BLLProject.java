@@ -2,6 +2,13 @@ package com.example.pbl3.BLL;
 
 
 import com.example.pbl3.DTO.Product;
+import com.jfoenix.controls.JFXDialog;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.PrinterJob;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -106,6 +113,27 @@ public class BLLProject {
                 return true;
         }
         return false;
+    }
+
+    public static void SetUpPrintJob(JFXDialog dialog, AnchorPane printAnchorPane, StackPane stackPane) {
+        dialog.setOverlayClose(true);
+        dialog.setContent(printAnchorPane);
+        dialog.setDialogContainer(stackPane);
+        dialog.getStyleClass().add("jfx-dialog-overlay-pane");
+        dialog.setStyle("-fx-background-color: transparent");
+        dialog.show();
+
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
+        if (printerJob != null) {
+            PageLayout pageLayout = printerJob.getPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, 50, 0, 40, 0);
+            printerJob.showPageSetupDialog(printAnchorPane.getScene().getWindow());
+            printerJob.showPrintDialog(printAnchorPane.getScene().getWindow());
+            boolean success = printerJob.printPage(pageLayout, printAnchorPane);
+            if (success) {
+                printerJob.endJob();
+                dialog.close();
+            }
+        }
     }
 }
 

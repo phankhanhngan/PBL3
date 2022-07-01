@@ -1,4 +1,5 @@
 package com.example.pbl3.View;
+
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
@@ -31,35 +32,12 @@ import java.sql.Date;
 public class StatisticsController implements Initializable {
 
     @FXML
-    private StackedBarChart<String, Double> StackedBarchart;
-    @FXML
     private PieChart PieChart;
     @FXML
     private AnchorPane AnchorPane;
 
     @FXML
-    private NumberAxis Money;
-
-    @FXML
     private BarChart<String, Double> barchart_Revenue;
-
-    @FXML
-    private MenuItem category;
-
-    @FXML
-    private MenuItem homepage;
-
-    @FXML
-    private MenuItem importPrd;
-
-    @FXML
-    private MenuItem logout;
-
-    @FXML
-    private CategoryAxis month;
-
-    @FXML
-    private MenuItem product;
 
     @FXML
     private DatePicker end_date;
@@ -102,17 +80,154 @@ public class StatisticsController implements Initializable {
     private MenuItem account;
     OpenUI openUI = new OpenUI();
 
-    XYChart.Series<String,Double> series = new XYChart.Series<>();
+    XYChart.Series<String, Double> series = new XYChart.Series<>();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        decentralization();
+        setTypeCBB();
+        typeCBB.setValue("Day");
+        barchart_Revenue.setAnimated(false);
+        loadTopProduct();
+        loadTopSeller();
+    }
+
+    public void decentralization() {
+        if (BLLProject.typecashier == false) {
+            account.setVisible(false);
+        }
+    }
+
+    public void loadTopProduct() {
+        ObservableList<TopProduct> listTopProduct = FXCollections.observableArrayList(BLLBills.loadTopProduct().topProductList);
+        col_ProductNo.setCellValueFactory(new PropertyValueFactory("No"));
+        col_ProductName.setCellValueFactory(new PropertyValueFactory("ProductName"));
+        col_ProductQty.setCellValueFactory(new PropertyValueFactory("quantity"));
+        tableViewTopProduct.setItems(listTopProduct);
+    }
+
+    public void loadTopSeller() {
+        ObservableList<TopSeller> listTopSeller = FXCollections.observableArrayList(BLLBills.loadTopSeller().topSellerList);
+        col_SellerNo.setCellValueFactory(new PropertyValueFactory("no"));
+        col_SellerName.setCellValueFactory(new PropertyValueFactory("seller_Name"));
+        col_SellerRevenue.setCellValueFactory(new PropertyValueFactory("revenue"));
+        tableViewTopSeller.setItems(listTopSeller);
+    }
+
+    private void loadPieChart(String txtStart, String txtEnd) {
+        List<String> listCategory = BLLBills.GetListCategory(txtStart, txtEnd);
+        List<Double> listSales = BLLBills.GetListSales(txtStart, txtEnd);
+
+        PieChart.getData().clear();
+        for (int i = 0; i < listCategory.size(); i++) {
+            PieChart.getData().add(new PieChart.Data(listCategory.get(i), listSales.get(i)));
+        }
+    }
+
+    private void loadBarChart_Revenue(String txtStart, String txtEnd, boolean type) {
+        series.getData().clear();
+        series.setName("Revenue");
+
+        int QuantityBill = BLLBills.GetQuantity(txtStart, txtEnd, type);
+        double Renevue = 0;
+        barchart_Revenue.getData().clear();
+        for (int i = 0; i < BLLBills.GetListSalesBarchart(txtStart, txtEnd, type).size(); i++) {
+            series.getData().add(new XYChart.Data(BLLBills.GetListDate(txtStart, txtEnd, type).get(i), BLLBills.GetListSalesBarchart(txtStart, txtEnd, type).get(i)));
+            Renevue += BLLBills.GetListSalesBarchart(txtStart, txtEnd, type).get(i);
+        }
+        barchart_Revenue.getData().add(series);
+        txtOrders.setText(QuantityBill + "");
+        txtRenevue.setText("" + Renevue);
+    }
+
     @FXML
-    public void productMenuItemOnAction(ActionEvent event) {
+    void startDateOnAction() {
+        if (typeCBB.getSelectionModel().getSelectedItem().equals("Month")) {
+            LocalDate Selected_datestart = start_date.getValue();
+            LocalDate date_start = Selected_datestart.withDayOfMonth(1);
+            start_date.setValue(date_start);
+        }
+    }
+
+    @FXML
+    void endDateOnAction(ActionEvent event) {
+        Date endDate = Date.valueOf(end_date.getValue());
+        Date startDate = Date.valueOf(start_date.getValue());
+        if (endDate.compareTo(startDate) < 0) {
+            Notifications.create().text("You need to choose valid date. Try again!").title("Oh Snap!")
+                    .hideAfter(Duration.seconds(5.0D)).show();
+            return;
+        }
+        if (typeCBB.getSelectionModel().getSelectedItem().equals("Day")) {
+            long day = (endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000);
+            if (day <= 31) {
+                loadBarChart_Revenue(startDate.toString(), endDate.toString(), true);
+                loadPieChart(startDate.toString(), endDate.toString());
+
+            } else {
+                Notifications.create().text("You need to choose valid date (<= 31 days). Try again!").title("Oh Snap!")
+                        .hideAfter(Duration.seconds(5.0D)).show();
+                return;
+            }
+        }
+        if (typeCBB.getSelectionModel().getSelectedItem().equals("Month")) {
+            LocalDate Selected_dateend = end_date.getValue();
+            LocalDate date_end = Selected_dateend.withDayOfMonth(Selected_dateend.lengthOfMonth());
+            end_date.setValue(date_end);
+            loadBarChart_Revenue(startDate.toString(), endDate.toString(), false);
+            loadPieChart(startDate.toString(), endDate.toString());
+        }
+    }
+
+    public void setTypeCBB() {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        list.add("Day");
+        list.add("Month");
+        typeCBB.setItems(list);
+        start_date.setValue(LocalDate.now());
+    }
+
+    public void loadPiechartInfo() {
+        for (PieChart.Data data : PieChart.getData()) {
+            data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton() == MouseButton.SECONDARY) {
+                    labelInfo.setText("");
+                } else {
+                    labelInfo.setTranslateX(event.getSceneX() - labelInfo.getLayoutX());
+                    labelInfo.setTranslateY(event.getSceneY() - labelInfo.getLayoutY());
+                    labelInfo.setText("" + data.getPieValue() + "$");
+                }
+
+            });
+        }
+    }
+
+    public void loadBarchartInfo() {
+        for (XYChart.Data<String, Double> data : series.getData()) {
+            data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
+                if (event.getButton() == MouseButton.SECONDARY) {
+                    labelInfo.setText("");
+                } else {
+                    labelInfo.setTranslateX(event.getSceneX() - labelInfo.getLayoutX());
+                    labelInfo.setTranslateY(event.getSceneY() - labelInfo.getLayoutY());
+                    labelInfo.toFront();
+                    labelInfo.setText("" + data.getYValue() + "$");
+                }
+            });
+        }
+    }
+
+    @FXML
+    public void productMenuItemOnAction() {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml");
+        openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
     public void logOutMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
     }
@@ -121,7 +236,7 @@ public class StatisticsController implements Initializable {
     public void accountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("AccountManagementUI.fxml");
+        openUI.Open_UI("AccountUI.fxml");
     }
 
     @FXML
@@ -135,14 +250,14 @@ public class StatisticsController implements Initializable {
     public void supplierMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("SupplierManagementUI.fxml");
+        openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
     public void categoryMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("CategoryManagementUI.fxml");
+        openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
@@ -168,14 +283,14 @@ public class StatisticsController implements Initializable {
 
     @FXML
     public void homePageMenuItemOnAction() {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("HomePageUI.fxml");
     }
 
     @FXML
     public void statisticMenuItemOnAction() {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("StatisticsUI.fxml");
     }
@@ -185,165 +300,5 @@ public class StatisticsController implements Initializable {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
-    }
-    public void decentralization()
-    {
-        if(BLLProject.typecashier == false)
-        {
-            account.setVisible(false);
-        }
-    }
-
-    public void loadTopProduct()
-    {
-        ObservableList<TopProduct> listTopProduct = FXCollections.observableArrayList(BLLBills.loadTopProduct().topProductList);
-        col_ProductNo.setCellValueFactory(new PropertyValueFactory("No"));
-        col_ProductName.setCellValueFactory(new PropertyValueFactory("ProductName"));
-        col_ProductQty.setCellValueFactory(new PropertyValueFactory("quantity"));
-        tableViewTopProduct.setItems(listTopProduct);
-    }
-    public void loadTopSeller()
-    {
-        ObservableList<TopSeller> listTopSeller = FXCollections.observableArrayList(BLLBills.loadTopSeller().topSellerList);
-        col_SellerNo.setCellValueFactory(new PropertyValueFactory("no"));
-        col_SellerName.setCellValueFactory(new PropertyValueFactory("seller_Name"));
-        col_SellerRevenue.setCellValueFactory(new PropertyValueFactory("revenue"));
-        tableViewTopSeller.setItems(listTopSeller);
-    }
-    private void loadPieChart(String txtStart, String txtEnd)
-    {
-        List<String> listCategory = BLLBills.GetListCategory(txtStart,txtEnd);
-        List<Double> listSales = BLLBills.GetListSales(txtStart,txtEnd);
-
-        PieChart.getData().clear();
-        for(int i = 0; i<listCategory.size();i++)
-        {
-            PieChart.getData().add(new PieChart.Data(listCategory.get(i),listSales.get(i)));
-        }
-
-    }
-
-
-
-    private void loadBarChart_Revenue(String txtStart, String txtEnd, boolean type)
-    {
-        series.getData().clear();
-        series.setName("Renevue");
-
-        int QuantityBill = BLLBills.GetQuantity(txtStart, txtEnd,type);
-        double Renevue =0 ;
-        barchart_Revenue.getData().clear();
-        for (int i =0; i< BLLBills.GetListSalesBarchart(txtStart, txtEnd,type).size();i++ )
-        {
-            series.getData().add(new XYChart.Data(BLLBills.GetListDate(txtStart, txtEnd,type).get(i), BLLBills.GetListSalesBarchart(txtStart, txtEnd, type).get(i)));
-            Renevue += BLLBills.GetListSalesBarchart(txtStart, txtEnd, type).get(i);
-        }
-        barchart_Revenue.getData().add(series);
-        txtOrders.setText(QuantityBill+"");
-        txtRenevue.setText(""+ Renevue);
-
-
-    }
-
-    @FXML
-    void startDateOnAction(ActionEvent event) {
-        if(typeCBB.getSelectionModel().getSelectedItem().equals("Month") )
-        {
-            LocalDate Selected_datestart = start_date.getValue();
-            LocalDate date_start = Selected_datestart.withDayOfMonth(1);
-            start_date.setValue(date_start);
-        }
-    }
-
-    @FXML
-    void endDateOnAction(ActionEvent event) {
-        Date endDate = Date.valueOf(end_date.getValue());
-        Date startDate = Date.valueOf(start_date.getValue());
-        if(endDate.compareTo(startDate) < 0)
-        {
-            Notifications.create().text("You need to choose valid date. Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-            return;
-        }
-        if(typeCBB.getSelectionModel().getSelectedItem().equals("Day"))
-        {
-            long day = (endDate.getTime() - startDate.getTime())/(24 * 60 * 60 * 1000);
-            if(day<=31){
-                loadBarChart_Revenue(startDate.toString(),endDate.toString(),true);
-                loadPieChart(startDate.toString(),endDate.toString());
-
-            }
-            else{
-                Notifications.create().text("You need to choose valid date (<= 31 days). Try again!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-                return;
-            }
-        }
-        if(typeCBB.getSelectionModel().getSelectedItem().equals("Month") )
-        {
-            LocalDate Selected_dateend = end_date.getValue();
-            LocalDate date_end = Selected_dateend.withDayOfMonth(Selected_dateend.lengthOfMonth());
-            end_date.setValue(date_end);
-            loadBarChart_Revenue(startDate.toString(),endDate.toString(),false);
-            loadPieChart(startDate.toString(), endDate.toString());
-        }
-    }
-
-
-
-    public void setTypeCBB()
-    {
-        ObservableList<String> list = FXCollections.observableArrayList();
-        list.add("Day");
-        list.add("Month");
-        typeCBB.setItems(list);
-        start_date.setValue(LocalDate.now());
-    }
-    public void loadPiechartInfo()
-    {
-        for (PieChart.Data data: PieChart.getData())
-        {
-            data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event ->{
-                if(event.getButton() == MouseButton.SECONDARY)
-                {
-                    labelInfo.setText("");
-                }
-                else
-                {
-                    labelInfo.setTranslateX(event.getSceneX() - labelInfo.getLayoutX());
-                    labelInfo.setTranslateY(event.getSceneY() - labelInfo.getLayoutY());
-                    labelInfo.setText(""+data.getPieValue()+"$");
-                }
-
-            });
-        }
-    }
-    public void loadBarchartInfo()
-    {
-        for ( XYChart.Data<String, Double> data: series.getData())
-        {
-            data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, event ->{
-
-                if(event.getButton() == MouseButton.SECONDARY)
-                {
-                    labelInfo.setText("");
-                }
-                else
-                {
-                    labelInfo.setTranslateX(event.getSceneX() - labelInfo.getLayoutX());
-                    labelInfo.setTranslateY(event.getSceneY() - labelInfo.getLayoutY());
-                    labelInfo.toFront();
-                    labelInfo.setText("" +data.getYValue()+"$");
-                }
-
-            });
-        }
-    }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        decentralization();
-        setTypeCBB();
-        typeCBB.setValue("Day");
-        barchart_Revenue.setAnimated(false);
-        loadTopProduct();
-        loadTopSeller();
     }
 }

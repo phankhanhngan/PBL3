@@ -47,7 +47,7 @@
                         <JFXButton fx:id="butUpdateOK" layoutX="82.0" layoutY="381.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Ok" />
                   <TextField fx:id="txtCategory" layoutX="457.0" layoutY="73.0" prefHeight="27.0" prefWidth="162.0" stylesheets="@../../../css/textfield.css" />
                         <JFXButton fx:id="butDetailCancle" layoutX="271.0" layoutY="381.0" prefHeight="32.0" prefWidth="94.0" styleClass="button-type-3" stylesheets="@../../../css/button.css" text="Cancel" />
-                  <Label fx:id="quatityLabel" layoutX="363.0" layoutY="272.0" text="Quantity" />
+                  <Label fx:id="quantityLabel" layoutX="363.0" layoutY="272.0" text="Quantity" />
                   <TextField fx:id="txtQuantity" layoutX="457.0" layoutY="267.0" prefHeight="27.0" prefWidth="162.0" promptText="Quantity" style="-fx-opacity: 0.4;" stylesheets="@../../../css/textfield.css" />
                     </children>
                 </AnchorPane>

@@ -24,8 +24,7 @@
                 <Image url="@../../../assets/Background2.png" />
             </image>
         </ImageView>
-        <JFXComboBox focusColor="#a8408d" labelFloat="true" layoutX="814.0" layoutY="108.0" prefHeight="26.0" prefWidth="214.0" promptText="Category" unFocusColor="#996281" />
-        <TableView fx:id="tableViewTopProduct" layoutX="815.0" layoutY="191.0" prefHeight="287.0" prefWidth="223.0" stylesheets="@../../../css/tablesimple.css">
+        <TableView fx:id="tableViewTopProduct" layoutX="815.0" layoutY="118.0" prefHeight="353.0" prefWidth="223.0" stylesheets="@../../../css/tablesimple.css">
             <columns>
                 <TableColumn fx:id="col_ProductNo" prefWidth="25.5999755859375" text="No." />
                 <TableColumn fx:id="col_ProductName" prefWidth="153.60009765625" text="NAME" />

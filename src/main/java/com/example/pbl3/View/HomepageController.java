@@ -48,19 +48,7 @@ public class HomepageController implements Initializable {
     private MenuItem statistics;
 
     @FXML
-    private MenuItem bill;
-
-    @FXML
     private Button buttonStarted;
-
-    @FXML
-    private MenuItem category;
-
-    @FXML
-    private MenuItem customer;
-
-    @FXML
-    private MenuItem dashboard;
 
     @FXML
     private ImageView facebook;
@@ -70,9 +58,6 @@ public class HomepageController implements Initializable {
 
     @FXML
     private ImageView imageLogo;
-
-    @FXML
-    private ImageView imageMain;
 
     @FXML
     private Label labelWelcome;
@@ -91,24 +76,6 @@ public class HomepageController implements Initializable {
 
     @FXML
     private Line line;
-
-    @FXML
-    private MenuItem logout;
-
-    @FXML
-    private MenuItem myaccount;
-
-    @FXML
-    private MenuItem order;
-
-    @FXML
-    private MenuItem product;
-
-    @FXML
-    private MenuItem receipt;
-
-    @FXML
-    private MenuItem supplier;
 
     @FXML
     private Text txt1;
@@ -139,6 +106,7 @@ public class HomepageController implements Initializable {
 
     @FXML
     private ImageView youtube;
+
     private final String FACEBOOK = "https://www.facebook.com/LaynezCode-106644811127683";
 
     private final String GMAIL = "https://www.google.com/";
@@ -154,8 +122,15 @@ public class HomepageController implements Initializable {
         setURL();
         setTransition();
     }
-    private void setView()
-    {
+
+    public void decentralization() {
+        if (BLLProject.typecashier == false) {
+            account.setVisible(false);
+            statistics.setVisible(false);
+        }
+    }
+
+    private void setView() {
         labelWelcome1.setVisible(false);
         lb1.setVisible(false);
         lb2.setVisible(false);
@@ -179,32 +154,31 @@ public class HomepageController implements Initializable {
         google.setVisible(false);
         youtube.setVisible(false);
     }
-    private void setTransition()
-    {
-        //transition(imageMain,0.5);
-        transition(labelWelcome,0.5);
-        transition(labelWelcome1,0.75);
-        transition(lb1,1);
-        transition(lb2,1);
-        transition(lb3,1);
-        transition(txt1,1.5);
-        transition(imageLogo,1.5);
-        transition(txt2,2);
-        transition(txt3,2.5);
-        transition(txt4,2.5);
-        transition(txt5,3);
-        transition(txt6,3);
-        transition(txt7,3.5);
-        transition(txt8,4);
-        transition(txt9,4);
-        transition(TextDevelopBy,4.5);
-        transition(TextOrie,4.75);
-        transition(line,5);
-        transition(facebook,5.5);
-        transition(google,5.75);
-        transition(youtube,6);
 
+    private void setTransition() {
+        transition(labelWelcome, 0.5);
+        transition(labelWelcome1, 0.75);
+        transition(lb1, 1);
+        transition(lb2, 1);
+        transition(lb3, 1);
+        transition(txt1, 1.5);
+        transition(imageLogo, 1.5);
+        transition(txt2, 2);
+        transition(txt3, 2.5);
+        transition(txt4, 2.5);
+        transition(txt5, 3);
+        transition(txt6, 3);
+        transition(txt7, 3.5);
+        transition(txt8, 4);
+        transition(txt9, 4);
+        transition(TextDevelopBy, 4.5);
+        transition(TextOrie, 4.75);
+        transition(line, 5);
+        transition(facebook, 5.5);
+        transition(google, 5.75);
+        transition(youtube, 6);
     }
+
     private void transition(Node node, double duration) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), node);
         scaleTransition.setFromX(1.0);
@@ -249,14 +223,17 @@ public class HomepageController implements Initializable {
             scaleTransition.play();
         });
     }
+
     private void fadeInUp(Node node) {
         new FadeInUp(node).play();
     }
+
     private void setURL() {
         url(FACEBOOK, facebook);
         url(GMAIL, google);
         url(YOUTUBE, youtube);
     }
+
     private void url(String url, Node node) {
         node.setOnMouseClicked(ev -> {
             Desktop desktop = Desktop.getDesktop();
@@ -267,16 +244,17 @@ public class HomepageController implements Initializable {
             }
         });
     }
+
     @FXML
     public void productMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("ProductManagementUI.fxml");
+        openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
     public void logOutMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
     }
@@ -285,7 +263,7 @@ public class HomepageController implements Initializable {
     public void accountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("AccountManagementUI.fxml");
+        openUI.Open_UI("AccountUI.fxml");
     }
 
     @FXML
@@ -299,14 +277,14 @@ public class HomepageController implements Initializable {
     public void supplierMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("SupplierManagementUI.fxml");
+        openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
     public void categoryMenuItemOnAction(ActionEvent event) {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
-        openUI.Open_UI("CategoryManagementUI.fxml");
+        openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
@@ -332,14 +310,14 @@ public class HomepageController implements Initializable {
 
     @FXML
     public void homePageMenuItemOnAction() {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("HomePageUI.fxml");
     }
 
     @FXML
     public void statisticMenuItemOnAction() {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("StatisticsUI.fxml");
     }
@@ -350,13 +328,4 @@ public class HomepageController implements Initializable {
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");
     }
-    public void decentralization()
-    {
-        if(BLLProject.typecashier == false)
-        {
-            account.setVisible(false);
-            statistics.setVisible(false);
-        }
-    }
-
 }

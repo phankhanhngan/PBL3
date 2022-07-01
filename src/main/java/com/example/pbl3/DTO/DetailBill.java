@@ -39,15 +39,6 @@ public class DetailBill {
         return Quantity;
     }
 
-    public int getSTT() {
-        return STT;
-    }
-
-    public double getUnitPrice() {
-        return unitPrice;
-    }
-
-
     public double getIntoMoney() {
         return intoMoney;
     }

@@ -39,14 +39,14 @@ public class RecoveryPasswordSecondController {
                 this.announceLabel.setText("Password does not match");
             }
         } else {
-            this.announceLabel.setText("Please enter password and confirmPassword!");
+            this.announceLabel.setText("Please enter password and confirm password!");
         }
 
     }
 
     @FXML
     void backToLoginOnAction(ActionEvent event) {
-        this.announceLabel.setText("Khang");
+        this.announceLabel.setText("");
         Stage stage = (Stage)this.backToLoginHyperLink.getScene().getWindow();
         stage.close();
         this.backLoginStage();

@@ -17,10 +17,6 @@ public class DetailBillDB {
         this.unit_price = unit_price;
     }
 
-    public int getIdDetailBill() {
-        return idDetailBill;
-    }
-
     public int getIdBill() {
         return idBill;
     }
@@ -31,14 +27,6 @@ public class DetailBillDB {
 
     public String getProductName() {
         return productName;
-    }
-
-    public void setIdDetailBill(int idDetailBill) {
-        this.idDetailBill = idDetailBill;
-    }
-
-    public void setIdBill(int idBill) {
-        this.idBill = idBill;
     }
 
     public void setQuantity(int quantity) {
@@ -53,15 +41,8 @@ public class DetailBillDB {
         return product_serial;
     }
 
-    public void setProduct_serial(String product_serial) {
-        this.product_serial = product_serial;
-    }
-
     public double getUnit_price() {
         return unit_price;
     }
 
-    public void setUnit_price(double unit_price) {
-        this.unit_price = unit_price;
-    }
 }

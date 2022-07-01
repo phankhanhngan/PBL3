@@ -118,11 +118,11 @@
          <font>
             <Font size="16.0" />
          </font></Text>
-      <Text fx:id="txt9" fill="#000000bb" layoutX="81.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lê Thị Mỹ Hạnh">
+      <Text fx:id="txt9" fill="#000000bb" layoutX="81.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TS. Lê Thị Mỹ Hạnh">
          <font>
             <Font size="16.0" />
          </font></Text>
-      <Text fx:id="txt8" fill="#000000bb" layoutX="81.0" layoutY="454.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lê Khanh">
+      <Text fx:id="txt8" fill="#000000bb" layoutX="81.0" layoutY="454.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ths. Lê Văn Khanh (DNHD)">
          <font>
             <Font size="16.0" />
          </font></Text>
