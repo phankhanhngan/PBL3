@@ -6,10 +6,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class OpenUI {
-    public void Open_UI(String namefile)
-    {
+    public void Open_UI(String namefile) {
         try {
-            Parent root = (Parent) FXMLLoader.load(this.getClass().getResource(namefile));
+            Parent root = FXMLLoader.load(this.getClass().getResource(namefile));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();

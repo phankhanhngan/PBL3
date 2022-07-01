@@ -11,6 +11,7 @@ module com.example.pbl3 {
     requires com.jfoenix;
     requires AnimateFX;
     requires java.desktop;
+    requires mysql.connector.java;
 
 
     opens com.example.pbl3 to javafx.fxml;

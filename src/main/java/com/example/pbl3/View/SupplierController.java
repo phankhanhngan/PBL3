@@ -4,9 +4,9 @@ import com.example.pbl3.BLL.BLLProject;
 import com.example.pbl3.BLL.BLLSuppliers;
 import com.example.pbl3.DTO.Supplier;
 import com.example.pbl3.OpenUI;
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -15,7 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
-import org.controlsfx.control.action.Action;
 
 import java.net.URL;
 import java.util.*;
@@ -51,6 +50,11 @@ public class SupplierController implements Initializable {
     private TextField SupPhoneTextField;
     @FXML
     private MenuItem account;
+    @FXML
+    private JFXButton searchButton;
+
+    @FXML
+    private TextField searchTextField;
 
     OpenUI openUI = new OpenUI();
 
@@ -58,34 +62,29 @@ public class SupplierController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         decentralization();
         LabelSupplier.setText("Add Supplier");
-        this.loadTable();
-        this.resetButton.setOnAction(e -> {
-            this.butResetOnAction();
-        });
+        this.loadTable("");
+        this.resetButton.setOnAction(e -> this.butResetOnAction());
         this.addButton.setOnAction(e -> {
             if (!ValidationField()) {
                 this.butAddOnAction();
             } else {
                 Notifications.create().text("Please fill in all fields.").title("Oh Snap!")
-                        .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                        .hideAfter(Duration.seconds(5.0D)).action().show();
             }
         });
-        this.deleteButton.setOnAction(e -> {
-            this.butDeleteOnAction();
-        });
-        this.updateButton.setOnAction(e -> {
-            this.butUpdateOnAction();
-        });
+        this.deleteButton.setOnAction(e -> this.butDeleteOnAction());
+        this.updateButton.setOnAction(e -> this.butUpdateOnAction());
         this.SupplierTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 this.SelectedRowAction();
             }
 
         });
+        this.searchButton.setOnAction(e -> loadTable(searchTextField.getText()));
     }
 
     public void decentralization() {
-        if (BLLProject.typecashier == false) {
+        if (!BLLProject.typecashier) {
             account.setVisible(false);
         }
     }
@@ -114,9 +113,9 @@ public class SupplierController implements Initializable {
                         SupNameTextField.getText(), SupAddressTextField.getText(), SupPhoneTextField.getText());
                 if (BLLSuppliers.UpdateSupplier(s)) {
                     butResetOnAction();
-                    this.loadTable();
+                    this.loadTable("");
                     Notifications.create().text("You have updated supplier successfully into our system.").title("Well-done!")
-                            .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                            .hideAfter(Duration.seconds(5.0D)).action().show();
                 } else {
                     Notifications.create().text("You have failed update supplier into our System. Try again!").title("Oh Snap!")
                             .hideAfter(Duration.seconds(5.0D)).show();
@@ -124,7 +123,7 @@ public class SupplierController implements Initializable {
             }
         } else {
             Notifications.create().text("Please select a supplier !").title("Notification!")
-                    .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                    .hideAfter(Duration.seconds(5.0D)).action().show();
 
         }
 
@@ -138,8 +137,8 @@ public class SupplierController implements Initializable {
         if (alert.getResult() == ButtonType.YES) {
             if (BLLSuppliers.DeleteSupplier(selected.getSup_Id())) {
                 Notifications.create().text("You have deleted this supplier successfully.").title("Well-done!")
-                        .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
-                loadTable();
+                        .hideAfter(Duration.seconds(5.0D)).action().show();
+                loadTable("");
                 butResetOnAction();
             } else {
                 Notifications.create().text("You have failed to delete this supplier!").title("Oh Snap!")
@@ -157,9 +156,9 @@ public class SupplierController implements Initializable {
         Supplier s = new Supplier(0, SupNameTextField.getText(), SupAddressTextField.getText(), SupPhoneTextField.getText());
         if (BLLSuppliers.AddSupplier(s)) {
             Notifications.create().text("You have added supplier successfully into our system.").title("Well-done!")
-                    .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                    .hideAfter(Duration.seconds(5.0D)).action().show();
             butResetOnAction();
-            this.loadTable();
+            this.loadTable("");
         } else {
             Notifications.create().text("You have failed to add supplier in to our System. Try again!").title("Oh Snap!")
                     .hideAfter(Duration.seconds(5.0D)).show();
@@ -175,8 +174,8 @@ public class SupplierController implements Initializable {
         this.SupplierTableView.getSelectionModel().clearSelection();
     }
 
-    public void loadTable() {
-        ObservableList<Supplier> list = FXCollections.observableArrayList(BLLSuppliers.getListSupplier());
+    public void loadTable(String txt) {
+        ObservableList<Supplier> list = FXCollections.observableArrayList(BLLSuppliers.searchSupplier(txt));
         this.Col_Id.setCellValueFactory(new PropertyValueFactory("Sup_Id"));
         this.Col_Name.setCellValueFactory(new PropertyValueFactory("Sup_Name"));
         this.Col_Address.setCellValueFactory(new PropertyValueFactory("Sup_Address"));
@@ -189,14 +188,14 @@ public class SupplierController implements Initializable {
     }
 
     @FXML
-    public void productMenuItemOnAction(ActionEvent event) {
+    public void productMenuItemOnAction() {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
-    public void logOutMenuItemOnAction(ActionEvent event) {
+    public void logOutMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
@@ -210,42 +209,42 @@ public class SupplierController implements Initializable {
     }
 
     @FXML
-    public void importMenuItemOnAction(ActionEvent event) {
+    public void importMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ImportUI.fxml");
     }
 
     @FXML
-    public void supplierMenuItemOnAction(ActionEvent event) {
+    public void supplierMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
-    public void categoryMenuItemOnAction(ActionEvent event) {
+    public void categoryMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
-    public void customerMenuItemOnAction(ActionEvent event) {
+    public void customerMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CustomerUI.fxml");
     }
 
     @FXML
-    public void orderMenuItemOnAction(ActionEvent event) {
+    public void orderMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CreateNewBillUI.fxml");
     }
 
     @FXML
-    void billMenuItemOnAction(ActionEvent event) {
+    void billMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ViewBillUI.fxml");
@@ -266,7 +265,7 @@ public class SupplierController implements Initializable {
     }
 
     @FXML
-    void myAccountMenuItemOnAction(ActionEvent event) {
+    void myAccountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");

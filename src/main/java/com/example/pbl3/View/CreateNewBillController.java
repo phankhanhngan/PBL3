@@ -11,15 +11,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.print.PageLayout;
-import javafx.print.PageOrientation;
-import javafx.print.Paper;
 import javafx.print.PrinterJob;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.BoxBlur;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -79,7 +74,7 @@ public class CreateNewBillController implements Initializable {
     @FXML
     private ComboBox<String> cbbProduct;
     @FXML
-    private ComboBox<Integer> cbbQuantity;
+    private ComboBox<String> cbbQuantity;
     @FXML
     private Label customerTextField;
     @FXML
@@ -108,6 +103,8 @@ public class CreateNewBillController implements Initializable {
     private Label payLabel1;
     @FXML
     private Hyperlink newCustomerHyperLink;
+    @FXML
+    private MenuItem deleteItem;
 
     JFXDialog dialog = new JFXDialog();
     OpenUI openUI = new OpenUI();
@@ -124,9 +121,11 @@ public class CreateNewBillController implements Initializable {
         addCBBProduct();
         addCBBPay();
         setDate();
+        deleteItem.setOnAction(e -> deleteRow());
         new AutoCompleteBox(cbbCustomer);
         new AutoCompleteBox(cbbProduct);
         if (BLLProject.IDBill == 0) {
+            DetailBill.setSTT();
             newCustomerHyperLink.setVisible(true);
             cashierTextField.setText(BLLProject.namecashier);
             button.setText("Create New Bill");
@@ -151,8 +150,8 @@ public class CreateNewBillController implements Initializable {
             butAdd.setVisible(true);
             List<Customer> customers = BLLCustomers.getListCustomer();
             ObservableList<String> List = FXCollections.observableArrayList();
-            for (int i = 0; i < customers.size(); i++) {
-                String item = customers.get(i).getPhone() + " - " + customers.get(i).getFirstname() + " " + customers.get(i).getLastname();
+            for (Customer customer : customers) {
+                String item = customer.getPhone() + " - " + customer.getFirstname() + " " + customer.getLastname();
                 List.add(item);
             }
             cbbCustomer.setItems(List);
@@ -171,8 +170,7 @@ public class CreateNewBillController implements Initializable {
             cbbProduct.setVisible(true);
             List<Product> productList = BLLProducts.getListProduct();
             ObservableList<String> List = FXCollections.observableArrayList();
-            for (int i = 0; i < productList.size(); i++)
-                List.add(productList.get(i).getProductName());
+            for (Product product : productList) List.add(product.getProductName());
             cbbProduct.setItems(List);
         } else {
             cbbProduct.setVisible(false);
@@ -197,10 +195,20 @@ public class CreateNewBillController implements Initializable {
     public void addCBBQuantity() {
         if (BLLProject.IDBill == 0) {
             cbbQuantity.setVisible(true);
+            ObservableList<String> List = FXCollections.observableArrayList();
+
             if (cbbProduct.getSelectionModel().getSelectedItem() != null) {
-                ObservableList<Integer> List = FXCollections.observableArrayList();
-                for (int i = 0; i <= BLLImports.GetQuantityProductImport(cbbProduct.getSelectionModel().getSelectedItem()) - BLLBills.GetQuantityProductBought(cbbProduct.getSelectionModel().getSelectedItem()); i++)
-                    List.add(i);
+                int quantity = BLLImports.GetQuantityProductImport(cbbProduct.getSelectionModel().getSelectedItem())
+                        - BLLBills.GetQuantityProductBought(cbbProduct.getSelectionModel().getSelectedItem())
+                        - getQuanityInTable(cbbProduct.getSelectionModel().getSelectedItem());
+                if (quantity == 0) {
+                    List.add("Out of Stock");
+                    butAdd.setDisable(true);
+                } else {
+                    for (int i = 1; i <= quantity; i++)
+                        List.add(i + "");
+                    butAdd.setDisable(false);
+                }
                 cbbQuantity.setItems(List);
             }
         } else {
@@ -230,8 +238,7 @@ public class CreateNewBillController implements Initializable {
 
     public boolean Check() {
         if (cbbCustomer.getSelectionModel().getSelectedItem() == null) return false;
-        if (cbbPay.getSelectionModel().getSelectedItem() == null) return false;
-        return true;
+        return cbbPay.getSelectionModel().getSelectedItem() != null;
     }
 
     public void addDetailBill(int Quantity, String Product, String ProductSerial, double unit_price) {
@@ -239,19 +246,31 @@ public class CreateNewBillController implements Initializable {
         BLLBills.AddDetailBill(detailBillDB);
     }
 
+    public int getQuanityInTable(String productname) {
+        int sl = 0;
+        if (!DetailBillTableView.getItems().isEmpty()) {
+            for (DetailBill detailBill : this.DetailBillTableView.getItems()) {
+                if (detailBill.getProduct().equals(productname)) {
+                    sl = sl + detailBill.getQuantity();
+                }
+            }
+        }
+        return sl;
+
+    }
+
     @FXML
     void addOnAction() {
         if (Check() && !cbbProduct.getSelectionModel().isEmpty() && !cbbQuantity.getSelectionModel().isEmpty()
-                && cbbQuantity.getSelectionModel().toString() != "0") {
+                && !cbbQuantity.getSelectionModel().toString().equals("0")) {
             DetailBill db = new DetailBill(cbbProduct.getSelectionModel().getSelectedItem(),
-                    cbbQuantity.getSelectionModel().getSelectedItem());
+                    Integer.parseInt(cbbQuantity.getSelectionModel().getSelectedItem()));
             list.add(db);
             double total = Double.parseDouble(totalMoneyTextField.getText());
             total += db.getIntoMoney();
             totalMoneyTextField.setText(total + "");
             SetCol(Col_STT, Col_Product, Col_Quantity, Col_UnitPrice, Col_IntoMoney);
             this.DetailBillTableView.setItems(list);
-
             ClearSelection();
         } else {
             Notifications.create().text("You have failed to add products into bill. Try again!").title("Oh Snap!")
@@ -260,7 +279,7 @@ public class CreateNewBillController implements Initializable {
     }
 
     @FXML
-    void buttonOnAction(ActionEvent event) {
+    void buttonOnAction() {
         if (BLLProject.IDBill == 0) {
             if (Check()) {
                 if (list.size() == 0) {
@@ -269,19 +288,14 @@ public class CreateNewBillController implements Initializable {
                     return;
                 }
                 String[] cus = cbbCustomer.getSelectionModel().getSelectedItem().split(" ", 3);
-                String gmail_cashier = BLLProject.gmail;
-                list.forEach(detailbill -> {
-                    Total += BLLProducts.getProductByProductName(detailbill.getProduct()).getSalePrice() * detailbill.getQuantity();
-                });
+                list.forEach(detailbill -> Total += BLLProducts.getProductByProductName(detailbill.getProduct()).getSalePrice() * detailbill.getQuantity());
                 BLLBills.AddBill(new Bill(0, BLLCustomers.getCustomerByCustomerPhone(cus[0]).getID(), cus[2],
                         BLLProject.gmail, BLLProject.namecashier, java.sql.Date.valueOf(LocalDate.now()), Total,
                         cbbPay.getSelectionModel().getSelectedItem(), true));
                 ID_Bill = BLLBills.getMaxIDBill();
-                list.forEach(detailbill -> {
-                    addDetailBill(detailbill.getQuantity(), detailbill.getProduct(),
-                            BLLProducts.getProductByProductName(detailbill.getProduct()).getSerial(),
-                            BLLProducts.getProductByProductName(detailbill.getProduct()).getSalePrice());
-                });
+                list.forEach(detailbill -> addDetailBill(detailbill.getQuantity(), detailbill.getProduct(),
+                        BLLProducts.getProductByProductName(detailbill.getProduct()).getSerial(),
+                        BLLProducts.getProductByProductName(detailbill.getProduct()).getSalePrice()));
                 Notifications.create().text("You have created new bill successfully!").title("Well-done!")
                         .hideAfter(Duration.seconds(5.0D)).show();
                 Stage stage = (Stage) this.button.getScene().getWindow();
@@ -311,23 +325,18 @@ public class CreateNewBillController implements Initializable {
         openUI.Open_UI("ViewBillUI.fxml");
     }
 
-    @FXML
-    void deleteRow(KeyEvent event) {
+    void deleteRow() {
         if (BLLProject.IDBill == 0) {
             if (DetailBillTableView.getSelectionModel().getSelectedItem() != null) {
-                if (event.getCode() == KeyCode.BACK_SPACE) {
-                    double total = Double.parseDouble(totalMoneyTextField.getText());
-                    total -= DetailBillTableView.getSelectionModel().getSelectedItem().getIntoMoney();
-                    totalMoneyTextField.setText(total + "");
-                    list.remove(DetailBillTableView.getSelectionModel().getSelectedItem());
-                    ObservableList<DetailBill> newlist = FXCollections.observableArrayList();
-                    DetailBill.setSTT();
-                    list.forEach(detailBill -> {
-                        newlist.add(new DetailBill(detailBill.getProduct(), detailBill.getQuantity()));
-                    });
-                    list = newlist;
-                    DetailBillTableView.setItems(list);
-                }
+                double total = Double.parseDouble(totalMoneyTextField.getText());
+                total -= DetailBillTableView.getSelectionModel().getSelectedItem().getIntoMoney();
+                totalMoneyTextField.setText(total + "");
+                list.remove(DetailBillTableView.getSelectionModel().getSelectedItem());
+                ObservableList<DetailBill> newlist = FXCollections.observableArrayList();
+                DetailBill.setSTT();
+                list.forEach(detailBill -> newlist.add(new DetailBill(detailBill.getProduct(), detailBill.getQuantity())));
+                list = newlist;
+                DetailBillTableView.setItems(list);
             }
         }
     }
@@ -346,9 +355,9 @@ public class CreateNewBillController implements Initializable {
         list.clear();
         DetailBill.setSTT();
         List<DetailBillDB> detailBillDBS = BLLBills.getDetailBillByIDBill(BLLProject.IDBill);
-        for (int i = 0; i < detailBillDBS.size(); i++)
-            list.add(new DetailBill(detailBillDBS.get(i).getProductName(), detailBillDBS.get(i).getQuantity(),
-                    detailBillDBS.get(i).getUnit_price()));
+        for (DetailBillDB detailBillDB : detailBillDBS)
+            list.add(new DetailBill(detailBillDB.getProductName(), detailBillDB.getQuantity(),
+                    detailBillDB.getUnit_price()));
         SetCol(Col_STT, Col_Product, Col_Quantity, Col_UnitPrice, Col_IntoMoney);
         DetailBillTableView.setItems(list);
     }
@@ -357,8 +366,8 @@ public class CreateNewBillController implements Initializable {
         list.clear();
         DetailBill.setSTT();
         List<DetailBillDB> detailBillDBS = BLLBills.getDetailBillByIDBill(BLLProject.IDBill);
-        for (int i = 0; i < detailBillDBS.size(); i++)
-            list.add(new DetailBill(detailBillDBS.get(i).getProductName(), detailBillDBS.get(i).getQuantity()));
+        for (DetailBillDB detailBillDB : detailBillDBS)
+            list.add(new DetailBill(detailBillDB.getProductName(), detailBillDB.getQuantity()));
         SetCol(Col_STT1, Col_Product1, Col_Quantity1, Col_UnitPrice1, Col_IntoMoney1);
         DetailBillTableView1.setItems(list);
     }
@@ -397,5 +406,4 @@ public class CreateNewBillController implements Initializable {
         stage.close();
         openUI.Open_UI("CustomerUI.fxml");
     }
-
 }

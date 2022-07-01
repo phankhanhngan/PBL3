@@ -3,7 +3,6 @@ package com.example.pbl3.View;
 
 import com.example.pbl3.BLL.BLLAccounts;
 import com.example.pbl3.OpenUI;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -45,7 +44,7 @@ public class LoginController {
     }
 
     @FXML
-    void recoveryPasswordOnAction(ActionEvent event) {
+    void recoveryPasswordOnAction() {
         Stage stage = (Stage) this.recoveryPasswordHyperlink.getScene().getWindow();
         stage.close();
         openUI.Open_UI("RecoveryPasswordUI.fxml");

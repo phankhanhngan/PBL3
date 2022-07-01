@@ -9,7 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 
-public class AutoCompleteBox implements EventHandler{
+public class AutoCompleteBox implements EventHandler {
     private ComboBox comboBox;
     final private ObservableList data;
     private Integer sid;
@@ -33,9 +33,9 @@ public class AutoCompleteBox implements EventHandler{
         this.comboBox.getEditor().focusedProperty().addListener((observable, oldValue, newValue) -> {
         });
 
-        this.comboBox.getEditor().setOnMouseClicked(event ->{
-            if(event.getButton().equals(MouseButton.PRIMARY)){
-                if(event.getClickCount() == 2){
+        this.comboBox.getEditor().setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
                     return;
                 }
             }
@@ -49,7 +49,7 @@ public class AutoCompleteBox implements EventHandler{
 
         this.comboBox.setOnKeyReleased(AutoCompleteBox.this);
 
-        if(this.sid!=null)
+        if (this.sid != null)
             this.comboBox.getSelectionModel().select(this.sid);
     }
 
@@ -64,7 +64,7 @@ public class AutoCompleteBox implements EventHandler{
             }
         }
 
-        if(list.isEmpty()) this.comboBox.hide();
+        if (list.isEmpty()) this.comboBox.hide();
 
         this.comboBox.setItems(list);
     }
@@ -74,14 +74,13 @@ public class AutoCompleteBox implements EventHandler{
     }
 
     @Override
-    public void handle(Event event)
-    {
+    public void handle(Event event) {
         handle((KeyEvent) event);
     }
 
 
     public void handle(KeyEvent event) {
-        if ( event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN
+        if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN
                 || event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.LEFT
                 || event.getCode() == KeyCode.HOME
                 || event.getCode() == KeyCode.END || event.getCode() == KeyCode.TAB
@@ -89,19 +88,19 @@ public class AutoCompleteBox implements EventHandler{
             return;
         }
 
-        if(event.getCode() == KeyCode.BACK_SPACE){
+        if (event.getCode() == KeyCode.BACK_SPACE) {
             String str = this.comboBox.getEditor().getText();
             if (str != null && str.length() > 0) {
                 str = str.substring(0, str.length());
             }
-            if(str != null){
+            if (str != null) {
                 this.comboBox.getEditor().setText(str);
                 moveCaret(str.length());
             }
             this.comboBox.getSelectionModel().clearSelection();
         }
 
-        if(event.getCode() == KeyCode.ENTER && comboBox.getSelectionModel().getSelectedIndex()>-1)
+        if (event.getCode() == KeyCode.ENTER && comboBox.getSelectionModel().getSelectedIndex() > -1)
             return;
 
         setItems();

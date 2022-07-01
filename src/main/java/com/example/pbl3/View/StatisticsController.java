@@ -13,7 +13,6 @@ import com.example.pbl3.OpenUI;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
@@ -93,7 +92,7 @@ public class StatisticsController implements Initializable {
     }
 
     public void decentralization() {
-        if (BLLProject.typecashier == false) {
+        if (!BLLProject.typecashier) {
             account.setVisible(false);
         }
     }
@@ -150,7 +149,7 @@ public class StatisticsController implements Initializable {
     }
 
     @FXML
-    void endDateOnAction(ActionEvent event) {
+    void endDateOnAction() {
         Date endDate = Date.valueOf(end_date.getValue());
         Date startDate = Date.valueOf(start_date.getValue());
         if (endDate.compareTo(startDate) < 0) {
@@ -226,7 +225,7 @@ public class StatisticsController implements Initializable {
     }
 
     @FXML
-    public void logOutMenuItemOnAction(ActionEvent event) {
+    public void logOutMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
@@ -240,42 +239,42 @@ public class StatisticsController implements Initializable {
     }
 
     @FXML
-    public void importMenuItemOnAction(ActionEvent event) {
+    public void importMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ImportUI.fxml");
     }
 
     @FXML
-    public void supplierMenuItemOnAction(ActionEvent event) {
+    public void supplierMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
-    public void categoryMenuItemOnAction(ActionEvent event) {
+    public void categoryMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
-    public void customerMenuItemOnAction(ActionEvent event) {
+    public void customerMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CustomerUI.fxml");
     }
 
     @FXML
-    public void orderMenuItemOnAction(ActionEvent event) {
+    public void orderMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CreateNewBillUI.fxml");
     }
 
     @FXML
-    void billMenuItemOnAction(ActionEvent event) {
+    void billMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ViewBillUI.fxml");
@@ -296,7 +295,7 @@ public class StatisticsController implements Initializable {
     }
 
     @FXML
-    void myAccountMenuItemOnAction(ActionEvent event) {
+    void myAccountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");

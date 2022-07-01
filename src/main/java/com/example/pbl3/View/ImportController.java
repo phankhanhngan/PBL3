@@ -11,13 +11,10 @@ import com.example.pbl3.DTO.Supplier;
 import com.example.pbl3.DTO.DetailImport;
 import com.example.pbl3.OpenUI;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.print.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.BoxBlur;
@@ -26,10 +23,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
-import org.controlsfx.control.action.Action;
 import com.jfoenix.controls.JFXDialog;
 
-import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -37,10 +32,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ImportController implements Initializable {
-    @FXML
-    private ContextMenu inventoryContextMenu;
-    @FXML
-    private MenuItem Addmenu;
     @FXML
     private MenuItem Deletemenu;
     @FXML
@@ -58,33 +49,17 @@ public class ImportController implements Initializable {
     @FXML
     private Button cancelButton;
     @FXML
-    private MenuItem homepage;
-    @FXML
     private MenuItem account;
     @FXML
     private MenuItem statistics;
     @FXML
-    private MenuItem product;
-    @FXML
-    private MenuItem logout;
-    @FXML
-    private MenuItem importPrd;
-    @FXML
     private Button addSubmitButton;
-    @FXML
-    private Button resetButton;
-    @FXML
-    private Button deleteButton;
-    @FXML
-    private Button updateButton;
     @FXML
     private Button printReceiptButton;
     @FXML
     private Hyperlink newSupplierHyper;
     @FXML
     private Hyperlink newItemHyper;
-    @FXML
-    private Button search;
     @FXML
     private ComboBox itemCBBox;
     @FXML
@@ -170,11 +145,10 @@ public class ImportController implements Initializable {
     private Label staffPrint;
 
     JFXDialog dialog = new JFXDialog();
-    private Double totalCal = Double.valueOf(0);
+    private Double totalCal = (double) 0;
 
     private ObservableList<Import> importList;
     private ObservableList<DetailImport> importDetailList = FXCollections.observableArrayList();
-    private ObservableList<Double> amountList = FXCollections.observableArrayList();
     OpenUI openUI = new OpenUI();
 
     @Override
@@ -183,9 +157,7 @@ public class ImportController implements Initializable {
         this.lbStaff.setText(BLLProject.namecashier);
         receiptAnchorpane.setVisible(false);
         printAnchorPane.setVisible(false);
-        this.makeReceiptButton.setOnAction((e) -> {
-            ShowDialogReceipt();
-        });
+        this.makeReceiptButton.setOnAction((e) -> ShowDialogReceipt());
         this.cancelButton.setOnAction((e) -> {
             resetInputField();
             CloseDialogReceipt();
@@ -199,12 +171,8 @@ public class ImportController implements Initializable {
                 ex.printStackTrace();
             }
         });
-        this.newItemHyper.setOnAction((e) -> {
-            productMenuItemOnAction(e);
-        });
-        this.newSupplierHyper.setOnAction((e) -> {
-            supplierMenuItemOnAction(e);
-        });
+        this.newItemHyper.setOnAction((e) -> productMenuItemOnAction());
+        this.newSupplierHyper.setOnAction((e) -> supplierMenuItemOnAction());
         this.printReceiptButton.setOnAction((e) -> {
             printReceipt();
             AnchorPane.setEffect(null);
@@ -212,9 +180,7 @@ public class ImportController implements Initializable {
             importDetailList.clear();
             resetInputField();
         });
-        this.addItemButton.setOnAction((e) -> {
-            addAnItem();
-        });
+        this.addItemButton.setOnAction((e) -> addAnItem());
         UpdateListImport("");
 
         showSupplierComboBoxItem();
@@ -236,13 +202,11 @@ public class ImportController implements Initializable {
         });
 
         showContextMenu();
-        deleteDetailContextMenu.setOnAction((e) -> {
-            deleteAnItem();
-        });
+        deleteDetailContextMenu.setOnAction((e) -> deleteAnItem());
     }
 
     public void decentralization() {
-        if (BLLProject.typecashier == false) {
+        if (!BLLProject.typecashier) {
             account.setVisible(false);
             statistics.setVisible(false);
         }
@@ -274,8 +238,8 @@ public class ImportController implements Initializable {
         List<DetailImport> listDetailImport = BLLImports.getListDetailImportByIDImport(ImportTableView.getSelectionModel()
                 .getSelectedItem().getImport_id());
         importDetailList.clear();
-        for (int i = 0; i < listDetailImport.size(); i++) {
-            importDetailList.add(listDetailImport.get(i));
+        for (DetailImport detailImport : listDetailImport) {
+            importDetailList.add(detailImport);
         }
         loadDetailImportTable(importDetailList);
         deleteDetailContextMenu.setDisable(true);
@@ -349,7 +313,7 @@ public class ImportController implements Initializable {
             }
         } else {
             Notifications.create().text("Please fill in all fields.").title("Oh Snap!")
-                    .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                    .hideAfter(Duration.seconds(5.0D)).action().show();
         }
     }
 
@@ -361,16 +325,16 @@ public class ImportController implements Initializable {
             if (BLLImports.AddImport(i)) {
                 Notifications.create().text("You have added products into inventory successfully!")
                         .title("Well-done!")
-                        .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                        .hideAfter(Duration.seconds(5.0D)).action().show();
             } else {
                 Notifications.create().text("You have failed to add products into inventory!")
                         .title("Oh Snap!")
-                        .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                        .hideAfter(Duration.seconds(5.0D)).action().show();
             }
         } else {
             Notifications.create().text("Please fill in all fields!")
                     .title("Notification")
-                    .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                    .hideAfter(Duration.seconds(5.0D)).action().show();
         }
     }
 
@@ -392,7 +356,7 @@ public class ImportController implements Initializable {
             if (!ImportTableView.getSelectionModel().isEmpty()) {
                 if (BLLImports.DeleteImport(ImportTableView.getSelectionModel().getSelectedItem().getImport_id())) {
                     Notifications.create().text("You have deleted this receipt successfully.").title("Well-done!")
-                            .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                            .hideAfter(Duration.seconds(5.0D)).action().show();
                     UpdateListImport("");
                     resetInputField();
                 } else {
@@ -402,7 +366,7 @@ public class ImportController implements Initializable {
                 }
             } else {
                 Notifications.create().text("Please pick a row to delete.").title("Oh Snap!")
-                        .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                        .hideAfter(Duration.seconds(5.0D)).action().show();
             }
         }
     }
@@ -434,36 +398,35 @@ public class ImportController implements Initializable {
     }
 
     public void showContextMenu() {
-        Deletemenu.setOnAction(e -> {
-            this.deleteButtonOnAction();
-        });
+        Deletemenu.setOnAction(e -> this.deleteButtonOnAction());
     }
 
     //confirm dialog
     private void deleteAnItem() {
         if (!DetailImportTableView.getSelectionModel().isEmpty()) {
-            importDetailList.forEach(DetailImport -> {
-                if (DetailImportTableView.getSelectionModel().getSelectedItem().getImportID() == DetailImport.getImportID()) {
-                    importDetailList.remove(DetailImport);
-                    return;
-                }
-            });
+            double total_old = Double.parseDouble(lbTotal.getText());
+            lbTotal.setText((total_old - DetailImportTableView.getSelectionModel().getSelectedItem().getAmount()) + "");
+            importDetailList.remove(DetailImportTableView.getSelectionModel().getSelectedItem());
+//            importDetailList.forEach(DetailImport -> {
+//                if (DetailImportTableView.getSelectionModel().getSelectedItem().getImportID() == DetailImport.getImportID()) {
+//                    importDetailList.remove(DetailImport);
+//                    return;
+//                }
+//            });
         }
     }
 
     public ObservableList<String> getAllSupplierName() {
         ObservableList<String> list = FXCollections.observableArrayList();
         List<Supplier> supplierList = BLLSuppliers.getListSupplier();
-        for (int i = 0; i < supplierList.size(); i++)
-            list.add(supplierList.get(i).getSup_Name());
+        for (Supplier supplier : supplierList) list.add(supplier.getSup_Name());
         return list;
     }
 
     public ObservableList<String> getAllProductName() {
         ObservableList<String> list = FXCollections.observableArrayList();
         List<Product> productList = BLLProducts.getListProduct();
-        for (int i = 0; i < productList.size(); i++)
-            list.add(productList.get(i).getProductName());
+        for (Product product : productList) list.add(product.getProductName());
         return list;
     }
 
@@ -480,7 +443,7 @@ public class ImportController implements Initializable {
             resetDetailInputField();
         } else {
             Notifications.create().text("Add failure! Please fill in all fields.")
-                    .title("Notification").hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                    .title("Notification").hideAfter(Duration.seconds(5.0D)).action().show();
             ;
         }
     }
@@ -518,14 +481,14 @@ public class ImportController implements Initializable {
     }
 
     @FXML
-    public void productMenuItemOnAction(ActionEvent event) {
+    public void productMenuItemOnAction() {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
-    public void logOutMenuItemOnAction(ActionEvent event) {
+    public void logOutMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
@@ -539,42 +502,42 @@ public class ImportController implements Initializable {
     }
 
     @FXML
-    public void importMenuItemOnAction(ActionEvent event) {
+    public void importMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ImportUI.fxml");
     }
 
     @FXML
-    public void supplierMenuItemOnAction(ActionEvent event) {
+    public void supplierMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
-    public void categoryMenuItemOnAction(ActionEvent event) {
+    public void categoryMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
-    public void customerMenuItemOnAction(ActionEvent event) {
+    public void customerMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CustomerUI.fxml");
     }
 
     @FXML
-    public void orderMenuItemOnAction(ActionEvent event) {
+    public void orderMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CreateNewBillUI.fxml");
     }
 
     @FXML
-    void billMenuItemOnAction(ActionEvent event) {
+    void billMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ViewBillUI.fxml");
@@ -595,7 +558,7 @@ public class ImportController implements Initializable {
     }
 
     @FXML
-    void myAccountMenuItemOnAction(ActionEvent event) {
+    void myAccountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");

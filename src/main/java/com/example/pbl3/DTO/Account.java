@@ -49,14 +49,6 @@ public class Account {
         return address;
     }
 
-    public void setfName(String fName) {
-        this.firstName = fName;
-    }
-
-    public void setlName(String lName) {
-        this.lastName = lName;
-    }
-
     public void setGmail(String gmail) {
         this.gmail = gmail;
     }
@@ -65,20 +57,12 @@ public class Account {
         this.phone = phone;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public void setTypeOfUser(String typeOfUser) {
-        this.typeOfUser = typeOfUser;
     }
 
     public String isTypeOfUser() {

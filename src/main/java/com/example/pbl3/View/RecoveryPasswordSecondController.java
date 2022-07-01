@@ -3,7 +3,6 @@ package com.example.pbl3.View;
 
 import com.example.pbl3.BLL.BLLAccounts;
 import com.example.pbl3.OpenUI;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -28,11 +27,11 @@ public class RecoveryPasswordSecondController {
     }
 
     @FXML
-    void saveNewPasswordOnAction(ActionEvent event) {
+    void saveNewPasswordOnAction() {
         if (!this.passwordField.getText().isBlank() && !this.confirmPasswordField.getText().isBlank()) {
             if (this.passwordField.getText().equals(this.confirmPasswordField.getText())) {
                 this.updatePassword();
-                Stage stage = (Stage)this.saveNewPasswordButton.getScene().getWindow();
+                Stage stage = (Stage) this.saveNewPasswordButton.getScene().getWindow();
                 stage.close();
                 this.backLoginStage();
             } else {
@@ -41,13 +40,12 @@ public class RecoveryPasswordSecondController {
         } else {
             this.announceLabel.setText("Please enter password and confirm password!");
         }
-
     }
 
     @FXML
-    void backToLoginOnAction(ActionEvent event) {
+    void backToLoginOnAction() {
         this.announceLabel.setText("");
-        Stage stage = (Stage)this.backToLoginHyperLink.getScene().getWindow();
+        Stage stage = (Stage) this.backToLoginHyperLink.getScene().getWindow();
         stage.close();
         this.backLoginStage();
     }

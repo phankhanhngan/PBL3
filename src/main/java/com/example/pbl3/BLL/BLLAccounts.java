@@ -2,31 +2,25 @@ package com.example.pbl3.BLL;
 
 import com.example.pbl3.DAL.DatabaseHelper;
 import com.example.pbl3.DTO.*;
-import com.example.pbl3.OpenUI;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BLLAccounts {
-    private static OpenUI openUI = new OpenUI();
-
     public static String DecodePassword(String pass) { return DatabaseHelper.DecodePassword(pass); }
 
     public static boolean CheckAccount(String username, String password)
     {
         List<Account> listAccount = DatabaseHelper.GetAllAccount();
-        for(int i=0; i<listAccount.size(); i++)
-        {
-            if(username.equals(listAccount.get(i).getUsername()) && BLLAccounts.DecodePassword(password).equals(listAccount.get(i).getPassword()))
-            {
-                BLLProject.setGmail(listAccount.get(i).getGmail());
-                BLLProject.setNameCashier(listAccount.get(i).getFirstName() + " " + listAccount.get(i).getLastName());
-                BLLProject.setPhoneCashier(listAccount.get(i).getPhone());
-                BLLProject.setAddress(listAccount.get(i).getAddress());
-                BLLProject.setUsername(listAccount.get(i).getUsername());
+        for (Account account : listAccount) {
+            if (username.equals(account.getUsername()) && BLLAccounts.DecodePassword(password).equals(account.getPassword())) {
+                BLLProject.setGmail(account.getGmail());
+                BLLProject.setNameCashier(account.getFirstName() + " " + account.getLastName());
+                BLLProject.setPhoneCashier(account.getPhone());
+                BLLProject.setAddress(account.getAddress());
+                BLLProject.setUsername(account.getUsername());
                 boolean type;
-                if(listAccount.get(i).isTypeOfUser().equals("Manager")) type = true;
-                else type = false;
+                type = account.isTypeOfUser().equals("Manager");
                 BLLProject.setTypecashier(type);
                 return true;
             }
@@ -37,10 +31,8 @@ public class BLLAccounts {
     public static boolean CheckMail(String gmail)
     {
         List<Account> listAccount = DatabaseHelper.GetAllAccount();
-        for(int i=0; i<listAccount.size(); i++)
-        {
-            if(listAccount.get(i).getGmail().equals(gmail))
-            {
+        for (Account account : listAccount) {
+            if (account.getGmail().equals(gmail)) {
                 BLLProject.setGmail(gmail);
                 return true;
             }
@@ -71,11 +63,11 @@ public class BLLAccounts {
     {
         List<Account> listAccount = DatabaseHelper.GetAllAccount();
         List<Account> list = new ArrayList<>();
-        for(int i=0; i<listAccount.size(); i++)
-            if(listAccount.get(i).getFirstName().contains(txt) || listAccount.get(i).getLastName().contains(txt) ||
-                    listAccount.get(i).getGmail().contains(txt) || listAccount.get(i).getPhone().contains(txt) ||
-                    listAccount.get(i).getAddress().contains(txt) || listAccount.get(i).isTypeOfUser().contains(txt))
-                list.add(listAccount.get(i));
+        for (Account account : listAccount)
+            if (account.getFirstName().toLowerCase().contains(txt.toLowerCase()) || account.getLastName().toLowerCase().contains(txt.toLowerCase()) ||
+                    account.getGmail().contains(txt) || account.getPhone().contains(txt) ||
+                    account.getAddress().contains(txt) || account.isTypeOfUser().contains(txt))
+                list.add(account);
         return list;
     }
 }

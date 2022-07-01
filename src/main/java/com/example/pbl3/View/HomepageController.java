@@ -6,7 +6,6 @@ import com.example.pbl3.OpenUI;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -124,7 +123,7 @@ public class HomepageController implements Initializable {
     }
 
     public void decentralization() {
-        if (BLLProject.typecashier == false) {
+        if (!BLLProject.typecashier) {
             account.setVisible(false);
             statistics.setVisible(false);
         }
@@ -195,9 +194,7 @@ public class HomepageController implements Initializable {
         pauseTransition.setOnFinished(ev -> {
             PauseTransition pauseTransition2 = new PauseTransition();
             pauseTransition2.setDuration(Duration.seconds(0.1));
-            pauseTransition2.setOnFinished(ev2 -> {
-                node.setVisible(true);
-            });
+            pauseTransition2.setOnFinished(ev2 -> node.setVisible(true));
 
             pauseTransition2.play();
             fadeInUp(node);
@@ -246,14 +243,14 @@ public class HomepageController implements Initializable {
     }
 
     @FXML
-    public void productMenuItemOnAction(ActionEvent event) {
+    public void productMenuItemOnAction() {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
-    public void logOutMenuItemOnAction(ActionEvent event) {
+    public void logOutMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
@@ -267,42 +264,42 @@ public class HomepageController implements Initializable {
     }
 
     @FXML
-    public void importMenuItemOnAction(ActionEvent event) {
+    public void importMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ImportUI.fxml");
     }
 
     @FXML
-    public void supplierMenuItemOnAction(ActionEvent event) {
+    public void supplierMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
-    public void categoryMenuItemOnAction(ActionEvent event) {
+    public void categoryMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
-    public void customerMenuItemOnAction(ActionEvent event) {
+    public void customerMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CustomerUI.fxml");
     }
 
     @FXML
-    public void orderMenuItemOnAction(ActionEvent event) {
+    public void orderMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CreateNewBillUI.fxml");
     }
 
     @FXML
-    void billMenuItemOnAction(ActionEvent event) {
+    void billMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ViewBillUI.fxml");
@@ -323,7 +320,7 @@ public class HomepageController implements Initializable {
     }
 
     @FXML
-    void myAccountMenuItemOnAction(ActionEvent event) {
+    void myAccountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");

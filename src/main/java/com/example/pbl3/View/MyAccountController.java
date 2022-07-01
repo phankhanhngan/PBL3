@@ -5,7 +5,6 @@ import com.example.pbl3.BLL.BLLProject;
 import com.example.pbl3.OpenUI;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -76,13 +75,9 @@ public class MyAccountController implements Initializable {
         DisableField();
         FillInformation();
 
-        resetButton.setOnAction(e -> {
-            resetField();
-        });
+        resetButton.setOnAction(e -> resetField());
 
-        sendCodeButton.setOnAction(e -> {
-            sendCode();
-        });
+        sendCodeButton.setOnAction(e -> sendCode());
 
         submitButton.setOnAction(e -> {
             confirm();
@@ -90,10 +85,8 @@ public class MyAccountController implements Initializable {
         });
     }
 
-    public void decentralization()
-    {
-        if(BLLProject.typecashier == false)
-        {
+    public void decentralization() {
+        if (!BLLProject.typecashier) {
             account.setVisible(false);
         }
     }
@@ -114,7 +107,7 @@ public class MyAccountController implements Initializable {
         phoneTxt.setText(BLLProject.phonecashier);
         usernameTxt.setText(BLLProject.username);
         addressTxt.setText(BLLProject.address);
-        if(BLLProject.typecashier) managerRadioBtn.setSelected(true);
+        if (BLLProject.typecashier) managerRadioBtn.setSelected(true);
         else cashierRadioBtn.setSelected(true);
         nameLabel.setText(nameTxt.getText() + "!");
     }
@@ -126,11 +119,10 @@ public class MyAccountController implements Initializable {
     }
 
     public void sendCode() {
-        if(BLLAccounts.CheckMail(BLLProject.gmail))
-        {
+        if (BLLAccounts.CheckMail(BLLProject.gmail)) {
             Random generator = new Random();
             this.value = generator.nextInt(9000) + 1000;
-            BLLProject.SendMail(BLLProject.gmail,"Your confirmation code is: " + value +
+            BLLProject.SendMail(BLLProject.gmail, "Your confirmation code is: " + value +
                     "\nDo not share this to anyone.", "Your Confirmation Code");
             Notifications.create().text("Code sent to your gmail. Check it out!").title("Sent successful!")
                     .hideAfter(Duration.seconds(5.0D)).show();
@@ -143,7 +135,6 @@ public class MyAccountController implements Initializable {
 
     public void confirm() {
         if (!inputEmpty()) {
-            String s = String.valueOf(this.value);
             if (this.value == Integer.parseInt(this.code.getText())) {
                 if (newPass.getText().equals(newPassConfirm.getText())) {
                     updatePassword();
@@ -164,23 +155,22 @@ public class MyAccountController implements Initializable {
 
     public void updatePassword() {
         String var10000 = this.newPass.getText();
-        if(BLLAccounts.UpdatePasswordAccount(var10000))
-        {
+        if (BLLAccounts.UpdatePasswordAccount(var10000)) {
             Notifications.create().text("Your password has been changed!").title("Great!")
                     .hideAfter(Duration.seconds(5.0D)).show();
         }
     }
 
     @FXML
-    public void productMenuItemOnAction(ActionEvent event) {
+    public void productMenuItemOnAction() {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
-    public void logOutMenuItemOnAction(ActionEvent event) {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+    public void logOutMenuItemOnAction() {
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
     }
@@ -193,42 +183,42 @@ public class MyAccountController implements Initializable {
     }
 
     @FXML
-    public void importMenuItemOnAction(ActionEvent event) {
+    public void importMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ImportUI.fxml");
     }
 
     @FXML
-    public void supplierMenuItemOnAction(ActionEvent event) {
+    public void supplierMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
-    public void categoryMenuItemOnAction(ActionEvent event) {
+    public void categoryMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
-    public void customerMenuItemOnAction(ActionEvent event) {
+    public void customerMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CustomerUI.fxml");
     }
 
     @FXML
-    public void orderMenuItemOnAction(ActionEvent event) {
+    public void orderMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CreateNewBillUI.fxml");
     }
 
     @FXML
-    void billMenuItemOnAction(ActionEvent event) {
+    void billMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ViewBillUI.fxml");
@@ -236,20 +226,20 @@ public class MyAccountController implements Initializable {
 
     @FXML
     public void homePageMenuItemOnAction() {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("HomePageUI.fxml");
     }
 
     @FXML
     public void statisticMenuItemOnAction() {
-        Stage stage = (Stage)this.AnchorPane.getScene().getWindow();
+        Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("StatisticsUI.fxml");
     }
 
     @FXML
-    void myAccountMenuItemOnAction(ActionEvent event) {
+    void myAccountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");

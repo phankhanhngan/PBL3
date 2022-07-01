@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class PBL3Application extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = (Parent)FXMLLoader.load(this.getClass().getResource("LoginUI.fxml"));
+        Parent root = FXMLLoader.load(this.getClass().getResource("LoginUI.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Electronic Shop");

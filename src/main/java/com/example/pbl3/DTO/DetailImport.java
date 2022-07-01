@@ -22,20 +22,7 @@ public class DetailImport {
         return unit_price;
     }
 
-    public void setUnit_price(Double unit_price) {
-        this.unit_price = unit_price;
-    }
-
-    public int getDetail_id() {
-        return detail_id;
-    }
-
-    public void setDetail_id(int detail_id) {
-        this.detail_id = detail_id;
-    }
-
-
-    public DetailImport(int importID,String productName, String product_id, int quantity, Double unitPrice, Double amount) {
+    public DetailImport(int importID, String productName, String product_id, int quantity, Double unitPrice, Double amount) {
         this.importID = importID;
         this.detail_id = ++id;
         this.product = productName;
@@ -50,18 +37,9 @@ public class DetailImport {
         return amount;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
     public int getImportID() {
         return importID;
     }
-
-    public void setImportID(int importID) {
-        this.importID = importID;
-    }
-
 
     public int getQuantity() {
         return quantity;
@@ -75,7 +53,4 @@ public class DetailImport {
         return product_id;
     }
 
-    public void setProduct_id(String product_id) {
-        this.product_id = product_id;
-    }
 }

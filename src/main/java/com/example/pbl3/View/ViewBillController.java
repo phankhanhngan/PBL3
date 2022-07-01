@@ -7,13 +7,10 @@ import com.example.pbl3.OpenUI;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -47,6 +44,8 @@ public class ViewBillController implements Initializable {
     private JFXButton butCreateNewBill;
     @FXML
     private TextField searchTextField;
+    @FXML
+    private MenuItem deleteItem;
 
     private OpenUI openUI = new OpenUI();
 
@@ -55,6 +54,7 @@ public class ViewBillController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         decentralization();
         loadTableBill("");
+        deleteItem.setOnAction(e -> deleteRow());
         BillTableView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && !BillTableView.getSelectionModel().isEmpty()) {
                 BLLProject.setIDBill(BillTableView.getSelectionModel().getSelectedItem().getID_Bill());
@@ -66,7 +66,7 @@ public class ViewBillController implements Initializable {
     }
 
     public void decentralization() {
-        if (BLLProject.typecashier == false) {
+        if (!BLLProject.typecashier) {
             account.setVisible(false);
         }
     }
@@ -93,34 +93,29 @@ public class ViewBillController implements Initializable {
         openUI.Open_UI("CreateNewBillUI.fxml");
     }
 
-    @FXML
-    void deleteRow(KeyEvent event) {
+    void deleteRow() {
         if (BillTableView.getSelectionModel().getSelectedItem() != null) {
-            if (event.getCode() == KeyCode.BACK_SPACE) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete this bill?", ButtonType.YES, ButtonType.CANCEL);
-                alert.showAndWait();
-                if (alert.getResult() == ButtonType.YES) {
-                    BLLBills.DeleteBill(BillTableView.getSelectionModel().getSelectedItem().getID_Bill());
-                    BillTableView.getSelectionModel().clearSelection();
-                    loadTableBill("");
-                } else {
-                    Notifications.create().text("Please select row!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
-                }
-            } else {
-                Notifications.create().text("Please select row!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete this bill?", ButtonType.YES, ButtonType.CANCEL);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                BLLBills.DeleteBill(BillTableView.getSelectionModel().getSelectedItem().getID_Bill());
+                BillTableView.getSelectionModel().clearSelection();
+                loadTableBill("");
             }
+        } else {
+            Notifications.create().text("Please select row!").title("Oh Snap!").hideAfter(Duration.seconds(5.0D)).show();
         }
     }
 
     @FXML
-    public void productMenuItemOnAction(ActionEvent event) {
+    public void productMenuItemOnAction() {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
-    public void logOutMenuItemOnAction(ActionEvent event) {
+    public void logOutMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
@@ -134,42 +129,42 @@ public class ViewBillController implements Initializable {
     }
 
     @FXML
-    public void importMenuItemOnAction(ActionEvent event) {
+    public void importMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ImportUI.fxml");
     }
 
     @FXML
-    public void supplierMenuItemOnAction(ActionEvent event) {
+    public void supplierMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
-    public void categoryMenuItemOnAction(ActionEvent event) {
+    public void categoryMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
-    public void customerMenuItemOnAction(ActionEvent event) {
+    public void customerMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CustomerUI.fxml");
     }
 
     @FXML
-    public void orderMenuItemOnAction(ActionEvent event) {
+    public void orderMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CreateNewBillUI.fxml");
     }
 
     @FXML
-    void billMenuItemOnAction(ActionEvent event) {
+    void billMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ViewBillUI.fxml");
@@ -190,7 +185,7 @@ public class ViewBillController implements Initializable {
     }
 
     @FXML
-    void myAccountMenuItemOnAction(ActionEvent event) {
+    void myAccountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");

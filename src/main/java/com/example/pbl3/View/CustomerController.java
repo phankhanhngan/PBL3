@@ -6,17 +6,13 @@ import com.example.pbl3.DTO.Customer;
 import com.example.pbl3.OpenUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
-import org.controlsfx.control.action.Action;
-
 
 import java.net.URL;
 import java.sql.*;
@@ -89,27 +85,21 @@ public class CustomerController implements Initializable {
                 this.addCustomer();
             } else {
                 Notifications.create().text("Please fill in all fields.").title("Oh Snap!")
-                        .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                        .hideAfter(Duration.seconds(5.0D)).action().show();
             }
         });
-        this.resetButton.setOnAction((e) -> {
-            this.Clear();
-        });
-        this.deleteButton.setOnAction(e -> {
-            this.Delete();
-        });
+        this.resetButton.setOnAction((e) -> this.Clear());
+        this.deleteButton.setOnAction(e -> this.Delete());
         this.CustomerTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 this.SelectedRowAction();
             }
         });
-        this.updateButton.setOnAction((e) -> {
-            this.Update();
-        });
+        this.updateButton.setOnAction((e) -> this.Update());
     }
 
     public void decentralization() {
-        if (BLLProject.typecashier == false) {
+        if (!BLLProject.typecashier) {
             account.setVisible(false);
             statistics.setVisible(false);
         }
@@ -154,7 +144,7 @@ public class CustomerController implements Initializable {
         if (BLLCustomers.AddCustomer(c)) {
             Clear();
             Notifications.create().text("You have added customer successfully into our system.").title("Well-done!")
-                    .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                    .hideAfter(Duration.seconds(5.0D)).action().show();
             this.loadTable("");
         } else {
             Notifications.create().text("You have failed to add customer into our System. Try again!").title("Oh Snap!")
@@ -182,7 +172,7 @@ public class CustomerController implements Initializable {
         if (alert.getResult() == ButtonType.YES) {
             if (BLLCustomers.DeleteCustomer(CustomerTableView.getSelectionModel().getSelectedItem().getID())) {
                 Notifications.create().text("You have deleted this customer successfully.").title("Well-done!")
-                        .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                        .hideAfter(Duration.seconds(5.0D)).action().show();
                 loadTable("");
                 Clear();
             } else {
@@ -193,7 +183,7 @@ public class CustomerController implements Initializable {
     }
 
     public void SelectedRowAction() {
-        if ((this.CustomerTableView.getSelectionModel().getSelectedItem()).getFirstname() != "") {
+        if (!(this.CustomerTableView.getSelectionModel().getSelectedItem()).getFirstname().equals("")) {
             addButton.setDisable(true);
             this.firstnameTextField.setText((this.CustomerTableView.getSelectionModel().getSelectedItem()).getFirstname());
             this.lastnameTextField.setText((this.CustomerTableView.getSelectionModel().getSelectedItem()).getLastname());
@@ -226,11 +216,11 @@ public class CustomerController implements Initializable {
         else if (femaleRadioButton.isSelected()) gender = "Female";
         else gender = "Other";
         Customer c = new Customer(id, firstnameTextField.getText(), lastnameTextField.getText(), gmailTextField.getText(),
-                phoneTextField.getText(), gender, java.sql.Date.valueOf((LocalDate) this.birthdayDatePicker.getValue()),
+                phoneTextField.getText(), gender, java.sql.Date.valueOf(this.birthdayDatePicker.getValue()),
                 addressTextField.getText());
         if (BLLCustomers.UpdateCustomer(c)) {
             Notifications.create().text("You have updated customer successfully into our system.").title("Well-done!")
-                    .hideAfter(Duration.seconds(5.0D)).action(new Action[0]).show();
+                    .hideAfter(Duration.seconds(5.0D)).action().show();
             this.loadTable("");
             Clear();
         } else {
@@ -240,22 +230,19 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void pressEnterOnAction(KeyEvent event) {
-        if (event.getCode().toString() == "ENTER") {
-            loadTable(searchTextField.getText());
-
-        }
+    void searchOnAction() {
+        loadTable(searchTextField.getText());
     }
 
     @FXML
-    public void productMenuItemOnAction(ActionEvent event) {
+    public void productMenuItemOnAction() {
         Stage stage = (Stage) AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ProductUI.fxml");
     }
 
     @FXML
-    public void logOutMenuItemOnAction(ActionEvent event) {
+    public void logOutMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("LoginUI.fxml");
@@ -269,42 +256,42 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    public void importMenuItemOnAction(ActionEvent event) {
+    public void importMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ImportUI.fxml");
     }
 
     @FXML
-    public void supplierMenuItemOnAction(ActionEvent event) {
+    public void supplierMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("SupplierUI.fxml");
     }
 
     @FXML
-    public void categoryMenuItemOnAction(ActionEvent event) {
+    public void categoryMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CategoryUI.fxml");
     }
 
     @FXML
-    public void customerMenuItemOnAction(ActionEvent event) {
+    public void customerMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CustomerUI.fxml");
     }
 
     @FXML
-    public void orderMenuItemOnAction(ActionEvent event) {
+    public void orderMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("CreateNewBillUI.fxml");
     }
 
     @FXML
-    void billMenuItemOnAction(ActionEvent event) {
+    void billMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("ViewBillUI.fxml");
@@ -325,7 +312,7 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void myAccountMenuItemOnAction(ActionEvent event) {
+    void myAccountMenuItemOnAction() {
         Stage stage = (Stage) this.AnchorPane.getScene().getWindow();
         stage.close();
         openUI.Open_UI("MyAccountUI.fxml");

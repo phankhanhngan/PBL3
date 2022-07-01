@@ -31,18 +31,9 @@ public class BLLCategories {
     {
         List<Category> list = new ArrayList<>();
         List<Category> categoryList = DatabaseHelper.GetAllCategory();
-        for(int i=0; i<categoryList.size(); i++)
-            if(categoryList.get(i).getCate_Name().contains(txt))
-                list.add(categoryList.get(i));
+        for (Category category : categoryList)
+            if (category.getCate_Name().contains(txt))
+                list.add(category);
         return list;
-    }
-
-    public static Category getCategoryByNameCategory(String nameCategory)
-    {
-        List<Category> categoryList = BLLCategories.getListCategory();
-        for(int i=0; i<categoryList.size(); i++)
-            if(categoryList.get(i).getCate_Name().equals(nameCategory))
-                return categoryList.get(i);
-        return null;
     }
 }

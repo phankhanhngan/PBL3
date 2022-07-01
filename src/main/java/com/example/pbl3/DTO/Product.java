@@ -24,10 +24,6 @@ public class Product {
         return serial;
     }
 
-    public void setSerial(String serial) {
-        this.serial = serial;
-    }
-
     public String getProductName() {
         return this.ProductName;
     }
@@ -40,21 +36,21 @@ public class Product {
         return this.Category;
     }
 
-    public int getQuantity() {return this.quantity;}
+    public int getQuantity() {
+        return this.quantity;
+    }
 
     public void setProductName(String productName) {
         this.ProductName = productName;
-    }
-
-    public void setSalePrice(double salePrice) {
-        this.salePrice = salePrice;
     }
 
     public void setCategory(String category) {
         this.Category = category;
     }
 
-    public void setQuantity(int quant) { this.quantity = quant; }
+    public void setQuantity(int quant) {
+        this.quantity = quant;
+    }
 
     public InputStream getImage() {
         return image;

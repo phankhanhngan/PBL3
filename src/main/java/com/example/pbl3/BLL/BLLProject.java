@@ -50,8 +50,7 @@ public class BLLProject {
         gmail = Gmail;
     }
 
-    public static void setTypecashier (boolean type)
-    {
+    public static void setTypecashier(boolean type) {
         typecashier = type;
     }
 
@@ -82,34 +81,29 @@ public class BLLProject {
         }
     }
 
-    public static boolean CheckPhone(String phone)
-    {
-        if(phone.length() == 10)
-        {
+    public static boolean CheckPhone(String phone) {
+        if (phone.length() == 10) {
             try {
                 int phone_number = Integer.parseInt(phone);
                 return true;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 return false;
             }
         }
         return false;
     }
 
-    public static boolean CheckMail(String mail)
-    {
-        if(mail.contains("@gmail.com"))
+    public static boolean CheckMail(String mail) {
+        if (mail.contains("@gmail.com")) {
             return true;
+        }
         return false;
     }
 
-    public static boolean CheckSerial(String serial)
-    {
+    public static boolean CheckSerial(String serial) {
         List<Product> productList = BLLProducts.getListProduct();
-        for (int i=0; i<productList.size(); i++)
-        {
-            if(productList.get(i).getSerial().equals(serial))
+        for (Product product : productList) {
+            if (product.getSerial().equals(serial))
                 return true;
         }
         return false;

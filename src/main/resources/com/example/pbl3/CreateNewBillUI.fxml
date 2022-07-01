@@ -3,8 +3,10 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,7 +17,7 @@
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pbl3.View.CreateNewBillController">
 <AnchorPane fx:id="AnchorPane" prefHeight="738.0" prefWidth="895.0" style="-fx-background-color: rgba(192,162,232,0.35); -fx-background-radius: 2em;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TableView fx:id="DetailBillTableView" layoutX="22.0" layoutY="298.0" onKeyPressed="#deleteRow" prefHeight="226.0" prefWidth="854.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
+        <TableView fx:id="DetailBillTableView" layoutX="22.0" layoutY="298.0" prefHeight="226.0" prefWidth="854.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
             <columns>
                 <TableColumn fx:id="Col_STT" prefWidth="66.39999389648438" text="STT" />
                 <TableColumn fx:id="Col_Product" prefWidth="193.6000518798828" text="Product" />
@@ -23,6 +25,13 @@
                 <TableColumn fx:id="Col_UnitPrice" prefWidth="223.20001220703125" text="Unit Price" />
                 <TableColumn fx:id="Col_IntoMoney" prefWidth="229.5999755859375" text="Into Money" />
             </columns>
+            <contextMenu>
+               <ContextMenu>
+                 <items>
+                   <MenuItem fx:id="deleteItem" mnemonicParsing="false" text="Delete" />
+                 </items>
+               </ContextMenu>
+            </contextMenu>
         </TableView>
         <Label alignment="CENTER" layoutX="286.0" layoutY="72.0" prefHeight="70.0" prefWidth="322.0" text="RETAIL SALE INVOICE" textFill="RED">
             <font>

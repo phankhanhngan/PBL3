@@ -16,12 +16,4 @@ public class Category {
     public String getCate_Name() {
         return Cate_Name;
     }
-
-    public void setCate_Id(int cate_Id) {
-        Cate_Id = cate_Id;
-    }
-
-    public void setCate_Name(String cate_Name) {
-        Cate_Name = cate_Name;
-    }
 }

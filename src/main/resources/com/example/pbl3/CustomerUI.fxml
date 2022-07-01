@@ -80,7 +80,7 @@
                 </JFXRadioButton>
             <TextField fx:id="addressTextField" layoutX="13.0" layoutY="165.0" prefHeight="34.0" prefWidth="217.0" promptText="Address" stylesheets="@../../../css/textfield.css" />
             </children></AnchorPane>
-        <TextField fx:id="searchTextField" layoutX="367.0" layoutY="98.0" onKeyPressed="#pressEnterOnAction" prefHeight="26.0" prefWidth="656.0" promptText="Search" style="-fx-background-color: #FFFFFF;" />
+        <TextField fx:id="searchTextField" layoutX="367.0" layoutY="98.0" prefHeight="26.0" prefWidth="542.0" promptText="Search" style="-fx-background-color: #FFFFFF;" />
         <TableView fx:id="CustomerTableView" layoutX="361.0" layoutY="142.0" prefHeight="576.0" prefWidth="668.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
             <columns>
                 <TableColumn fx:id="Col_ID" prefWidth="44.26666259765625" text="ID" />
@@ -161,5 +161,13 @@
             </Menu>
          </menus>
       </MenuBar>
+      <JFXButton fx:id="searchButton" buttonType="RAISED" layoutX="923.0" layoutY="96.0" onAction="#searchOnAction" prefHeight="30.0" prefWidth="93.0" ripplerFill="#f2bebe" style="-fx-background-color: #8168A3; -fx-background-radius: 8;" text="Search" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
     </children>
 </AnchorPane>

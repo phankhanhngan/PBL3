@@ -1,8 +1,6 @@
 package com.example.pbl3.DTO;
 
 import com.example.pbl3.BLL.BLLProducts;
-import com.example.pbl3.BLL.BLLProject;
-
 
 public class DetailBill {
     static int stt = 0;
@@ -11,8 +9,8 @@ public class DetailBill {
     private int Quantity;
     private double unitPrice;
     private double intoMoney;
-    public DetailBill(String Product, int Quantity)
-    {
+
+    public DetailBill(String Product, int Quantity) {
         stt++;
         STT = stt;
         this.Product = Product;
@@ -21,8 +19,7 @@ public class DetailBill {
         intoMoney = unitPrice * Quantity;
     }
 
-    public DetailBill(String Product, int Quantity, double unitPrice)
-    {
+    public DetailBill(String Product, int Quantity, double unitPrice) {
         stt++;
         STT = stt;
         this.Product = Product;
@@ -43,8 +40,7 @@ public class DetailBill {
         return intoMoney;
     }
 
-    public static void setSTT()
-    {
+    public static void setSTT() {
         stt = 0;
     }
 

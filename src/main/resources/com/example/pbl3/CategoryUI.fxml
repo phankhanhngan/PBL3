@@ -63,7 +63,7 @@
             <Image url="@../../../assets/category.png" />
          </image>
       </ImageView>
-        <TableView fx:id="CategoryTableView" layoutX="308.0" layoutY="125.0" prefHeight="374.0" prefWidth="478.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
+        <TableView fx:id="CategoryTableView" layoutX="308.0" layoutY="167.0" prefHeight="332.0" prefWidth="478.0" styleClass="tabledataview" stylesheets="@../../../css/account.css">
             <columns>
                 <TableColumn fx:id="Col_Id" prefWidth="69.5999755859375" text="Id" />
                 <TableColumn fx:id="Col_Name" prefWidth="408.0000061035156" text="Name" />
@@ -110,5 +110,7 @@
             </Menu>
          </menus>
       </MenuBar>
+      <TextField fx:id="txtSearch" layoutX="310.0" layoutY="122.0" prefHeight="26.0" prefWidth="478.0" stylesheets="@../../../css/textfield.css" />
+      <JFXButton fx:id="buttonSearch" layoutX="725.0" layoutY="123.0" prefHeight="26.0" prefWidth="63.0" styleClass="button-type-1" stylesheets="@../../../css/button.css" text="Search" />
     </children>
 </AnchorPane>

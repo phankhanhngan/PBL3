@@ -27,9 +27,9 @@ public class BLLImports {
     {
         List<Import> importList = getListImport();
         List<Import> list = new ArrayList<>();
-        for(int i=0; i<importList.size(); i++)
-            if(importList.get(i).getSupplier_name().contains(txt) || importList.get(i).getCashier().contains(txt) || importList.get(i).getImport_date().toString().contains(txt))
-                list.add(importList.get(i));
+        for (Import anImport : importList)
+            if (anImport.getSupplier_name().toLowerCase().contains(txt.toLowerCase()) || anImport.getCashier().toLowerCase().contains(txt.toLowerCase()) || anImport.getImport_date().toString().contains(txt))
+                list.add(anImport);
         return list;
     }
 
@@ -37,8 +37,7 @@ public class BLLImports {
     {
         int max = 0;
         List<Import> importList = getListImport();
-        for(int i=0; i<importList.size(); i++)
-            if(importList.get(i).getImport_id() > max) max = importList.get(i).getImport_id();
+        for (Import anImport : importList) if (anImport.getImport_id() > max) max = anImport.getImport_id();
         System.out.println(max);
         return max;
     }
@@ -59,19 +58,19 @@ public class BLLImports {
     {
         List<DetailImport> detailImports = getListDetailImport();
         List<DetailImport> list = new ArrayList<>();
-        for(int i=0; i<detailImports.size(); i++)
-            if(detailImports.get(i).getImportID() == id)
-                list.add(detailImports.get(i));
+        for (DetailImport detailImport : detailImports)
+            if (detailImport.getImportID() == id)
+                list.add(detailImport);
         return list;
     }
 
-    public static int GetQuantityProductImport(String productname)
+    public static int GetQuantityProductImport(String productName)
     {
         int quantity = 0;
         List<DetailImport> detailImports = getListDetailImport();
-        for(int i=0; i<detailImports.size(); i++)
-            if(detailImports.get(i).getProduct().equals(productname))
-                quantity += detailImports.get(i).getQuantity();
+        for (DetailImport detailImport : detailImports)
+            if (detailImport.getProduct().equals(productName))
+                quantity += detailImport.getQuantity();
         return quantity;
     }
 }

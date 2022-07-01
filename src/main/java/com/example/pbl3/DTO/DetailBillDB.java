@@ -44,5 +44,4 @@ public class DetailBillDB {
     public double getUnit_price() {
         return unit_price;
     }
-
 }

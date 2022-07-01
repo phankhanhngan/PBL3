@@ -11,20 +11,12 @@ public class TopSeller implements Comparable<TopSeller> {
         this.revenue = revenue;
     }
 
-    public int getNo() {
-        return no;
-    }
-
     public String getSeller_Name() {
         return seller_Name;
     }
 
     public double getRevenue() {
         return revenue;
-    }
-
-    public void setSeller_Name(String seller_Name) {
-        this.seller_Name = seller_Name;
     }
 
     public void setRevenue(double revenue) {
@@ -37,6 +29,6 @@ public class TopSeller implements Comparable<TopSeller> {
 
     @Override
     public int compareTo(TopSeller o) {
-        return  (int)(o.getRevenue() - this.getRevenue());
+        return (int) (o.getRevenue() - this.getRevenue());
     }
 }
