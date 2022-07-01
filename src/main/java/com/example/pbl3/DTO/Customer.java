@@ -32,6 +32,30 @@ public class Customer {
         return firstname;
     }
 
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getLastname() {
         return lastname;
     }

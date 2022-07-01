@@ -15,6 +15,10 @@ public class TopProduct implements Comparable<TopProduct> {
         return ProductName;
     }
 
+    public int getNo() {
+        return No;
+    }
+
     public int getQuantity() {
         return quantity;
     }

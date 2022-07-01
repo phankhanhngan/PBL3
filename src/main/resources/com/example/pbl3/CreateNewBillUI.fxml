@@ -190,13 +190,13 @@
                      <Font name="System Italic" size="14.0" />
                   </font>
                </Label>
-               <TableView fx:id="DetailBillTableView1" layoutX="14.0" layoutY="274.0" prefHeight="200.0" prefWidth="550.0">
+               <TableView fx:id="DetailBillTableView1" layoutX="14.0" layoutY="274.0" prefHeight="200.0" prefWidth="525.0">
                  <columns>
                    <TableColumn fx:id="Col_STT1" prefWidth="57.600006103515625" text="STT" />
                    <TableColumn fx:id="Col_Product1" prefWidth="128.800048828125" text="Product" />
                      <TableColumn fx:id="Col_Quantity1" prefWidth="113.60003662109375" text="Quantity" />
-                     <TableColumn fx:id="Col_UnitPrice1" prefWidth="128.0" text="Unit Price" />
-                     <TableColumn fx:id="Col_IntoMoney1" prefWidth="135.20001220703125" text="Into Money" />
+                     <TableColumn fx:id="Col_UnitPrice1" prefWidth="89.5999755859375" text="Unit Price" />
+                     <TableColumn fx:id="Col_IntoMoney1" prefWidth="132.79998779296875" text="Into Money" />
                  </columns>
                </TableView>
                <Label layoutX="49.0" layoutY="493.0" prefHeight="18.0" prefWidth="172.0" text="Total Money :">

@@ -65,6 +65,8 @@ public class MyAccountController implements Initializable {
     private TextField nameTxt;
     @FXML
     private MenuItem account;
+    @FXML
+    private  Menu statistics_parent;
 
     int value;
     OpenUI openUI = new OpenUI();
@@ -88,6 +90,7 @@ public class MyAccountController implements Initializable {
     public void decentralization() {
         if (!BLLProject.typecashier) {
             account.setVisible(false);
+            statistics_parent.setVisible(false);
         }
     }
 

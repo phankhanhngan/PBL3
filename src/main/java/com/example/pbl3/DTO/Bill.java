@@ -9,6 +9,39 @@ public class Bill {
     private String cashier_gmail;
     private String cashierName;
     private Date date;
+
+    public void setID_Bill(int ID_Bill) {
+        this.ID_Bill = ID_Bill;
+    }
+
+    public void setID_Customer(int ID_Customer) {
+        this.ID_Customer = ID_Customer;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setCashier_gmail(String cashier_gmail) {
+        this.cashier_gmail = cashier_gmail;
+    }
+
+    public void setCashierName(String cashierName) {
+        this.cashierName = cashierName;
+    }
+
+    public void setTotal_Money(double total_Money) {
+        Total_Money = total_Money;
+    }
+
+    public void setPay(String pay) {
+        this.pay = pay;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     private double Total_Money;
     private String pay;
     private boolean status;

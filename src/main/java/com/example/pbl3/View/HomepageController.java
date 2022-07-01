@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -44,7 +45,7 @@ public class HomepageController implements Initializable {
     private MenuItem account;
 
     @FXML
-    private MenuItem statistics;
+    private Menu statistics_parent;
 
     @FXML
     private Button buttonStarted;
@@ -125,7 +126,7 @@ public class HomepageController implements Initializable {
     public void decentralization() {
         if (!BLLProject.typecashier) {
             account.setVisible(false);
-            statistics.setVisible(false);
+            statistics_parent.setVisible(false);
         }
     }
 

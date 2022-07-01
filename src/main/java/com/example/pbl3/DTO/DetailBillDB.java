@@ -8,6 +8,26 @@ public class DetailBillDB {
     private String product_serial;
     private double unit_price;
 
+    public int getIdDetailBill() {
+        return idDetailBill;
+    }
+
+    public void setIdDetailBill(int idDetailBill) {
+        this.idDetailBill = idDetailBill;
+    }
+
+    public void setIdBill(int idBill) {
+        this.idBill = idBill;
+    }
+
+    public void setProduct_serial(String product_serial) {
+        this.product_serial = product_serial;
+    }
+
+    public void setUnit_price(double unit_price) {
+        this.unit_price = unit_price;
+    }
+
     public DetailBillDB(int idDetailBill, int idBill, int quantity, String productName, String product_serial, double unit_price) {
         this.idDetailBill = idDetailBill;
         this.idBill = idBill;

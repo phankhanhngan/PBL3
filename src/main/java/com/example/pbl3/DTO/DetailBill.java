@@ -6,6 +6,35 @@ public class DetailBill {
     static int stt = 0;
     private int STT;
     private String Product;
+
+    public int getSTT() {
+        return STT;
+    }
+
+    public void setSTT(int STT) {
+        this.STT = STT;
+    }
+
+    public void setProduct(String product) {
+        Product = product;
+    }
+
+    public void setQuantity(int quantity) {
+        Quantity = quantity;
+    }
+
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public void setIntoMoney(double intoMoney) {
+        this.intoMoney = intoMoney;
+    }
+
     private int Quantity;
     private double unitPrice;
     private double intoMoney;

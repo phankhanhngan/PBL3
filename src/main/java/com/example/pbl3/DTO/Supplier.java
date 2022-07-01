@@ -7,6 +7,22 @@ public class Supplier {
     private String Sup_Phone;
 
 
+    public void setSup_Id(int sup_Id) {
+        Sup_Id = sup_Id;
+    }
+
+    public void setSup_Name(String sup_Name) {
+        Sup_Name = sup_Name;
+    }
+
+    public void setSup_Address(String sup_Address) {
+        Sup_Address = sup_Address;
+    }
+
+    public void setSup_Phone(String sup_Phone) {
+        Sup_Phone = sup_Phone;
+    }
+
     public Supplier(int sup_Id, String sup_Name, String sup_Address, String sup_Phone) {
         Sup_Id = sup_Id;
         Sup_Name = sup_Name;

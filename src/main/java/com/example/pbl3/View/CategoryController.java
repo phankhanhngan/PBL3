@@ -46,6 +46,8 @@ public class CategoryController implements Initializable {
     private JFXButton buttonSearch;
     @FXML
     private MenuItem account;
+    @FXML
+    private Menu statistics_parent;
 
     OpenUI openUI = new OpenUI();
 
@@ -77,6 +79,7 @@ public class CategoryController implements Initializable {
     public void decentralization() {
         if (!BLLProject.typecashier) {
             account.setVisible(false);
+            statistics_parent.setVisible(false);
         }
     }
 

@@ -76,6 +76,10 @@ public class StatisticsController implements Initializable {
     @FXML
     private Label labelInfo;
     @FXML
+    private Label pieLabel;
+    @FXML
+    private Label chartLabel;
+    @FXML
     private MenuItem account;
     OpenUI openUI = new OpenUI();
 
@@ -158,6 +162,8 @@ public class StatisticsController implements Initializable {
             return;
         }
         if (typeCBB.getSelectionModel().getSelectedItem().equals("Day")) {
+            pieLabel.setText("Doanh thu theo danh mục sản phẩm");
+            chartLabel.setText("Doanh thu theo ngày");
             long day = (endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000);
             if (day <= 31) {
                 loadBarChart_Revenue(startDate.toString(), endDate.toString(), true);
@@ -170,6 +176,8 @@ public class StatisticsController implements Initializable {
             }
         }
         if (typeCBB.getSelectionModel().getSelectedItem().equals("Month")) {
+            pieLabel.setText("Doanh thu theo danh mục sản phẩm");
+            chartLabel.setText("Doanh thu theo tháng");
             LocalDate Selected_dateend = end_date.getValue();
             LocalDate date_end = Selected_dateend.withDayOfMonth(Selected_dateend.lengthOfMonth());
             end_date.setValue(date_end);
@@ -196,7 +204,6 @@ public class StatisticsController implements Initializable {
                     labelInfo.setTranslateY(event.getSceneY() - labelInfo.getLayoutY());
                     labelInfo.setText("" + data.getPieValue() + "$");
                 }
-
             });
         }
     }

@@ -119,7 +119,7 @@ public class BLLProject {
 
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         if (printerJob != null) {
-            PageLayout pageLayout = printerJob.getPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, 50, 0, 40, 0);
+            PageLayout pageLayout = printerJob.getPrinter().createPageLayout(Paper.A4, PageOrientation.PORTRAIT, 20, 0, 40, 0);
             printerJob.showPageSetupDialog(printAnchorPane.getScene().getWindow());
             printerJob.showPrintDialog(printAnchorPane.getScene().getWindow());
             boolean success = printerJob.printPage(pageLayout, printAnchorPane);

@@ -160,7 +160,7 @@
                   <MenuItem fx:id="createOrder" mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
                </items>
             </Menu>
-            <Menu fx:id="statistics" mnemonicParsing="false" text="Statistics">
+            <Menu fx:id="statistics_parent" mnemonicParsing="false" text="Statistics">
                <items>
                   <MenuItem fx:id="statistics" mnemonicParsing="false" onAction="#statisticMenuItemOnAction" text="Statistic" />
                </items></Menu>

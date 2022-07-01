@@ -10,6 +10,14 @@ public class Product {
     private String Category;
     private int quantity;
 
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
+
+    public void setSalePrice(double salePrice) {
+        this.salePrice = salePrice;
+    }
+
     public Product(String serial, String productName, double salePrice, InputStream image, String category, int quantity) {
         this.serial = serial;
         this.ProductName = productName;

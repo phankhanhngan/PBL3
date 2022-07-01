@@ -5,10 +5,18 @@ public class TopSeller implements Comparable<TopSeller> {
     private String seller_Name;
     private double revenue;
 
+    public int getNo() {
+        return no;
+    }
+
     public TopSeller(int no, String seller_Name, double revenue) {
         this.no = no;
         this.seller_Name = seller_Name;
         this.revenue = revenue;
+    }
+
+    public void setSeller_Name(String seller_Name) {
+        this.seller_Name = seller_Name;
     }
 
     public String getSeller_Name() {

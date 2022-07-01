@@ -71,7 +71,7 @@ public class CustomerController implements Initializable {
     @FXML
     private MenuItem account;
     @FXML
-    private MenuItem statistics;
+    private  Menu statistics_parent;
 
     OpenUI openUI = new OpenUI();
 
@@ -101,7 +101,7 @@ public class CustomerController implements Initializable {
     public void decentralization() {
         if (!BLLProject.typecashier) {
             account.setVisible(false);
-            statistics.setVisible(false);
+            statistics_parent.setVisible(false);
         }
     }
 

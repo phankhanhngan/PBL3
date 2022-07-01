@@ -358,7 +358,11 @@ public class CreateNewBillController implements Initializable {
         for (DetailBillDB detailBillDB : detailBillDBS)
             list.add(new DetailBill(detailBillDB.getProductName(), detailBillDB.getQuantity(),
                     detailBillDB.getUnit_price()));
-        SetCol(Col_STT, Col_Product, Col_Quantity, Col_UnitPrice, Col_IntoMoney);
+        Col_STT.setCellValueFactory(new PropertyValueFactory("STT"));
+        Col_Product.setCellValueFactory(new PropertyValueFactory("Product"));
+        Col_Quantity.setCellValueFactory(new PropertyValueFactory("Quantity"));
+        Col_UnitPrice.setCellValueFactory(new PropertyValueFactory("unitPrice"));
+        Col_IntoMoney.setCellValueFactory(new PropertyValueFactory("intoMoney"));
         DetailBillTableView.setItems(list);
     }
 
@@ -368,7 +372,11 @@ public class CreateNewBillController implements Initializable {
         List<DetailBillDB> detailBillDBS = BLLBills.getDetailBillByIDBill(BLLProject.IDBill);
         for (DetailBillDB detailBillDB : detailBillDBS)
             list.add(new DetailBill(detailBillDB.getProductName(), detailBillDB.getQuantity()));
-        SetCol(Col_STT1, Col_Product1, Col_Quantity1, Col_UnitPrice1, Col_IntoMoney1);
+        Col_STT1.setCellValueFactory(new PropertyValueFactory("STT"));
+        Col_Product1.setCellValueFactory(new PropertyValueFactory("Product"));
+        Col_Quantity1.setCellValueFactory(new PropertyValueFactory("Quantity"));
+        Col_UnitPrice1.setCellValueFactory(new PropertyValueFactory("unitPrice"));
+        Col_IntoMoney1.setCellValueFactory(new PropertyValueFactory("intoMoney"));
         DetailBillTableView1.setItems(list);
     }
 

@@ -51,6 +51,8 @@ public class SupplierController implements Initializable {
     @FXML
     private MenuItem account;
     @FXML
+    private  Menu statistics_parent;
+    @FXML
     private JFXButton searchButton;
 
     @FXML
@@ -86,6 +88,7 @@ public class SupplierController implements Initializable {
     public void decentralization() {
         if (!BLLProject.typecashier) {
             account.setVisible(false);
+            statistics_parent.setVisible(false);
         }
     }
 

@@ -27,6 +27,8 @@ public class ViewBillController implements Initializable {
     @FXML
     private MenuItem account;
     @FXML
+    private  Menu statistics_parent;
+    @FXML
     JFXButton butSearch;
     @FXML
     TableView<Bill> BillTableView;
@@ -68,6 +70,7 @@ public class ViewBillController implements Initializable {
     public void decentralization() {
         if (!BLLProject.typecashier) {
             account.setVisible(false);
+            statistics_parent.setVisible(false);
         }
     }
 

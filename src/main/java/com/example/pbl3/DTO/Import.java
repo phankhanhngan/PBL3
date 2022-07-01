@@ -37,6 +37,38 @@ public class Import {
         return import_date;
     }
 
+    public void setImport_id(int import_id) {
+        this.import_id = import_id;
+    }
+
+    public void setSupplier_id(int supplier_id) {
+        this.supplier_id = supplier_id;
+    }
+
+    public void setSupplier_name(String supplier_name) {
+        this.supplier_name = supplier_name;
+    }
+
+    public void setImport_date(Date import_date) {
+        this.import_date = import_date;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public String getCashier_name() {
+        return cashier_name;
+    }
+
+    public void setCashier_name(String cashier_name) {
+        this.cashier_name = cashier_name;
+    }
+
+    public void setCashier_gmail(String cashier_gmail) {
+        this.cashier_gmail = cashier_gmail;
+    }
+
     public Double getTotal() {
         return total;
     }

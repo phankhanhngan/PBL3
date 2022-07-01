@@ -41,6 +41,38 @@ public class DetailImport {
         return importID;
     }
 
+    public static int getId() {
+        return id;
+    }
+
+    public static void setId(int id) {
+        DetailImport.id = id;
+    }
+
+    public void setUnit_price(Double unit_price) {
+        this.unit_price = unit_price;
+    }
+
+    public int getDetail_id() {
+        return detail_id;
+    }
+
+    public void setDetail_id(int detail_id) {
+        this.detail_id = detail_id;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public void setImportID(int importID) {
+        this.importID = importID;
+    }
+
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
+    }
+
     public int getQuantity() {
         return quantity;
     }

@@ -126,6 +126,8 @@ public class ImportController implements Initializable {
 
     @FXML
     private Button addItemButton;
+    @FXML
+    private  Menu statistics_parent;
 
     @FXML
     private Label supplierNamePrint;
@@ -208,7 +210,7 @@ public class ImportController implements Initializable {
     public void decentralization() {
         if (!BLLProject.typecashier) {
             account.setVisible(false);
-            statistics.setVisible(false);
+            statistics_parent.setVisible(false);
         }
     }
 

@@ -72,7 +72,7 @@
         <JFXComboBox fx:id="typeCBB" layoutX="70.0" layoutY="46.0" prefHeight="26.0" prefWidth="110.0" style="-fx-background-radius: 0.5em;" visibleRowCount="3" />
         <DatePicker fx:id="start_date" layoutX="270.0" layoutY="47.0" onAction="#startDateOnAction" />
         <DatePicker fx:id="end_date" layoutX="526.0" layoutY="46.0" onAction="#endDateOnAction" />
-        <PieChart fx:id="PieChart" layoutX="45.0" layoutY="72.0" onMouseClicked="#loadPiechartInfo" prefHeight="380.0" prefWidth="443.0" />
+        <PieChart fx:id="PieChart" layoutX="45.0" layoutY="93.0" onMouseClicked="#loadPiechartInfo" prefHeight="338.0" prefWidth="443.0" />
         <Label fx:id="labelInfo" layoutX="526.0" layoutY="113.0" prefHeight="38.0" prefWidth="138.0" />
         <BarChart fx:id="barchart_Revenue" categoryGap="0.0" layoutX="20.0" layoutY="462.0" onMouseClicked="#loadBarchartInfo" prefHeight="306.0" prefWidth="771.0">
             <xAxis>
@@ -126,6 +126,16 @@
       <Label fx:id="columnChartNameLabel" layoutX="45.0" layoutY="443.0" prefHeight="18.0" prefWidth="57.0" textFill="#000000a9">
          <font>
             <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="pieLabel" layoutX="65.0" layoutY="87.0" prefHeight="18.0" prefWidth="609.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="chartLabel" layoutX="65.0" layoutY="441.0" prefHeight="18.0" prefWidth="717.0">
+         <font>
+            <Font size="15.0" />
          </font>
       </Label>
     </children>

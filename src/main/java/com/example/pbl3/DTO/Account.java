@@ -10,6 +10,26 @@ public class Account {
     private String address;
     private String typeOfUser;
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getTypeOfUser() {
+        return typeOfUser;
+    }
+
+    public void setTypeOfUser(String typeOfUser) {
+        this.typeOfUser = typeOfUser;
+    }
+
     public Account(String fName, String lName, String gmail, String phone, String username, String password, String address, String typeOfUser) {
         this.firstName = fName;
         this.lastName = lName;

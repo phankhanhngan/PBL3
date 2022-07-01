@@ -25,106 +25,6 @@
    <children>
       <AnchorPane fx:id="AnchorPane" prefHeight="557.0" prefWidth="753.0">
           <children>
-            <AnchorPane fx:id="printAnchorPane" layoutX="25.0" layoutY="23.0" prefHeight="701.6" prefWidth="496.0" style="-fx-background-color: #FFFFFF;">
-               <children>
-                  <Label fx:id="ProductLabel2" layoutX="23.0" layoutY="14.0" text="Electronic shop">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="25.0" layoutY="36.0" text="PBL3 - ORIE">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="ProductLabel21" layoutX="422.0" layoutY="14.0" prefHeight="22.0" prefWidth="58.0" text="Receipt">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="26.0" layoutY="91.0" text="SUPPLIER">
-                     <font>
-                        <Font name="System Bold" size="9.0" />
-                     </font>
-                  </Label>
-                  <Line endX="26.399993896484375" layoutX="127.0" layoutY="109.0" startX="-100.0" stroke="#00000080" />
-                  <Label fx:id="supplierNamePrint" layoutX="27.0" layoutY="117.0" text="Name: ">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="supplierPhonePrint" layoutX="27.0" layoutY="139.0" text="Phone:">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="supplierAddressPrint" layoutX="26.0" layoutY="160.0" text="Address:">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="282.0" layoutY="117.0" text="Receipt #">
-                     <font>
-                        <Font name="System Bold" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="282.0" layoutY="139.0" text="Receipt Date">
-                     <font>
-                        <Font name="System Bold" size="9.0" />
-                     </font>
-                  </Label>
-                  <TableView fx:id="detailTablePrint" layoutX="23.0" layoutY="208.0" prefHeight="340.0" prefWidth="455.0" stylesheets="@../../../css/print_table.css">
-                    <columns>
-                      <TableColumn fx:id="Col_printQuantity" prefWidth="54.399993896484375" style="-fx-background-color: transparent;" text="QTY" />
-                      <TableColumn fx:id="Col_printProduct" prefWidth="169.60001373291016" style="-fx-background-color: transparent;" text="PRODUCT" />
-                        <TableColumn fx:id="Col_printUnit" prefWidth="113.5999755859375" style="-fx-background-color: transparent;" text="UNIT PRICE" />
-                        <TableColumn fx:id="Col_printAmount" prefWidth="107.2000732421875" style="-fx-background-color: transparent;" text="AMOUNT" />
-                        <TableColumn fx:id="Col_printID" minWidth="0.0" prefWidth="2.39990234375" style="-fx-background-color: transparent;" />
-                    </columns>
-                  </TableView>
-                  <Label layoutX="301.0" layoutY="584.0" text="TOTAL:">
-                     <font>
-                        <Font name="System Bold" size="9.0" />
-                     </font>
-                  </Label>
-                  <Line endX="299.1999816894531" layoutX="148.0" layoutY="574.0" startX="-100.0" stroke="#00000080" />
-                  <Label layoutX="381.0" layoutY="628.0" text="Supplier">
-                     <font>
-                        <Font name="System Bold" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="68.0" layoutY="628.0" text="Staff">
-                     <font>
-                        <Font name="System Bold" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="supplierPrint" layoutX="374.0" layoutY="657.0" text="Supplier name">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="staffPrint" layoutX="59.0" layoutY="657.0" text="Staff name">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="receiptIDPrint" layoutX="332.0" layoutY="117.0" prefHeight="14.0" prefWidth="127.0">
-                     <font>
-                        <Font name="System Bold" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="receiptDatePrint" layoutX="337.0" layoutY="139.0" prefHeight="14.0" prefWidth="115.0">
-                     <font>
-                        <Font name="System Bold" size="9.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="totalPrint" layoutX="339.0" layoutY="583.0" prefHeight="14.0" prefWidth="115.0">
-                     <font>
-                        <Font name="System Bold" size="9.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
             <ImageView fitHeight="747.0" fitWidth="993.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../assets/Background2.png" />
@@ -271,13 +171,113 @@
                         <MenuItem fx:id="createOrder" mnemonicParsing="false" onAction="#orderMenuItemOnAction" text="Order" />
                      </items>
                   </Menu>
-                  <Menu fx:id="statistics" mnemonicParsing="false" text="Statistics">
+                  <Menu fx:id="statistics_parent" mnemonicParsing="false" text="Statistics">
                      <items>
                         <MenuItem fx:id="statistics" mnemonicParsing="false" onAction="#statisticMenuItemOnAction" text="Statistic" />
                      </items>
                   </Menu>
                </menus>
             </MenuBar>
+            <AnchorPane fx:id="printAnchorPane" layoutX="25.0" layoutY="23.0" prefHeight="702.0" prefWidth="537.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Label fx:id="ProductLabel2" layoutX="41.0" layoutY="14.0" text="Electronic shop">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="43.0" layoutY="36.0" text="PBL3 - ORIE">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="ProductLabel21" layoutX="440.0" layoutY="14.0" prefHeight="22.0" prefWidth="58.0" text="Receipt">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="44.0" layoutY="91.0" text="SUPPLIER">
+                     <font>
+                        <Font name="System Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Line endX="26.399993896484375" layoutX="145.0" layoutY="109.0" startX="-100.0" stroke="#00000080" />
+                  <Label fx:id="supplierNamePrint" layoutX="45.0" layoutY="117.0" text="Name: ">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="supplierPhonePrint" layoutX="45.0" layoutY="139.0" text="Phone:">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="supplierAddressPrint" layoutX="44.0" layoutY="160.0" text="Address:">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="300.0" layoutY="117.0" text="Receipt #">
+                     <font>
+                        <Font name="System Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="300.0" layoutY="139.0" text="Receipt Date">
+                     <font>
+                        <Font name="System Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="detailTablePrint" layoutX="41.0" layoutY="208.0" prefHeight="340.0" prefWidth="455.0" stylesheets="@../../../css/print_table.css">
+                    <columns>
+                      <TableColumn fx:id="Col_printQuantity" prefWidth="54.399993896484375" style="-fx-background-color: transparent;" text="QTY" />
+                      <TableColumn fx:id="Col_printProduct" prefWidth="169.60001373291016" style="-fx-background-color: transparent;" text="PRODUCT" />
+                        <TableColumn fx:id="Col_printUnit" prefWidth="113.5999755859375" style="-fx-background-color: transparent;" text="UNIT PRICE" />
+                        <TableColumn fx:id="Col_printAmount" prefWidth="107.2000732421875" style="-fx-background-color: transparent;" text="AMOUNT" />
+                        <TableColumn fx:id="Col_printID" minWidth="0.0" prefWidth="2.39990234375" style="-fx-background-color: transparent;" />
+                    </columns>
+                  </TableView>
+                  <Label layoutX="319.0" layoutY="584.0" text="TOTAL:">
+                     <font>
+                        <Font name="System Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Line endX="299.1999816894531" layoutX="166.0" layoutY="574.0" startX="-100.0" stroke="#00000080" />
+                  <Label layoutX="399.0" layoutY="628.0" text="Supplier">
+                     <font>
+                        <Font name="System Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="86.0" layoutY="628.0" text="Staff">
+                     <font>
+                        <Font name="System Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="supplierPrint" layoutX="392.0" layoutY="657.0" text="Supplier name">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="staffPrint" layoutX="77.0" layoutY="657.0" text="Staff name">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="receiptIDPrint" layoutX="350.0" layoutY="117.0" prefHeight="14.0" prefWidth="127.0">
+                     <font>
+                        <Font name="System Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="receiptDatePrint" layoutX="355.0" layoutY="139.0" prefHeight="14.0" prefWidth="115.0">
+                     <font>
+                        <Font name="System Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalPrint" layoutX="357.0" layoutY="583.0" prefHeight="14.0" prefWidth="115.0">
+                     <font>
+                        <Font name="System Bold" size="9.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
           </children>
       </AnchorPane>
    </children>

@@ -100,6 +100,8 @@ public class ProductController implements Initializable {
     private ComboBox<String> cbbprice;
     @FXML
     private MenuItem account;
+    @FXML
+    private  Menu statistics_parent;
 
     JFXDialog dialog = new JFXDialog();
 
@@ -183,6 +185,7 @@ public class ProductController implements Initializable {
     public void decentralization() {
         if (!BLLProject.typecashier) {
             account.setVisible(false);
+            statistics_parent.setVisible(false);
         }
     }
 
